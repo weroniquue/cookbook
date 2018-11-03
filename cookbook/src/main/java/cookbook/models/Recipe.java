@@ -12,30 +12,29 @@ import javax.validation.constraints.NotBlank;
 @Entity
 @Table(name = "recipes")
 public class Recipe {
-	
+
 	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@NotBlank
 	private String title;
 
 	@ManyToOne
 	@JoinColumn(name = "category_id")
 	private FoodCategory category;
-	
+
 	@NotBlank
 	private String shotDescription;
-	
+
 	@NotBlank
 	private String description;
 
 	/*
 	 * Dodac składniki tylko nie wiadomo w jakiej funkcji
 	 * 
-	 * */
-	
-	
+	 */
+
 	public Long getId() {
 		return id;
 	}
@@ -74,6 +73,6 @@ public class Recipe {
 
 	public void setDescription(String description) {
 		this.description = description;
-	} 
-	
+	}
+
 }
