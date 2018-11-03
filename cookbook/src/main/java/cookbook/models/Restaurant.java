@@ -22,12 +22,12 @@ public class Restaurant {
 	@Column(name = "restaurant_name")
 	private String restaurantName;
 
-	private Optional<String> street;
+	private String street;
 
-	private Optional<String> zipCode;
+	private String zipCode;
 
 	@NotBlank
-	private Optional<String> city;
+	private String city;
 
 	public Long getId() {
 		return id;
@@ -46,26 +46,26 @@ public class Restaurant {
 	}
 
 	public Optional<String> getStreet() {
-		return street;
+		return Optional.ofNullable(street);
 	}
 
-	public void setStreet(Optional<String> street) {
+	public void setStreet(String street) {
 		this.street = street;
 	}
 
 	public Optional<String> getZipCode() {
-		return zipCode;
+		return Optional.ofNullable(zipCode);
 	}
 
-	public void setZipCode(Optional<String> zipCode) {
+	public void setZipCode(String zipCode) {
 		this.zipCode = zipCode;
 	}
 
-	public Optional<String> getCity() {
+	public String getCity() {
 		return city;
 	}
 
-	public void setCity(Optional<String> city) {
+	public void setCity(String city) {
 		this.city = city;
 	}
 
