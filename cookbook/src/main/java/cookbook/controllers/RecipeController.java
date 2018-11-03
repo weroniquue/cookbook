@@ -10,5 +10,7 @@ public class RecipeController {
 	public String hallo() {
 		return "Hallo";
 	}
+	
+
 
 }
