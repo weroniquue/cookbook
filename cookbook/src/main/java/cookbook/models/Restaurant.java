@@ -26,6 +26,7 @@ public class Restaurant {
 
 	private Optional<String> zipCode;
 
+	@NotBlank
 	private Optional<String> city;
 
 	public Long getId() {
