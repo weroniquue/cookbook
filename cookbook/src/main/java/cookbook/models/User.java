@@ -11,32 +11,44 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.NaturalId;
 
 @Entity
-@Table(name = "users", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {
-                "username"
-            })
-})
-public class User {
-	
+@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = { "username" }) })
+public class User extends DateAudit {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Size(max = 30)
 	private String username;
-	
+
 	@NotBlank
 	@Size(max = 100)
 	private String password;
 
 	@NaturalId
-    @NotBlank
-    @Size(max = 40)
-    @Email
-    private String email;
-	
-	private String imie;
-	
-	private String nazwisko;
-	
-	
+	@NotBlank
+	@Size(max = 40)
+	@Email
+	private String email;
+
+	private String name;
+
+	private String surname;
+
+	public User() {
+
+	}
+
+	public User(String username, String password, String email, String name, String surname) {
+
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.name = name;
+		this.surname = surname;
+	}
 
 	public String getUsername() {
 		return username;
@@ -52,8 +64,8 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}	
-	
+	}
+
 	public String getEmail() {
 		return email;
 	}
@@ -62,23 +74,20 @@ public class User {
 		this.email = email;
 	}
 
-	public String getImie() {
-		return imie;
+	public String getName() {
+		return name;
 	}
 
-	public void setImie(String imie) {
-		this.imie = imie;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getNazwisko() {
-		return nazwisko;
+	public String getSurname() {
+		return surname;
 	}
 
-	public void setNazwisko(String nazwisko) {
-		this.nazwisko = nazwisko;
+	public void setSurname(String surname) {
+		this.surname = surname;
 	}
-	
-	
-	
 
 }
