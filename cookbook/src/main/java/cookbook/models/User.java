@@ -3,6 +3,7 @@ package cookbook.models;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -11,20 +12,19 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.NaturalId;
 
 @Entity
-@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = { "username" }) })
-public class User extends DateAudit {
+@Table(name = "users")//, uniqueConstraints = { @UniqueConstraint(columnNames = { "username" }) })
+public class User {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L; 
 
 	@Id
 	@Size(max = 30)
 	private String username;
 
 	@NotBlank
-	@Size(max = 100)
 	private String password;
 
 	@NaturalId
@@ -36,6 +36,9 @@ public class User extends DateAudit {
 	private String name;
 
 	private String surname;
+	
+	@Transient
+	public static String role = "ROLE_USER";
 
 	public User() {
 
@@ -89,5 +92,15 @@ public class User extends DateAudit {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
+
+	public String getRole() {
+		return role;
+	}
+
+	//public void setRole(String role) {
+	//	this.role = role;
+	//}
+	
+	
 
 }

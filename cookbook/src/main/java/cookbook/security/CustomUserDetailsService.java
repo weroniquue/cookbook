@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import cookbook.security.UserPrincipal;
 import cookbook.database.UserRepository;
+import cookbook.exception.ResourceNotFoundException;
 import cookbook.models.User;
 
 @Service
@@ -27,9 +28,21 @@ public class CustomUserDetailsService implements UserDetailsService{
                 .orElseThrow(() ->
                         new UsernameNotFoundException("User not found with username or email : " + usernameOrEmail)
         );
-
-        return  UserPrincipal.create(user);
+       
+        return UserPrincipal.create(user);
     }
+	
+	@Transactional
+	public UserDetails loadUserById(String username) {
+		User user = userRepository.findById(username)
+				.orElseThrow(() -> new ResourceNotFoundException("User", "id", username)
+					);
+		
+		return UserPrincipal.create(user);
+		
+	}
+	
+	
 	
 	
 }
