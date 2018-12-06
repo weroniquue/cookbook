@@ -1,4 +1,4 @@
-package cookbook.models;
+package cookbook.models.audit;
 
 import java.io.Serializable;
 import java.time.Instant;

@@ -59,7 +59,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 				return cookie.getValue();
 			}
 		}
-
 		return null;
 	}
 }
