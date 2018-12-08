@@ -1,24 +1,13 @@
 package cookbook.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import cookbook.database.RestaurantRepository;
-import cookbook.exception.ResourceNotFoundException;
-import cookbook.models.Restaurants;
-import cookbook.models.RestaurantsId;
-import cookbook.payloads.ObjectAvailability;
-import cookbook.payloads.restaurants.RestaurantDetails;
 
 @RestController
 @RequestMapping("/api")
 public class RestaurantController {
 	
-	@Autowired
+	/*@Autowired
 	private RestaurantRepository restaurantRepository;
 	
 	
@@ -36,7 +25,7 @@ public class RestaurantController {
 				.orElseThrow(() -> new ResourceNotFoundException("Restaurant", "name and city", name + " " + city));
 	
 		return new RestaurantDetails();
-	}
+	}*/
 	
 
 }

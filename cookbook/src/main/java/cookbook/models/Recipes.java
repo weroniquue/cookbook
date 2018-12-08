@@ -3,12 +3,16 @@ package cookbook.models;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -20,14 +24,14 @@ import javax.persistence.Table;
 @Table(name = "recipes")
 public class Recipes implements java.io.Serializable {
 
-	private int id;
+	private Integer id;
 	private Category category;
 	private Cousine cousine;
-	private Restaurants restaurants;
-	private User users;
+	private User user;
 	private String tittle;
 	private String description;
 	private Set<Photos> photoses = new HashSet<Photos>(0);
+	private Set<Restaurants> restaurantses = new HashSet<Restaurants>(0);
 	private Set<Amountingredients> amountingredientses = new HashSet<Amountingredients>(0);
 	private Set<Steps> stepses = new HashSet<Steps>(0);
 	private Set<Comments> commentses = new HashSet<Comments>(0);
@@ -35,38 +39,37 @@ public class Recipes implements java.io.Serializable {
 	public Recipes() {
 	}
 
-	public Recipes(int id, Cousine cousine, User users, String tittle, String description) {
-		this.id = id;
+	public Recipes(Cousine cousine, User user, String tittle, String description) {
 		this.cousine = cousine;
-		this.users = users;
+		this.user = user;
 		this.tittle = tittle;
 		this.description = description;
 	}
 
-	public Recipes(int id, Category category, Cousine cousine, Restaurants restaurants, User users, String tittle,
-			String description, Set<Photos> photoses, Set<Amountingredients> amountingredientses, Set<Steps> stepses,
-			Set<Comments> commentses) {
-		this.id = id;
+	public Recipes(Category category, Cousine cousine, User user, String tittle, String description,
+			Set<Photos> photoses, Set<Restaurants> restaurantses, Set<Amountingredients> amountingredientses,
+			Set<Steps> stepses, Set<Comments> commentses) {
 		this.category = category;
 		this.cousine = cousine;
-		this.restaurants = restaurants;
-		this.users = users;
+		this.user = user;
 		this.tittle = tittle;
 		this.description = description;
 		this.photoses = photoses;
+		this.restaurantses = restaurantses;
 		this.amountingredientses = amountingredientses;
 		this.stepses = stepses;
 		this.commentses = commentses;
 	}
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 
 	@Column(name = "id", unique = true, nullable = false)
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -91,24 +94,13 @@ public class Recipes implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumns({ @JoinColumn(name = "restaurants_name", referencedColumnName = "name"),
-			@JoinColumn(name = "restaurants_city", referencedColumnName = "city") })
-	public Restaurants getRestaurants() {
-		return this.restaurants;
-	}
-
-	public void setRestaurants(Restaurants restaurants) {
-		this.restaurants = restaurants;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "users_username", nullable = false)
 	public User getUsers() {
-		return this.users;
+		return this.user;
 	}
 
 	public void setUsers(User users) {
-		this.users = users;
+		this.user = users;
 	}
 
 	@Column(name = "tittle", nullable = false, length = 100)
@@ -136,6 +128,21 @@ public class Recipes implements java.io.Serializable {
 
 	public void setPhotoses(Set<Photos> photoses) {
 		this.photoses = photoses;
+	}
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "recipesinrestaurant",
+		joinColumns = {
+			@JoinColumn(name = "recipes_id", nullable = false, updatable = false) },
+			inverseJoinColumns = {
+			@JoinColumn(name = "restaurants_name", nullable = false, updatable = false),
+			@JoinColumn(name = "restaurants_city", nullable = false, updatable = false)})
+	public Set<Restaurants> getRestaurantses() {
+		return this.restaurantses;
+	}
+
+	public void setRestaurantses(Set<Restaurants> restaurantses) {
+		this.restaurantses = restaurantses;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "recipes")

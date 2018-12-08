@@ -3,13 +3,16 @@ package cookbook.models;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
@@ -25,11 +28,8 @@ public class Restaurants implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private RestaurantsId id;
-
 	private String address;
-
 	private String code;
-
 	private Set<Recipes> recipeses = new HashSet<Recipes>(0);
 
 	public Restaurants() {
@@ -47,6 +47,7 @@ public class Restaurants implements java.io.Serializable {
 	}
 
 	@EmbeddedId
+
 	@AttributeOverrides({
 			@AttributeOverride(name = "name", column = @Column(name = "name", nullable = false, length = 40)),
 			@AttributeOverride(name = "city", column = @Column(name = "city", nullable = false, length = 40)) })
@@ -76,7 +77,11 @@ public class Restaurants implements java.io.Serializable {
 		this.code = code;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurants")
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "recipesinrestaurant", joinColumns = {
+			@JoinColumn(name = "restaurants_name", nullable = false, updatable = false),
+			@JoinColumn(name = "restaurants_city", nullable = false, updatable = false) }, inverseJoinColumns = {
+					@JoinColumn(name = "recipes_id", nullable = false, updatable = false) })
 	public Set<Recipes> getRecipeses() {
 		return this.recipeses;
 	}
@@ -84,5 +89,4 @@ public class Restaurants implements java.io.Serializable {
 	public void setRecipeses(Set<Recipes> recipeses) {
 		this.recipeses = recipeses;
 	}
-
 }

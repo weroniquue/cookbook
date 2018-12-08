@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import cookbook.models.Restaurants;
 import cookbook.models.RestaurantsId;
 
-@Repository
+/*@Repository
 public interface RestaurantRepository extends JpaRepository<Restaurants, RestaurantsId>{
 	
 	Optional<Restaurants> findById(RestaurantsId id);
@@ -20,4 +20,4 @@ public interface RestaurantRepository extends JpaRepository<Restaurants, Restaur
 	
 	Boolean existsByIdName(String name);
 
-}
+}*/

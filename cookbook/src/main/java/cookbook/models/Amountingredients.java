@@ -18,6 +18,11 @@ import javax.persistence.Table;
 @Table(name = "amountingredients")
 public class Amountingredients implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private AmountingredientsId id;
 	private Ingredients ingredients;
 	private Recipes recipes;
