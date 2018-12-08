@@ -2,10 +2,8 @@ package cookbook.security;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,7 +13,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import cookbook.models.User;
 
-//Czy nie dodać uprawnień?
 public class UserPrincipal implements UserDetails {
 
 	/**
@@ -33,20 +30,20 @@ public class UserPrincipal implements UserDetails {
 	private String email;
 
 	@JsonIgnore
-	private String name;
+	private String firstName;
 
 	@JsonIgnore
-	private String surname;
+	private String secondName;
 
 	private Collection<? extends GrantedAuthority> authorities;
 
-	public UserPrincipal(String username, String email, String password, String name, String surname,
+	public UserPrincipal(String username, String email, String password, String firstName, String secondName,
 			Collection<? extends GrantedAuthority> authorities) {
 		this.username = username;
 		this.password = password;
 		this.email = email;
-		this.name = name;
-		this.surname = surname;
+		this.firstName = firstName;
+		this.secondName =secondName;
 		this.authorities = authorities;
 
 	}
@@ -56,8 +53,8 @@ public class UserPrincipal implements UserDetails {
 		List<GrantedAuthority> authorities = new ArrayList<>();
 		authorities.add(new SimpleGrantedAuthority(user.getRole()));
 		
-		return new UserPrincipal(user.getUsername(), user.getEmail(),user.getPassword(), user.getName(),
-				user.getSurname(), authorities);
+		return new UserPrincipal(user.getUsername(), user.getEmail(),user.getPassword(), user.getFirstname(),
+				user.getSecondname(), authorities);
 	}
 
 	public String getEmail() {
@@ -68,21 +65,24 @@ public class UserPrincipal implements UserDetails {
 		this.email = email;
 	}
 
-	public String getName() {
-		return name;
+
+
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public String getSurname() {
-		return surname;
+	public String getSecondName() {
+		return secondName;
 	}
 
-	public void setSurname(String surname) {
-		this.surname = surname;
+	public void setSecondName(String secondName) {
+		this.secondName = secondName;
 	}
+
 
 	@Override
 	public String getUsername() {

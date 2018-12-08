@@ -53,7 +53,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 	}
 
 	private String getJwtFromRequest(HttpServletRequest request) {
-
+		
+		
 		for (Cookie cookie : request.getCookies()) {
 			if (cookie.getName().equals("jwt")) {
 				return cookie.getValue();

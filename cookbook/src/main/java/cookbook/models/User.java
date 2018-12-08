@@ -11,32 +11,26 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-
-import org.hibernate.annotations.NaturalId;
 
 @Entity
 @Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class User {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L; 
-	
 	private String username;
-	private String password;
-	private String firstname;
-	private String secondname;
-	private String email;
-	private String name;
-	private String surname;
-	private Set<Comments> commentses = new HashSet<Comments>(0);
-	private Set<Recipes> recipeses = new HashSet<Recipes>(0);
 	
-	public static String role = "ROLE_USER";
+	private String password;
+	
+	private String firstname;
+	
+	private String secondname;
+	
+	private String email;
+	
+	private Set<Comments> commentses = new HashSet<Comments>(0);
+	
+	private Set<Recipes> recipeses = new HashSet<Recipes>(0);
+
+	public String role = "ROLE_USER";
 
 	
 	public User() {
@@ -46,29 +40,27 @@ public class User {
 		this.username = username;
 		this.password = password;
 	}
-	
-	public User(String username, String password, String firstname, String secondname, String email, String name,
-			String surname, Set<Comments> commentses, Set<Recipes> recipeses) {
+
+	public User(String username, String password, String firstname, String secondname, String email,
+			Set<Comments> commentses, Set<Recipes> recipeses) {
 		this.username = username;
 		this.password = password;
 		this.firstname = firstname;
 		this.secondname = secondname;
 		this.email = email;
-		this.name = name;
-		this.surname = surname;
 		this.commentses = commentses;
 		this.recipeses = recipeses;
 	}
-	
-	public User(String username, String password, String email, String name, String surname) {
+
+	public User(String username, String password, String email, String firstName, String secondName) {
 
 		this.username = username;
 		this.password = password;
 		this.email = email;
-		this.name = name;
-		this.surname = surname;
+		this.firstname = firstName;
+		this.secondname = secondName;
 	}
-	
+
 	@Id
 
 	@Column(name = "username", unique = true, nullable = false, length = 20)
@@ -116,24 +108,6 @@ public class User {
 		this.email = email;
 	}
 
-	@Column(name = "name")
-	public String getName() {
-		return this.name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	@Column(name = "surname")
-	public String getSurname() {
-		return this.surname;
-	}
-
-	public void setSurname(String surname) {
-		this.surname = surname;
-	}
-
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
 	public Set<Comments> getCommentses() {
 		return this.commentses;
@@ -152,92 +126,14 @@ public class User {
 		this.recipeses = recipeses;
 	}
 
-	
-	/*@Id
-	@Size(max = 30)
-	private String username;
-
-	@NotBlank
-	private String password;
-
-	@NaturalId
-	@NotBlank
-	@Size(max = 40)
-	@Email
-	private String email;
-
-	private String name;
-
-	private String surname;
-	
-	@Transient
-	public static String role = "ROLE_USER";
-
-	public User() {
-
-	}
-
-	public User(String username, String password, String email, String name, String surname) {
-
-		this.username = username;
-		this.password = password;
-		this.email = email;
-		this.name = name;
-		this.surname = surname;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getSurname() {
-		return surname;
-	}
-
-	public void setSurname(String surname) {
-		this.surname = surname;
-	}*/
-
 	@Transient
 	public String getRole() {
 		return role;
 	}
-	
+
 	@Transient
 	public void setRole(String role) {
 		this.role = role;
 	}
-
-
-	
-	
 
 }

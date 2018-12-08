@@ -1,10 +1,10 @@
 package cookbook.payloads;
 
-public class UserIdentityAvailability {
+public class ObjectAvailability {
 
 	private Boolean available;
 
-    public UserIdentityAvailability(Boolean available) {
+    public ObjectAvailability(Boolean available) {
         this.available = available;
     }
 

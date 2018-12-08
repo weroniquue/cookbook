@@ -25,8 +25,8 @@ import cookbook.database.UserRepository;
 import cookbook.models.User;
 import cookbook.payloads.ApiResponse;
 import cookbook.payloads.JwtAuthenticationResponse;
-import cookbook.payloads.LoginRequest;
-import cookbook.payloads.SignUpRequest;
+import cookbook.payloads.users.LoginRequest;
+import cookbook.payloads.users.SignUpRequest;
 import cookbook.security.JwtTokenProvider;
 
 
@@ -91,8 +91,8 @@ public class AuthenticationController {
         User user = new User(signUpRequest.getUsername(),
         		signUpRequest.getPassword(),
         		signUpRequest.getEmail(),
-        		signUpRequest.getName(),
-        		signUpRequest.getSurname());
+        		signUpRequest.getFirstName(),
+        		signUpRequest.getSecondName());
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         

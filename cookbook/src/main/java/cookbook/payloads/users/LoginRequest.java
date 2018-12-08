@@ -1,4 +1,4 @@
-package cookbook.payloads;
+package cookbook.payloads.users;
 
 import javax.validation.constraints.NotBlank;
 

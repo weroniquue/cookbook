@@ -19,9 +19,17 @@ import javax.persistence.Table;
 @Table(name = "restaurants")
 public class Restaurants implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private RestaurantsId id;
+
 	private String address;
+
 	private String code;
+
 	private Set<Recipes> recipeses = new HashSet<Recipes>(0);
 
 	public Restaurants() {
@@ -39,7 +47,6 @@ public class Restaurants implements java.io.Serializable {
 	}
 
 	@EmbeddedId
-
 	@AttributeOverrides({
 			@AttributeOverride(name = "name", column = @Column(name = "name", nullable = false, length = 40)),
 			@AttributeOverride(name = "city", column = @Column(name = "city", nullable = false, length = 40)) })

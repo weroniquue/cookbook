@@ -1,4 +1,4 @@
-package cookbook.payloads;
+package cookbook.payloads.users;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -7,11 +7,11 @@ import javax.validation.constraints.Size;
 public class SignUpRequest {
 	@NotBlank
 	@Size(min = 4, max = 40)
-	private String name;
+	private String firstName;
 	
 	@NotBlank
 	@Size(min = 4, max = 40)
-	private String surname;
+	private String secondName;
 
 	@NotBlank
 	@Size(min = 3, max = 20)
@@ -26,20 +26,22 @@ public class SignUpRequest {
 	@Size(min = 6, max = 20)
 	private String password;
 
-	public String getName() {
-		return name;
+
+
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public String getSurname() {
-		return surname;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public void setSurname(String surname) {
-		this.surname = surname;
+	public String getSecondName() {
+		return secondName;
+	}
+
+	public void setSecondName(String secondName) {
+		this.secondName = secondName;
 	}
 
 	public String getUsername() {
