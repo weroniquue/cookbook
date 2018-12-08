@@ -39,6 +39,12 @@ public class Restaurants implements java.io.Serializable {
 		this.id = id;
 	}
 
+	public Restaurants(RestaurantsId id, String address, String code) {
+		this.id = id;
+		this.address = address;
+		this.code = code;
+	}
+	
 	public Restaurants(RestaurantsId id, String address, String code, Set<Recipes> recipeses) {
 		this.id = id;
 		this.address = address;

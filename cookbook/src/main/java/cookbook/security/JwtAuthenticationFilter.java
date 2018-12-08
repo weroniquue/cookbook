@@ -33,14 +33,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 		try {
 			String jwt = getJwtFromRequest(request);
+			
+			logger.info("Cookie: "+ jwt);
 
 			if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
 				String username = tokenProvider.getUsernameFromJWT(jwt);
+				
+				logger.info("Current user:" + username);
 
 				UserDetails userDetails = customUserDetailsService.loadUserById(username);
 				
 				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
 						userDetails, null, userDetails.getAuthorities());
+				
+				logger.info("Authorization user:" + userDetails.getAuthorities());
+				
 				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
 				SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -53,8 +60,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 	}
 
 	private String getJwtFromRequest(HttpServletRequest request) {
-		
-		
+
 		for (Cookie cookie : request.getCookies()) {
 			if (cookie.getName().equals("jwt")) {
 				return cookie.getValue();
