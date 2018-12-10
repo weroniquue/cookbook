@@ -28,19 +28,19 @@ import cookbook.payloads.ObjectAvailability;
 import cookbook.payloads.restaurants.createRestaurantRequest;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/restaurants")
 public class RestaurantController {
 
 	@Autowired
 	private RestaurantRepository restaurantRepository;
 
-	@GetMapping("restaurants/chceckRestaurantAvailability")
+	@GetMapping("/chceckRestaurantAvailability")
 	public ObjectAvailability checkRestaurantAvailability(@RequestParam(value = "restaurants") String name) {
 		Boolean isAvailable = !restaurantRepository.existsByIdName(name);
 		return new ObjectAvailability(isAvailable);
 	}
 
-	@GetMapping("/restaurants/{city}/{name}")
+	@GetMapping("/{city}/{name}")
 	public Restaurants getRestaurantDetails(@PathVariable(value = "city") String city,
 			@PathVariable(value = "name") String name) {
 
@@ -50,7 +50,7 @@ public class RestaurantController {
 		return restaurant;
 	}
 
-	@PostMapping("/restaurants/add")
+	@PostMapping("/add")
 	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<?> addRestautant(@Valid @RequestBody createRestaurantRequest createRestaurantRequest) {
 		RestaurantsId id = new RestaurantsId(createRestaurantRequest.getName(), createRestaurantRequest.getCity());
@@ -70,7 +70,7 @@ public class RestaurantController {
 
 	}
 
-	@DeleteMapping("/restaurants/{city}/{name}")
+	@DeleteMapping("/{city}/{name}")
 	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<?> removeRestaurants(@PathVariable(value = "city") String city,
 			@PathVariable(value = "name") String name) {
@@ -87,7 +87,7 @@ public class RestaurantController {
 
 	}
 	
-	@GetMapping("/restaurants")
+	@GetMapping("/")
 	public List<Restaurants> getAllRestaurant(){
 		return restaurantRepository.findAll();
 	}

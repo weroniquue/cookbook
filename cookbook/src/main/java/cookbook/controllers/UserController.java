@@ -1,5 +1,7 @@
 package cookbook.controllers;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,7 +34,7 @@ public class UserController {
 		return new ObjectAvailability(isAvailable);
 	}
 	
-	@GetMapping("/users/{username}")
+	@GetMapping("/user/{username}")
     public UserProfile getUserProfile(@PathVariable(value = "username") String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
@@ -49,5 +51,11 @@ public class UserController {
 
         return userProfile;
     }
+	
+	/*@GetMapping("/user/me")
+	public String getMe(Principal principal) {
+		return principal.getName();
+		
+	}*/
 
 }

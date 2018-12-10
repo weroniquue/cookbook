@@ -22,8 +22,13 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "recipes")
-public class Recipes implements java.io.Serializable {
+public class Recipes implements java.io.Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private Integer id;
 	private Category category;
 	private Cousine cousine;
