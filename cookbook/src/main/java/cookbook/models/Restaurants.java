@@ -30,7 +30,7 @@ public class Restaurants implements java.io.Serializable {
 	private RestaurantsId id;
 	private String address;
 	private String code;
-	private Set<Recipes> recipeses = new HashSet<Recipes>(0);
+	private Set<Recipes> recipes = new HashSet<Recipes>(0);
 
 	public Restaurants() {
 	}
@@ -45,11 +45,11 @@ public class Restaurants implements java.io.Serializable {
 		this.code = code;
 	}
 	
-	public Restaurants(RestaurantsId id, String address, String code, Set<Recipes> recipeses) {
+	public Restaurants(RestaurantsId id, String address, String code, Set<Recipes> recipes) {
 		this.id = id;
 		this.address = address;
 		this.code = code;
-		this.recipeses = recipeses;
+		this.recipes = recipes;
 	}
 
 	@EmbeddedId
@@ -86,13 +86,14 @@ public class Restaurants implements java.io.Serializable {
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "recipesinrestaurant", joinColumns = {
 			@JoinColumn(name = "restaurants_name", nullable = false, updatable = false),
-			@JoinColumn(name = "restaurants_city", nullable = false, updatable = false) }, inverseJoinColumns = {
+			@JoinColumn(name = "restaurants_city", nullable = false, updatable = false) },
+	inverseJoinColumns = {
 					@JoinColumn(name = "recipes_id", nullable = false, updatable = false) })
-	public Set<Recipes> getRecipeses() {
-		return this.recipeses;
+	public Set<Recipes> getrecipes() {
+		return this.recipes;
 	}
 
-	public void setRecipeses(Set<Recipes> recipeses) {
-		this.recipeses = recipeses;
+	public void setrecipes(Set<Recipes> recipes) {
+		this.recipes = recipes;
 	}
 }

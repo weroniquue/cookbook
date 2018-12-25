@@ -25,7 +25,7 @@ import cookbook.models.Restaurants;
 import cookbook.models.RestaurantsId;
 import cookbook.payloads.ApiResponse;
 import cookbook.payloads.ObjectAvailability;
-import cookbook.payloads.restaurants.createRestaurantRequest;
+import cookbook.payloads.restaurants.CreateRestaurantRequest;
 
 @RestController
 @RequestMapping("/api/restaurants")
@@ -52,7 +52,7 @@ public class RestaurantController {
 
 	@PostMapping("/add")
 	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<?> addRestautant(@Valid @RequestBody createRestaurantRequest createRestaurantRequest) {
+	public ResponseEntity<?> addRestautant(@Valid @RequestBody CreateRestaurantRequest createRestaurantRequest) {
 		RestaurantsId id = new RestaurantsId(createRestaurantRequest.getName(), createRestaurantRequest.getCity());
 		if (restaurantRepository.existsById(id)) {
 			return new ResponseEntity<>(new ApiResponse(false, "Username is already taken!"), HttpStatus.BAD_REQUEST);

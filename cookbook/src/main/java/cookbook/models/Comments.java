@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -19,6 +21,11 @@ import javax.persistence.TemporalType;
 @Table(name = "comments")
 public class Comments implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private int id;
 	private Recipes recipes;
 	private User users;
@@ -28,16 +35,21 @@ public class Comments implements java.io.Serializable {
 	public Comments() {
 	}
 
-	public Comments(int id, Recipes recipes, User users, String comment, Date date) {
-		this.id = id;
+	
+	
+	public Comments(Recipes recipes, User users, String comment, Date date) {
+		super();
 		this.recipes = recipes;
 		this.users = users;
 		this.comment = comment;
 		this.date = date;
 	}
 
-	@Id
 
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	
 	@Column(name = "id", unique = true, nullable = false)
 	public int getId() {
 		return this.id;

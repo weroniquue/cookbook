@@ -16,12 +16,19 @@ public interface RecipeRepository extends JpaRepository<Recipes, Integer>{
 	
 	List<Recipes> findAll();
 	
-	List<Recipes> findByUser(User user);
+	List<Recipes> findByUsers(User user);
 	
 	//List<Recipes> findByCategoryName(String categoryName);
 	
 	List<Recipes> findByTittle(String tittle);
 	
 	List<Recipes> findByCousineName(String name);
+	
+	long countByCousineName(String name);
+	
+	long countByUsers(User user);
+	
+	
+	
 	
 }

@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import cookbook.models.Recipes;
 import cookbook.models.Restaurants;
 import cookbook.models.RestaurantsId;
 
@@ -17,6 +18,8 @@ public interface RestaurantRepository extends JpaRepository<Restaurants, Restaur
 	List<Restaurants> findByIdName(String name);
 	
 	List<Restaurants> findByIdCity(String city);
+	
+	List<Recipes> findByRecipes_Id(Integer id);
 	
 	Boolean existsByIdName(String name);
 
