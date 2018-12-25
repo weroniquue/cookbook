@@ -17,6 +17,12 @@ import javax.persistence.Table;
 @Table(name = "cousine")
 public class Cousine implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
 	private String name;
 	private Set<Recipes> recipeses = new HashSet<Recipes>(0);
 
