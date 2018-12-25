@@ -2,6 +2,8 @@ package cookbook.controllers;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import cookbook.database.RecipeRepository;
 import cookbook.database.RestaurantRepository;
 import cookbook.exception.ResourceNotFoundException;
 import cookbook.models.Restaurants;
@@ -26,6 +29,7 @@ import cookbook.models.RestaurantsId;
 import cookbook.payloads.ApiResponse;
 import cookbook.payloads.ObjectAvailability;
 import cookbook.payloads.restaurants.CreateRestaurantRequest;
+import cookbook.payloads.restaurants.RestaurantResponse;
 
 @RestController
 @RequestMapping("/api/restaurants")
@@ -34,6 +38,9 @@ public class RestaurantController {
 	@Autowired
 	private RestaurantRepository restaurantRepository;
 
+	@Autowired
+	private RecipeRepository recipeRepostory;
+
 	@GetMapping("/chceckRestaurantAvailability")
 	public ObjectAvailability checkRestaurantAvailability(@RequestParam(value = "restaurants") String name) {
 		Boolean isAvailable = !restaurantRepository.existsByIdName(name);
@@ -41,13 +48,18 @@ public class RestaurantController {
 	}
 
 	@GetMapping("/{city}/{name}")
-	public Restaurants getRestaurantDetails(@PathVariable(value = "city") String city,
+	public RestaurantResponse getRestaurantDetails(@PathVariable(value = "city") String city,
 			@PathVariable(value = "name") String name) {
 
 		Restaurants restaurant = restaurantRepository.findById(new RestaurantsId(name, city))
 				.orElseThrow(() -> new ResourceNotFoundException("Restaurant", "name and city", name + " " + city));
 
-		return restaurant;
+		Set<String> recipe = restaurant.getrecipes().stream().map(x -> x.getTittle()).collect(Collectors.toSet());
+
+		RestaurantResponse response = new RestaurantResponse(restaurant.getId().getName(), restaurant.getAddress(),
+				restaurant.getCode(), restaurant.getId().getCity(), recipe);
+
+		return response;
 	}
 
 	@PostMapping("/add")
@@ -55,11 +67,14 @@ public class RestaurantController {
 	public ResponseEntity<?> addRestautant(@Valid @RequestBody CreateRestaurantRequest createRestaurantRequest) {
 		RestaurantsId id = new RestaurantsId(createRestaurantRequest.getName(), createRestaurantRequest.getCity());
 		if (restaurantRepository.existsById(id)) {
-			return new ResponseEntity<>(new ApiResponse(false, "Username is already taken!"), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(new ApiResponse(false, "Such restaurant exists!"), HttpStatus.BAD_REQUEST);
 		}
 
 		Restaurants restaurant = new Restaurants(id, createRestaurantRequest.getAddress(),
 				createRestaurantRequest.getCode());
+
+		createRestaurantRequest.getRecipes().forEach(x -> restaurant.getrecipes()
+				.add(recipeRepostory.findById(x).orElseThrow(() -> new ResourceNotFoundException("Recipe", "id", x))));
 
 		Restaurants results = restaurantRepository.save(restaurant);
 
@@ -82,14 +97,32 @@ public class RestaurantController {
 						city + " " + name));
 
 		restaurantRepository.delete(restaurant);
-
 		return new ResponseEntity<>(new ApiResponse(true, "Restaurant removed successfully"), HttpStatus.OK);
 
 	}
-	
+
 	@GetMapping("/")
-	public List<Restaurants> getAllRestaurant(){
-		return restaurantRepository.findAll();
+	public List<RestaurantResponse> getAllRestaurant() {
+
+		List<RestaurantResponse> restaurants = restaurantRepository.findAll().stream().map(obj -> {
+
+			Set<String> recipe = obj.getrecipes()
+					.stream()
+					.map(x -> x.getTittle())
+					.collect(Collectors.toSet());
+
+			RestaurantResponse response = new RestaurantResponse(
+					obj.getId().getName(), 
+					obj.getAddress(),
+					obj.getCode(),
+					obj.getId().getCity(),
+					recipe);
+
+			return response;
+		}).collect(Collectors.toList());
+
+		return restaurants;
+
 	}
 
 }

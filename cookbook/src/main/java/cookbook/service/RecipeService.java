@@ -133,10 +133,16 @@ public class RecipeService {
 				.orElseThrow(() -> new ResourceNotFoundException("Recipe", "id", recipeId));
 
 		List<CommentResponse> comments = commentRepository.findAllByRecipes(recipe).stream().map(obj -> {
-			CommentResponse response = new CommentResponse(obj.getId(), obj.getRecipes().getId(),
-					new UserProfile(obj.getUsers().getUsername(), obj.getUsers().getFirstname(),
-							obj.getUsers().getSecondname(), obj.getUsers().getEmail()),
-					obj.getComment(), obj.getDate());
+			CommentResponse response = new CommentResponse(
+					obj.getId(),
+					obj.getRecipes().getId(),
+					new UserProfile(
+							obj.getUsers().getUsername(),
+							obj.getUsers().getFirstname(),
+							obj.getUsers().getSecondname(),
+							obj.getUsers().getEmail()),
+					obj.getComment(),
+					obj.getDate());
 			return response;
 		}).collect(Collectors.toList());
 

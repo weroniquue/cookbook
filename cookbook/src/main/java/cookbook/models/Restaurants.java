@@ -53,7 +53,6 @@ public class Restaurants implements java.io.Serializable {
 	}
 
 	@EmbeddedId
-
 	@AttributeOverrides({
 			@AttributeOverride(name = "name", column = @Column(name = "name", nullable = false, length = 40)),
 			@AttributeOverride(name = "city", column = @Column(name = "city", nullable = false, length = 40)) })
@@ -89,6 +88,7 @@ public class Restaurants implements java.io.Serializable {
 			@JoinColumn(name = "restaurants_city", nullable = false, updatable = false) },
 	inverseJoinColumns = {
 					@JoinColumn(name = "recipes_id", nullable = false, updatable = false) })
+	
 	public Set<Recipes> getrecipes() {
 		return this.recipes;
 	}
