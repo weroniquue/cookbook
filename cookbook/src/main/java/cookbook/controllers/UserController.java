@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import cookbook.database.RecipeRepository;
 import cookbook.database.UserRepository;
 import cookbook.exception.ResourceNotFoundException;
 import cookbook.models.User;
@@ -31,6 +32,9 @@ public class UserController {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private RecipeRepository recipeRepository;
 
 	@GetMapping("/checkUsernameAvailability")
 	public ObjectAvailability checkUsernameAvailability(@RequestParam(value = "username") String username) {
@@ -49,10 +53,7 @@ public class UserController {
 		User user = userRepository.findByUsername(username)
 				.orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
 
-		// long pollCount = pollRepository.countByCreatedBy(user.getId());
-		// long voteCount = voteRepository.countByUserId(user.getId());
-
-		long recipeCount = 0;
+		long recipeCount = recipeRepository.countByUsers(user);
 		long commentCount = 0;
 
 		UserProfile userProfile = new UserProfile(user.getUsername(), user.getFirstname(), user.getSecondname(),

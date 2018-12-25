@@ -1,6 +1,8 @@
 package cookbook.models;
 // Generated 2018-12-07 22:21:43 by Hibernate Tools 5.2.11.Final
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
@@ -50,12 +52,15 @@ public class RestaurantsId implements java.io.Serializable {
 			return false;
 		if (!(other instanceof RestaurantsId))
 			return false;
+		
 		RestaurantsId castOther = (RestaurantsId) other;
+		
 
 		return ((this.getName() == castOther.getName()) || (this.getName() != null && castOther.getName() != null
 				&& this.getName().equals(castOther.getName())))
 				&& ((this.getCity() == castOther.getCity()) || (this.getCity() != null && castOther.getCity() != null
 						&& this.getCity().equals(castOther.getCity())));
+		
 	}
 
 	public int hashCode() {
