@@ -129,7 +129,7 @@ public class RecipeService {
 				.orElseThrow(()->new ResourceNotFoundException("Cousine", "cousineName", cousineName));
 		
 		Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "id");
-		Page<Recipes> recipes = recipeRepository.findByCousine(cuisine, pageable);
+		Page<Recipes> recipes = recipeRepository.findByCuisine(cuisine, pageable);
 		
 		if (recipes.getNumberOfElements() == 0) {
 			return new PagedResponse<>(Collections.emptyList(),
