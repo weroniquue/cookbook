@@ -16,15 +16,14 @@ public class RecipeResponse {
 	private String tittle;
 	private String description;
 	private UserProfile createdBy;
-	
-	//Kroki inaczej
-	private Set<String> steps;
+
+	private Set<StepsRequest> steps;
 	private Set<String> photos;
 	private Set<Restaurants> restaurants;
-	//Składniki inaczej
-	private Set<Ingredients> ingredients;
-	
 	private List<CommentResponse> comments;
+
+	// Składniki inaczej
+	private Set<Ingredients> ingredients;
 
 	public RecipeResponse() {
 	}
@@ -57,8 +56,6 @@ public class RecipeResponse {
 		this.id = id;
 	}
 
-	
-
 	public String getCategory() {
 		return category;
 	}
@@ -87,14 +84,24 @@ public class RecipeResponse {
 		this.tittle = tittle;
 	}
 
-
-
-	public Set<String> getSteps() {
+	public Set<StepsRequest> getSteps() {
 		return steps;
 	}
 
-	public void setSteps(Set<String> steps) {
+	public void setSteps(Set<StepsRequest> steps) {
 		this.steps = steps;
+	}
+
+	public List<CommentResponse> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<CommentResponse> comments) {
+		this.comments = comments;
+	}
+
+	public String getDescription() {
+		return description;
 	}
 
 	public Set<String> getPhotos() {
@@ -128,9 +135,5 @@ public class RecipeResponse {
 	public void setCreatedBy(UserProfile createdBy) {
 		this.createdBy = createdBy;
 	}
-	
-	
-	
-	
 
 }

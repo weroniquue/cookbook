@@ -25,6 +25,7 @@ import cookbook.exception.ResourceNotFoundException;
 import cookbook.models.Comments;
 import cookbook.models.Recipes;
 import cookbook.payloads.ApiResponse;
+import cookbook.payloads.PagedResponse;
 import cookbook.payloads.comments.CommentResponse;
 import cookbook.payloads.comments.CreateCommentRequest;
 import cookbook.payloads.recipes.CreateRecipeRequest;
@@ -50,13 +51,11 @@ public class RecipeController {
 	
 
 	@GetMapping
-	public List<Recipes>/*PagedResponse<RecipeResponse>*/ getRecipes(@CurrentUser UserPrincipal currentUser,
+	public PagedResponse<RecipeResponse> getRecipes(@CurrentUser UserPrincipal currentUser,
 			@RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
 			@RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {
 
-		//return recipeService.getAllRecipes(currentUser, page, size);
-		//bo to się zapetla nalezy zrobic response bez zadnych list
-		return recipeRepository.findAll();
+		return recipeService.getAllRecipes(currentUser, page, size);
 	}
 	
 	@GetMapping("/{id}")

@@ -16,10 +16,17 @@ import javax.persistence.Table;
 @Table(name = "photos")
 public class Photos implements java.io.Serializable {
 
+	private static final long serialVersionUID = 1L;
+
 	private String path;
 	private Recipes recipes;
 
 	public Photos() {
+	}
+
+	public Photos(String path) {
+		super();
+		this.path = path;
 	}
 
 	public Photos(String path, Recipes recipes) {
