@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,22 +17,42 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import cookbook.database.CategoryRepository;
-import cookbook.database.CousineRepository;
+import cookbook.database.CuisineRepository;
 import cookbook.exception.ResourceNotFoundException;
 import cookbook.models.Category;
-import cookbook.models.Cousine;
+import cookbook.models.Cuisine;
 import cookbook.payloads.ApiResponse;
+import cookbook.payloads.PagedResponse;
+import cookbook.payloads.recipes.RecipeResponse;
+import cookbook.security.CurrentUser;
+import cookbook.security.UserPrincipal;
+import cookbook.service.RecipeService;
+import cookbook.util.AppConstants;
 
 @RestController
 @RequestMapping("/api")
-public class CategoryAndCousineController {
+public class CategoryAndCuisineController {
 
 	@Autowired
 	private CategoryRepository categoryRepository;
 
 	@Autowired
-	private CousineRepository cousineRepository;
+	private CuisineRepository cuisineRepository;
+	
+	@Autowired
+	private RecipeService recipeService;
 
+	@GetMapping("/category/{category}")
+	public PagedResponse<RecipeResponse> getAllRecipesByCategory(
+			@CurrentUser UserPrincipal currentUser,
+			@RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
+			@RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size,
+			@PathVariable(value = "category") String category){
+		return recipeService.getByCategory(currentUser, page, size, category);
+		
+	}
+	
+	
 	@PostMapping("/category")
 	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<?> addCategory(@RequestParam Map<String, String> category) {
@@ -63,33 +84,43 @@ public class CategoryAndCousineController {
 		return new ResponseEntity<>(new ApiResponse(true, "Category removed successfully"), HttpStatus.OK);
 	}
 
-	@PostMapping("/cousine")
+	@GetMapping("/cuisine/{cuisine}")
+	public PagedResponse<RecipeResponse> getAllRecipesByCousine(
+			@CurrentUser UserPrincipal currentUser,
+			@RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
+			@RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size,
+			@PathVariable(value = "cuisine") String cuisine){
+		return recipeService.getByCousine(currentUser, page, size, cuisine);
+	}
+	
+	
+	@PostMapping("/cuisine")
 	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<?> addCousine(@RequestParam Map<String, String> cousine) {
+	public ResponseEntity<?> addCousine(@RequestParam Map<String, String> cuisine) {
 		
-		if (cousineRepository.existsById(cousine.get("cousine"))) {
+		if (cuisineRepository.existsById(cuisine.get("cuisine"))) {
 			return new ResponseEntity<>(new ApiResponse(false, "Cousine exists!"), HttpStatus.BAD_REQUEST);
 		}
 
-		Cousine newCousine = new Cousine(cousine.get("cousine"));
+		Cuisine newCousine = new Cuisine(cuisine.get("cuisine"));
 
-		Cousine result = cousineRepository.save(newCousine);
+		Cuisine result = cuisineRepository.save(newCousine);
 
-		URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/cousine/{cousine}")
+		URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/cuisine/{cuisine}")
 				.buildAndExpand(result.getName()).toUri();
 
 		return ResponseEntity.created(location).body(new ApiResponse(true, "Cousine added successfully"));
 
 	}
 
-	@DeleteMapping("/cousine/{cousine}")
+	@DeleteMapping("/cuisine/{cuisine}")
 	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<?> removeCousine(@PathVariable(value = "cousine") String cousine) {
+	public ResponseEntity<?> removeCousine(@PathVariable(value = "cuisine") String cuisine) {
 
-		cousineRepository.findById(cousine)
-				.orElseThrow(() -> new ResourceNotFoundException("Such cousine doesn't exist", "cousine", cousine));
+		cuisineRepository.findById(cuisine)
+				.orElseThrow(() -> new ResourceNotFoundException("Such cuisine doesn't exist", "cuisine", cuisine));
 
-		cousineRepository.deleteById(cousine);
+		cuisineRepository.deleteById(cuisine);
 
 		return new ResponseEntity<>(new ApiResponse(true, "Cousine removed successfully"), HttpStatus.OK);
 	}

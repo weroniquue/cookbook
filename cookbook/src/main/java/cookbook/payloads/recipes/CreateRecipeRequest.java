@@ -7,7 +7,7 @@ public class CreateRecipeRequest {
 
 	String tittle;
 	String description;
-	String cousineName;
+	String cuisineName;
 	String category;
 
 	private Set<IngredientsRequest> ingredients = new HashSet<>();
@@ -31,11 +31,11 @@ public class CreateRecipeRequest {
 	}
 
 	public String getCousineName() {
-		return cousineName;
+		return cuisineName;
 	}
 
-	public void setCousineName(String cousineName) {
-		this.cousineName = cousineName;
+	public void setCousineName(String cuisineName) {
+		this.cuisineName = cuisineName;
 	}
 
 	public String getCategory() {

@@ -1,3 +1,23 @@
+use cookbook;
+
+
+DROP FUNCTION IF EXISTS portion;
+
+CREATE FUNCTION portion(amount float(11,2),ratio float(11,2))
+RETURNS float(11,2)
+READS SQL DATA
+DETERMINISTIC
+BEGIN
+    DECLARE newAmount float(11,2);
+    SET newAmount = amount*ratio;
+    RETURN newAmount;
+END;
+
+DROP procedure IF EXISTS commentsProcedure;
+create procedure commentsProcedure()
+select * from comments;
+
+
 CREATE TABLE IF NOT EXISTS amountingredients (
     amount             float(10,2) NOT NULL,
     ingredients_name   VARCHAR(30) NOT NULL,
@@ -10,10 +30,12 @@ CREATE TABLE category (
 
 ALTER TABLE category ADD CONSTRAINT category_pk PRIMARY KEY ( name );
 
+select * from recipesinrestaurant;
 
+ALTER TABLE comments MODIFY COLUMN id INTEGER NOT NULL auto_increment;
 
 CREATE TABLE comments (
-    id               INTEGER NOT NULL auto_increment,
+    id             INTEGER NOT NULL auto_increment,
     comment        VARCHAR(100) NOT NULL,
     date           DATE NOT NULL,
     users_username   VARCHAR(20) NOT NULL,
@@ -23,11 +45,11 @@ CREATE TABLE comments (
 );
 
 
-CREATE TABLE cousine (
+CREATE TABLE cuisine (
     name   VARCHAR(30) NOT NULL
 );
 
-ALTER TABLE cousine ADD CONSTRAINT cousine_pk PRIMARY KEY ( name );
+ALTER TABLE cuisine ADD CONSTRAINT cuisine_pk PRIMARY KEY ( name );
 
 CREATE TABLE ingredients (
     name   VARCHAR(30) NOT NULL,
@@ -48,7 +70,7 @@ CREATE TABLE recipes (
     id               INTEGER NOT NULL auto_increment,
     tittle           VARCHAR(100) NOT NULL,
     description      VARCHAR(300) NOT NULL,
-    cousine_name     VARCHAR(30) NOT NULL,
+    cuisine_name     VARCHAR(30) NOT NULL,
     users_username   VARCHAR(20) NOT NULL,
     category_name    VARCHAR(30),
     CONSTRAINT recipes_pk PRIMARY KEY ( id )
@@ -113,8 +135,8 @@ ALTER TABLE recipes
         REFERENCES category ( name );
 
 ALTER TABLE recipes
-    ADD CONSTRAINT recipes_cousine_fk FOREIGN KEY ( cousine_name )
-        REFERENCES cousine ( name );
+    ADD CONSTRAINT recipes_cuisine_fk FOREIGN KEY ( cuisine_name )
+        REFERENCES cuisine ( name );
 
 
 ALTER TABLE recipes
@@ -125,39 +147,6 @@ ALTER TABLE steps
     ADD CONSTRAINT steps_recipes_fk FOREIGN KEY ( recipes_id )
         REFERENCES recipes ( id );
 
---ALTER TABLE amountingredients
---    ADD CONSTRAINT amount_ingredients_fk FOREIGN KEY ( ingredients_name )
---        REFERENCES ingredients ( name );
-
---ALTER TABLE amountingredients
---    ADD CONSTRAINT amount_recipes_fk FOREIGN KEY ( recipes_id )
---        REFERENCES recipes ( id );
-
---ALTER TABLE comments
---    ADD CONSTRAINT comments_recipes_fk FOREIGN KEY ( recipes_id )
---        REFERENCES recipes ( id );
---
---ALTER TABLE comments
---    ADD CONSTRAINT comments_users_fk FOREIGN KEY ( users_username )
---        REFERENCES users ( username );
-
---ALTER TABLE photos
---    ADD CONSTRAINT photos_recipes_fk FOREIGN KEY ( recipes_id )
---        REFERENCES recipes ( id );
-
---ALTER TABLE recipes
---    ADD CONSTRAINT recipes_category_fk FOREIGN KEY ( category_name )
---        REFERENCES category ( name );
-
---ALTER TABLE recipes
---    ADD CONSTRAINT recipes_cousine_fk FOREIGN KEY ( cousine_name )
---        REFERENCES cousine ( name );
-
-
-        
-        
-
-
 
 
 ALTER TABLE recipesinrestaurant
@@ -165,9 +154,6 @@ ALTER TABLE recipesinrestaurant
                                                restaurants_city,
                                                recipes_id );
 
-
-
-
 ALTER TABLE recipesinrestaurant
     ADD CONSTRAINT relation_3_recipes_fk FOREIGN KEY ( recipes_id )
         REFERENCES recipes ( id );
@@ -178,15 +164,7 @@ ALTER TABLE recipesinrestaurant
         REFERENCES restaurants ( name,
                                  city );
 
-ALTER TABLE recipesinrestaurant
-    ADD CONSTRAINT relation_3_recipes_fk FOREIGN KEY ( recipes_id )
-        REFERENCES recipes ( id );
 
-ALTER TABLE recipesinrestaurant
-    ADD CONSTRAINT relation_3_restaurants_fk FOREIGN KEY ( restaurants_name,
-                                                           restaurants_city )
-        REFERENCES restaurants ( name,
-                                 city );
 
 
 

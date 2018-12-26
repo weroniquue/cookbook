@@ -33,7 +33,7 @@ public class Recipes implements java.io.Serializable{
 	
 	private Integer id;
 	private Category category;
-	private Cousine cousine;
+	private Cuisine cuisine;
 	private User user;
 	private String tittle;
 	private String description;
@@ -46,18 +46,18 @@ public class Recipes implements java.io.Serializable{
 	public Recipes() {
 	}
 
-	public Recipes(Cousine cousine, User user, String tittle, String description) {
-		this.cousine = cousine;
+	public Recipes(Cuisine cuisine, User user, String tittle, String description) {
+		this.cuisine = cuisine;
 		this.user = user;
 		this.tittle = tittle;
 		this.description = description;
 	}
 
-	public Recipes(Category category, Cousine cousine, User user, String tittle, String description,
+	public Recipes(Category category, Cuisine cuisine, User user, String tittle, String description,
 			Set<Photos> photoses, Set<Restaurants> restaurants, Set<Amountingredients> amountingredientses,
 			Set<Steps> stepses, Set<Comments> commentses) {
 		this.category = category;
-		this.cousine = cousine;
+		this.cuisine = cuisine;
 		this.user = user;
 		this.tittle = tittle;
 		this.description = description;
@@ -91,13 +91,13 @@ public class Recipes implements java.io.Serializable{
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "cousine_name")
-	public Cousine getCousine() {
-		return this.cousine;
+	@JoinColumn(name = "cuisine_name")
+	public Cuisine getCuisine() {
+		return this.cuisine;
 	}
 
-	public void setCousine(Cousine cousine) {
-		this.cousine = cousine;
+	public void setCuisine(Cuisine cuisine) {
+		this.cuisine = cuisine;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)

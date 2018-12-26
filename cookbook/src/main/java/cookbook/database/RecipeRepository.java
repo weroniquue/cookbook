@@ -3,9 +3,13 @@ package cookbook.database;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import cookbook.models.Category;
+import cookbook.models.Cuisine;
 import cookbook.models.Recipes;
 import cookbook.models.User;
 
@@ -18,13 +22,15 @@ public interface RecipeRepository extends JpaRepository<Recipes, Integer>{
 	
 	List<Recipes> findByUsers(User user);
 	
-	//List<Recipes> findByCategoryName(String categoryName);
+	Page<Recipes> findByCategory(Category category, Pageable pageable);
+	
+	Page<Recipes> findByCuisine(Cuisine cuisine, Pageable pageable);
 	
 	List<Recipes> findByTittle(String tittle);
 	
-	List<Recipes> findByCousineName(String name);
+	List<Recipes> findByCuisineName(String name);
 	
-	long countByCousineName(String name);
+	long countByCuisineName(String name);
 	
 	long countByUsers(User user);
 	
