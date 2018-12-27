@@ -1,8 +1,6 @@
 package cookbook.models;
 // Generated 2018-12-07 22:21:43 by Hibernate Tools 5.2.11.Final
 
-import java.util.Objects;
-
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 

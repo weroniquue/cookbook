@@ -39,6 +39,7 @@ import cookbook.payloads.comments.CreateCommentRequest;
 import cookbook.payloads.recipes.CreateRecipeRequest;
 import cookbook.payloads.recipes.RecipeResponse;
 import cookbook.payloads.recipes.StepsRequest;
+import cookbook.payloads.restaurants.RestaurantResponse;
 import cookbook.payloads.users.UserProfile;
 import cookbook.security.UserPrincipal;
 import cookbook.util.AppConstants;
@@ -165,10 +166,16 @@ public class RecipeService {
 				recipe.getCategory().getName(),
 				recipe.getCuisine().getName(),
 				recipe.getTittle(),
-				recipe.getDescription(),
-				recipe.getRestaurants()
+				recipe.getDescription()
 				);
 
+		response.setRestaurants(recipe.getRestaurants()
+				.stream()
+				.map(restaurant -> {
+					return new RestaurantResponse(restaurant.getId().getName(), restaurant.getAddress(), restaurant.getCode(), restaurant.getId().getCity(), null);
+				})
+				.collect(Collectors.toSet()));
+		
 		response.setPhotos(recipe.getPhotoses().
 				stream()
 				.map(photo -> {return photo.getPath();})
@@ -197,8 +204,8 @@ public class RecipeService {
 
 	public ResponseEntity<?> addRecipe(CreateRecipeRequest recipe, UserPrincipal user) {
 
-		Cuisine cuisine = cuisineRepository.findById(recipe.getCousineName())
-				.orElseThrow(() -> new ResourceNotFoundException("Cousine", "id", recipe.getCousineName()));
+		Cuisine cuisine = cuisineRepository.findById(recipe.getCuisineName())
+				.orElseThrow(() -> new ResourceNotFoundException("Cousine", "id", recipe.getCuisineName()));
 		
 		Category category = categoryRepository.findById(recipe.getCategory())
 				.orElseThrow(() -> new ResourceNotFoundException("Category", "id", recipe.getCategory()));
@@ -206,7 +213,6 @@ public class RecipeService {
 		User currentUser = userRepository.findByUsername(user.getUsername())
 				.orElseThrow(() -> new ResourceNotFoundException("User", "username", user.getUsername()));
 
-		//recipe.getIngredients().forEach(x -> System.out.println(x.getName() + x.getAmount() + x.getUnit()));
 		
 		Recipes newRecipe = new Recipes(cuisine, currentUser, "tittle", "description");
 		newRecipe.setCategory(category);
@@ -218,11 +224,16 @@ public class RecipeService {
 			stepRepository.save(new Steps(new StepsId(step.getId(), step.getDescription(), result.getId()),result));
 		});
 
+		recipe.getIngredients()
+			.forEach(ingredient -> {
+				
+			});
+		//recipe.getIngredients().forEach(x -> System.out.println(x.getName() + x.getAmount() + x.getUnit()));
 
 		URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/recipes/{id}")
 				.buildAndExpand(result.getId()).toUri();
 
-		return ResponseEntity.created(location).body(new ApiResponse(true, "Recipe saves successfully."));
+		return ResponseEntity.created(location).body(new ApiResponse(true, "Recipe was saved successfully."));
 
 	}
 

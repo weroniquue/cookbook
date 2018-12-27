@@ -20,10 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import cookbook.database.CommentRepository;
-import cookbook.database.RecipeRepository;
 import cookbook.exception.ResourceNotFoundException;
 import cookbook.models.Comments;
-import cookbook.models.Recipes;
 import cookbook.payloads.ApiResponse;
 import cookbook.payloads.PagedResponse;
 import cookbook.payloads.comments.CommentResponse;
@@ -40,9 +38,6 @@ import cookbook.util.AppConstants;
 @RequestMapping("/api/recipes")
 public class RecipeController {
 
-	@Autowired
-	private RecipeRepository recipeRepository;
-	
 	@Autowired
 	private CommentRepository commentRepository;
 

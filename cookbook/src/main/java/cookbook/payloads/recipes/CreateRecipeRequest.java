@@ -30,11 +30,12 @@ public class CreateRecipeRequest {
 		this.description = description;
 	}
 
-	public String getCousineName() {
+	
+	public String getCuisineName() {
 		return cuisineName;
 	}
 
-	public void setCousineName(String cuisineName) {
+	public void setCuisineName(String cuisineName) {
 		this.cuisineName = cuisineName;
 	}
 

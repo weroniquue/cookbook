@@ -53,7 +53,8 @@ public class RestaurantController {
 
 		Restaurants restaurant = restaurantRepository.findById(new RestaurantsId(name, city))
 				.orElseThrow(() -> new ResourceNotFoundException("Restaurant", "name and city", name + " " + city));
-
+		
+		//nie działa tutaj ale działa w przepisie?
 		Set<String> recipe = restaurant.getrecipes().stream().map(x -> x.getTittle()).collect(Collectors.toSet());
 
 		RestaurantResponse response = new RestaurantResponse(restaurant.getId().getName(), restaurant.getAddress(),
@@ -73,7 +74,8 @@ public class RestaurantController {
 		Restaurants restaurant = new Restaurants(id, createRestaurantRequest.getAddress(),
 				createRestaurantRequest.getCode());
 
-		createRestaurantRequest.getRecipes().forEach(x -> restaurant.getrecipes()
+		createRestaurantRequest.getRecipes().forEach(
+				x -> restaurant.getrecipes()
 				.add(recipeRepostory.findById(x).orElseThrow(() -> new ResourceNotFoundException("Recipe", "id", x))));
 
 		Restaurants results = restaurantRepository.save(restaurant);

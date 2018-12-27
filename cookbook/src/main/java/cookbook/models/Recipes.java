@@ -142,10 +142,9 @@ public class Recipes implements java.io.Serializable{
 		joinColumns = {
 			@JoinColumn(name = "recipes_id", nullable = false, updatable = false) },
 			inverseJoinColumns = {
-					@JoinColumn(name = "restaurants_city", nullable = false, updatable = false),
-					@JoinColumn(name = "restaurants_name", nullable = false, updatable = false)
+					@JoinColumn(name = "restaurants_name", nullable = false, updatable = false),
+					@JoinColumn(name = "restaurants_city", nullable = false, updatable = false)
 			})
-	
 	public Set<Restaurants> getRestaurants() {
 		return this.restaurants;
 	}

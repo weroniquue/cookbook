@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Set;
 
 import cookbook.models.Ingredients;
-import cookbook.models.Restaurants;
 import cookbook.payloads.comments.CommentResponse;
+import cookbook.payloads.restaurants.RestaurantResponse;
 import cookbook.payloads.users.UserProfile;
 
 public class RecipeResponse {
@@ -19,24 +19,14 @@ public class RecipeResponse {
 
 	private Set<StepsRequest> steps;
 	private Set<String> photos;
-	private Set<Restaurants> restaurants;
+
+	private Set<RestaurantResponse> restaurants;
 	private List<CommentResponse> comments;
 
 	// Składniki inaczej
 	private Set<Ingredients> ingredients;
 
 	public RecipeResponse() {
-	}
-
-	public RecipeResponse(Integer id, String category, String cuisine, String tittle, String description,
-			Set<Restaurants> restaurants) {
-		super();
-		this.id = id;
-		this.category = category;
-		this.cuisine = cuisine;
-		this.tittle = tittle;
-		this.description = description;
-		this.restaurants = restaurants;
 	}
 
 	public RecipeResponse(Integer id, String category, String cuisine, String tittle, String description) {
@@ -112,11 +102,11 @@ public class RecipeResponse {
 		this.photos = photos;
 	}
 
-	public Set<Restaurants> getRestaurants() {
+	public Set<RestaurantResponse> getRestaurants() {
 		return restaurants;
 	}
 
-	public void setRestaurants(Set<Restaurants> restaurants) {
+	public void setRestaurants(Set<RestaurantResponse> restaurants) {
 		this.restaurants = restaurants;
 	}
 
