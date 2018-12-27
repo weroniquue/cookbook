@@ -3,10 +3,13 @@ package cookbook.models;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.NamedStoredProcedureQueries;
+import javax.persistence.NamedStoredProcedureQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -15,8 +18,19 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "ingredients")
+
+//@NamedStoredProcedureQueries({
+//    @NamedStoredProcedureQuery(name = "getAllIngredients",
+//                                procedureName = "ingredientsProcedure"//,resultClasses = Ingredients.class
+//    )
+//})
 public class Ingredients implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private String name;
 	private String unit;
 	private Set<Amountingredients> amountingredientses = new HashSet<Amountingredients>(0);
@@ -24,9 +38,11 @@ public class Ingredients implements java.io.Serializable {
 	public Ingredients() {
 	}
 
-	public Ingredients(String name) {
+	public Ingredients(String name, String unit) {
 		this.name = name;
+		this.unit = unit;
 	}
+	
 
 	public Ingredients(String name, String unit, Set<Amountingredients> amountingredientses) {
 		this.name = name;
@@ -35,7 +51,6 @@ public class Ingredients implements java.io.Serializable {
 	}
 
 	@Id
-
 	@Column(name = "name", unique = true, nullable = false, length = 30)
 	public String getName() {
 		return this.name;

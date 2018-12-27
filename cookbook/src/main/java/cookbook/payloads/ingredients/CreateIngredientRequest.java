@@ -1,31 +1,30 @@
-package cookbook.payloads.recipes;
+package cookbook.payloads.ingredients;
 
-public class IngredientsRequest {
-	
+public class CreateIngredientRequest {
+
 	private String name;
 	private String unit;
-	private Long amount;
-	
-	
+
+	public CreateIngredientRequest(String name, String unit) {
+		super();
+		this.name = name;
+		this.unit = unit;
+	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getUnit() {
 		return unit;
 	}
+
 	public void setUnit(String unit) {
 		this.unit = unit;
 	}
-	public Long getAmount() {
-		return amount;
-	}
-	public void setAmount(Long amount) {
-		this.amount = amount;
-	}
-	
-	
 
 }

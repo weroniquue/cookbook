@@ -1,6 +1,10 @@
 use cookbook;
 
 
+DROP procedure IF EXISTS ingredientsProcedure;
+create procedure ingredientsProcedure()
+select * from ingredients;
+
 DROP FUNCTION IF EXISTS portion;
 
 CREATE FUNCTION portion(amount float(11,2),ratio float(11,2))

@@ -3,6 +3,8 @@ package cookbook.payloads.recipes;
 import java.util.HashSet;
 import java.util.Set;
 
+import cookbook.payloads.ingredients.AddIngredientToRecipeRequest;
+
 public class CreateRecipeRequest {
 
 	String tittle;
@@ -10,7 +12,7 @@ public class CreateRecipeRequest {
 	String cuisineName;
 	String category;
 
-	private Set<IngredientsRequest> ingredients = new HashSet<>();
+	private Set<AddIngredientToRecipeRequest> ingredients = new HashSet<>();
 	private Set<String> photos = new HashSet<>();
 	private Set<StepsRequest> steps = new HashSet<>();
 
@@ -30,7 +32,6 @@ public class CreateRecipeRequest {
 		this.description = description;
 	}
 
-	
 	public String getCuisineName() {
 		return cuisineName;
 	}
@@ -47,11 +48,11 @@ public class CreateRecipeRequest {
 		this.category = category;
 	}
 
-	public Set<IngredientsRequest> getIngredients() {
+	public Set<AddIngredientToRecipeRequest> getIngredients() {
 		return ingredients;
 	}
 
-	public void setIngredients(Set<IngredientsRequest> ingredients) {
+	public void setIngredients(Set<AddIngredientToRecipeRequest> ingredients) {
 		this.ingredients = ingredients;
 	}
 
