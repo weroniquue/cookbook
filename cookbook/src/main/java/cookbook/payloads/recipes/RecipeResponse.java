@@ -3,7 +3,7 @@ package cookbook.payloads.recipes;
 import java.util.List;
 import java.util.Set;
 
-import cookbook.models.Ingredients;
+import cookbook.models.IngredientResponse;
 import cookbook.payloads.comments.CommentResponse;
 import cookbook.payloads.restaurants.RestaurantResponse;
 import cookbook.payloads.users.UserProfile;
@@ -23,8 +23,7 @@ public class RecipeResponse {
 	private Set<RestaurantResponse> restaurants;
 	private List<CommentResponse> comments;
 
-	// Składniki inaczej
-	private Set<Ingredients> ingredients;
+	private Set<IngredientResponse> ingredients;
 
 	public RecipeResponse() {
 	}
@@ -110,11 +109,11 @@ public class RecipeResponse {
 		this.restaurants = restaurants;
 	}
 
-	public Set<Ingredients> getIngredients() {
+	public Set<IngredientResponse> getIngredients() {
 		return ingredients;
 	}
 
-	public void setIngredients(Set<Ingredients> ingredients) {
+	public void setIngredients(Set<IngredientResponse> ingredients) {
 		this.ingredients = ingredients;
 	}
 

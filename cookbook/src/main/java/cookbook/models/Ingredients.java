@@ -8,8 +8,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.NamedStoredProcedureQueries;
-import javax.persistence.NamedStoredProcedureQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -19,11 +17,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "ingredients")
 
-//@NamedStoredProcedureQueries({
-//    @NamedStoredProcedureQuery(name = "getAllIngredients",
-//                                procedureName = "ingredientsProcedure"//,resultClasses = Ingredients.class
-//    )
-//})
 public class Ingredients implements java.io.Serializable {
 
 	/**

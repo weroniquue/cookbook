@@ -15,18 +15,24 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import cookbook.database.AmountIngredientsRepository;
 import cookbook.database.CategoryRepository;
 import cookbook.database.CommentRepository;
 import cookbook.database.CuisineRepository;
+import cookbook.database.IngredientRepository;
 import cookbook.database.PhotoRepository;
 import cookbook.database.RecipeRepository;
 import cookbook.database.StepRepository;
 import cookbook.database.UserRepository;
 import cookbook.exception.BadRequestException;
 import cookbook.exception.ResourceNotFoundException;
+import cookbook.models.Amountingredients;
+import cookbook.models.AmountingredientsId;
 import cookbook.models.Category;
 import cookbook.models.Comments;
 import cookbook.models.Cuisine;
+import cookbook.models.IngredientResponse;
+import cookbook.models.Ingredients;
 import cookbook.models.Photos;
 import cookbook.models.Recipes;
 import cookbook.models.Steps;
@@ -64,9 +70,15 @@ public class RecipeService {
 
 	@Autowired
 	private CommentRepository commentRepository;
-	
+
 	@Autowired
 	private PhotoRepository photoRepository;
+
+	@Autowired
+	private IngredientRepository ingredientRepository;
+
+	@Autowired
+	private AmountIngredientsRepository amountIngredientsRepository;
 
 	public PagedResponse<RecipeResponse> getAllRecipes(UserPrincipal currentUser, int page, int size) {
 		validatePageNumberAndSize(page, size);
@@ -79,76 +91,52 @@ public class RecipeService {
 					recipes.getTotalElements(), recipes.getTotalPages(), recipes.isLast());
 		}
 
-		
-		List<RecipeResponse> recipeResponse = 
-				recipeRepository.findAll()
-				.stream()
-				.map( x-> recipeMapper(x))
+		List<RecipeResponse> recipeResponse = recipeRepository.findAll().stream().map(x -> recipeMapper(x))
 				.collect(Collectors.toList());
 
-		return new PagedResponse<>(recipeResponse, page, size, recipes.getTotalElements(),
-				recipes.getTotalPages(), recipes.isLast());
+		return new PagedResponse<>(recipeResponse, page, size, recipes.getTotalElements(), recipes.getTotalPages(),
+				recipes.isLast());
 
 	}
-	
-	public PagedResponse<RecipeResponse> getByCategory(
-			UserPrincipal currentUser,
-			int page, int size, String cat){
-		validatePageNumberAndSize(page, size);
-		
-		Category category = categoryRepository.findById(cat)
-				.orElseThrow(()->new ResourceNotFoundException("Category", "categoryName", cat));
-		
-		Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "id");
-		Page<Recipes> recipes = recipeRepository.findByCategory(category,pageable);
-		
+
+	public PagedResponse<RecipeResponse> getBy(Page<Recipes> recipes, int page, int size) {
+
 		if (recipes.getNumberOfElements() == 0) {
-			return new PagedResponse<>(Collections.emptyList(),
-					recipes.getNumber(),
-					recipes.getSize(),
-					recipes.getTotalElements(), 
-					recipes.getTotalPages(), 
-					recipes.isLast());
+			return new PagedResponse<>(Collections.emptyList(), recipes.getNumber(), recipes.getSize(),
+					recipes.getTotalElements(), recipes.getTotalPages(), recipes.isLast());
 		}
-		
-		List<RecipeResponse> recipeResponse = 
-				recipes
-				.stream()
-				.map( x-> recipeMapper(x))
-				.collect(Collectors.toList());
 
-		return new PagedResponse<>(recipeResponse, page, size, recipes.getTotalElements(),
-				recipes.getTotalPages(), recipes.isLast());
+		List<RecipeResponse> recipeResponse = recipes.stream().map(x -> recipeMapper(x)).collect(Collectors.toList());
+
+		return new PagedResponse<>(recipeResponse, page, size, recipes.getTotalElements(), recipes.getTotalPages(),
+				recipes.isLast());
 	}
-	
-	public PagedResponse<RecipeResponse> getByCousine(
-			UserPrincipal currentUser,
-			int page, int size, String cousineName){
+
+	public PagedResponse<RecipeResponse> getByCategory(UserPrincipal currentUser, int page, int size, String cat) {
 		validatePageNumberAndSize(page, size);
-		
+
+		Category category = categoryRepository.findById(cat)
+				.orElseThrow(() -> new ResourceNotFoundException("Category", "categoryName", cat));
+
+		Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "id");
+		Page<Recipes> recipes = recipeRepository.findByCategory(category, pageable);
+
+		return getBy(recipes, page, size);
+
+	}
+
+	public PagedResponse<RecipeResponse> getByCousine(UserPrincipal currentUser, int page, int size,
+			String cousineName) {
+		validatePageNumberAndSize(page, size);
+
 		Cuisine cuisine = cuisineRepository.findById(cousineName)
-				.orElseThrow(()->new ResourceNotFoundException("Cousine", "cousineName", cousineName));
-		
+				.orElseThrow(() -> new ResourceNotFoundException("Cousine", "cousineName", cousineName));
+
 		Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "id");
 		Page<Recipes> recipes = recipeRepository.findByCuisine(cuisine, pageable);
-		
-		if (recipes.getNumberOfElements() == 0) {
-			return new PagedResponse<>(Collections.emptyList(),
-					recipes.getNumber(),
-					recipes.getSize(),
-					recipes.getTotalElements(), 
-					recipes.getTotalPages(), 
-					recipes.isLast());
-		}
-		
-		List<RecipeResponse> recipeResponse = 
-				recipes
-				.stream()
-				.map( x-> recipeMapper(x))
-				.collect(Collectors.toList());
 
-		return new PagedResponse<>(recipeResponse, page, size, recipes.getTotalElements(),
-				recipes.getTotalPages(), recipes.isLast());
+		return getBy(recipes, page, size);
+
 	}
 
 	public RecipeResponse getRecipeById(Integer recipeId) {
@@ -160,44 +148,44 @@ public class RecipeService {
 	}
 
 	public RecipeResponse recipeMapper(Recipes recipe) {
-		
-		RecipeResponse response = new RecipeResponse(
-				recipe.getId(),
-				recipe.getCategory().getName(),
-				recipe.getCuisine().getName(),
-				recipe.getTittle(),
-				recipe.getDescription()
-				);
+
+		RecipeResponse response = new RecipeResponse(recipe.getId(), recipe.getCategory().getName(),
+				recipe.getCuisine().getName(), recipe.getTittle(), recipe.getDescription());
 
 		response.setRestaurants(recipe.getRestaurants()
 				.stream()
 				.map(restaurant -> {
-					return new RestaurantResponse(restaurant.getId().getName(), restaurant.getAddress(), restaurant.getCode(), restaurant.getId().getCity(), null);
-				})
-				.collect(Collectors.toSet()));
-		
-		response.setPhotos(recipe.getPhotoses().
-				stream()
-				.map(photo -> {return photo.getPath();})
-				.collect(Collectors.toSet()));
-				
-		
+					return new RestaurantResponse(restaurant.getId().getName(),
+							restaurant.getAddress(),
+							restaurant.getCode(),
+							restaurant.getId().getCity(),
+							null);//DO POPRAWY
+		}).collect(Collectors.toSet()));
+
+		response.setPhotos(recipe.getPhotoses()
+				.stream()
+				.map(photo -> {
+					return photo.getPath();
+				}).collect(Collectors.toSet()));
+
 		response.setSteps(recipe.getStepses()
 				.stream()
-				.map(step ->{
+				.map(step -> {
 					return new StepsRequest(step.getId().getNumber(), step.getId().getDescription());
-				})
-				.collect(Collectors.toSet()));
-		
+				}).collect(Collectors.toSet()));
+
 		response.setComments(getAllComment(recipe.getId()));
+		
+		response.setIngredients(recipe.getAmountingredientses()
+				.stream()
+				.map(ingr ->{
+					return new IngredientResponse(ingr.getId().getAmount(), ingr.getId().getIngredientsName(), ingr.getIngredients().getUnit());
+				}).collect(Collectors.toSet()));
 
 		User user = recipe.getUsers();
 		response.setCreatedBy(
-				new UserProfile(
-						user.getUsername(),
-						user.getFirstname(),
-						user.getSecondname(),
-						user.getEmail()));
+				new UserProfile(user.getUsername(), user.getFirstname(), user.getSecondname(), user.getEmail()));
+		
 		
 		return response;
 	}
@@ -226,9 +214,11 @@ public class RecipeService {
 
 		recipe.getIngredients()
 			.forEach(ingredient -> {
-				
+				Ingredients foundIngredient =  ingredientRepository.findByName(ingredient.getName())
+						.orElseThrow(()-> new ResourceNotFoundException("Ingredient", "name", ingredient.getName()));
+				amountIngredientsRepository.save(new Amountingredients(new AmountingredientsId(ingredient.getAmount(), ingredient.getName(), result.getId()),
+						foundIngredient, result));
 			});
-		//recipe.getIngredients().forEach(x -> System.out.println(x.getName() + x.getAmount() + x.getUnit()));
 
 		URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/recipes/{id}")
 				.buildAndExpand(result.getId()).toUri();
@@ -246,18 +236,17 @@ public class RecipeService {
 				.findAllByRecipes(recipe)
 				.stream()
 				.map(obj -> {
-					CommentResponse response = new CommentResponse(
-							obj.getId(),
+					CommentResponse response = new CommentResponse(obj.getId(),
 							obj.getRecipes().getId(),
 							new UserProfile(
 									obj.getUsers().getUsername(),
 									obj.getUsers().getFirstname(),
 									obj.getUsers().getSecondname(),
 									obj.getUsers().getEmail()),
-					obj.getComment(),
-					obj.getDate());
-					return response;
-				}).collect(Collectors.toList());
+							obj.getComment(),
+							obj.getDate());
+			return response;
+		}).collect(Collectors.toList());
 
 		return comments;
 	}
