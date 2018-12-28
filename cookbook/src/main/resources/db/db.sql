@@ -1,6 +1,3 @@
-use cookbook;
-
-
 DROP procedure IF EXISTS ingredientsProcedure;
 create procedure ingredientsProcedure()
 select * from ingredients;
@@ -120,7 +117,8 @@ ALTER TABLE amountingredients
 
 ALTER TABLE amountingredients
     ADD CONSTRAINT amount_recipes_fk FOREIGN KEY ( recipes_id )
-        REFERENCES recipes ( id );
+        REFERENCES recipes ( id )
+        on delete cascade;
 
 ALTER TABLE comments
     ADD CONSTRAINT comments_recipes_fk FOREIGN KEY ( recipes_id )
@@ -132,7 +130,8 @@ ALTER TABLE comments
 
 ALTER TABLE photos
     ADD CONSTRAINT photos_recipes_fk FOREIGN KEY ( recipes_id )
-        REFERENCES recipes ( id );
+        REFERENCES recipes ( id )
+        on delete cascade;
 
 ALTER TABLE recipes
     ADD CONSTRAINT recipes_category_fk FOREIGN KEY ( category_name )
@@ -149,7 +148,8 @@ ALTER TABLE recipes
 
 ALTER TABLE steps
     ADD CONSTRAINT steps_recipes_fk FOREIGN KEY ( recipes_id )
-        REFERENCES recipes ( id );
+        REFERENCES recipes ( id )
+        on delete cascade;
 
 
 
@@ -157,17 +157,17 @@ ALTER TABLE recipesinrestaurant
     ADD CONSTRAINT relation_3_pk PRIMARY KEY ( restaurants_name,
                                                restaurants_city,
                                                recipes_id );
-
 ALTER TABLE recipesinrestaurant
     ADD CONSTRAINT relation_3_recipes_fk FOREIGN KEY ( recipes_id )
-        REFERENCES recipes ( id );
+        REFERENCES recipes ( id )
+        on delete cascade;
 
 ALTER TABLE recipesinrestaurant
     ADD CONSTRAINT relation_3_restaurants_fk FOREIGN KEY ( restaurants_name,
                                                            restaurants_city )
         REFERENCES restaurants ( name,
-                                 city );
-
+                                 city )
+        on delete cascade;
 
 
 
