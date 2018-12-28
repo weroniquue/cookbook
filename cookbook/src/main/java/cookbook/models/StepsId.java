@@ -10,6 +10,11 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class StepsId implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private int number;
 	private String description;
 	private int recipesId;

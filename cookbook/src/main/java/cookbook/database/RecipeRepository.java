@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import cookbook.models.Category;
@@ -33,6 +35,9 @@ public interface RecipeRepository extends JpaRepository<Recipes, Integer>{
 	long countByCuisineName(String name);
 	
 	long countByUsers(User user);
+	
+	@Query(nativeQuery = true,value = "SELECT PORTION(:amount,:ratio)")
+	float callPortionFunction(@Param("amount") float amount, @Param("ratio") float ratio);
 	
 	
 	

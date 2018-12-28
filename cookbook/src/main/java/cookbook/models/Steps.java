@@ -3,7 +3,6 @@ package cookbook.models;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -19,6 +18,11 @@ import javax.persistence.Table;
 @Table(name = "steps")
 public class Steps implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private StepsId id;
 	private Recipes recipes;
 

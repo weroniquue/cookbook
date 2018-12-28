@@ -140,12 +140,24 @@ public class RecipeService {
 
 	}
 
-	public RecipeResponse getRecipeById(Integer recipeId) {
+	public RecipeResponse getRecipeById(Integer recipeId, Integer ratio) {
 
 		Recipes recipe = recipeRepository.findById(recipeId)
 				.orElseThrow(() -> new ResourceNotFoundException("Recipe", "id", recipeId));
 
-		return recipeMapper(recipe);
+		RecipeResponse response = recipeMapper(recipe);
+		
+		if(ratio>1) {
+			response.setIngredients(recipe.getAmountingredientses()
+					.stream()
+					.map(ingr ->{
+						return new IngredientResponse(recipeRepository.callPortionFunction(ingr.getId().getAmount(), ratio),
+								 ingr.getId().getIngredientsName(), ingr.getIngredients().getUnit());
+					}).collect(Collectors.toSet()));
+					
+		}
+		
+		return response;
 	}
 
 	public RecipeResponse recipeMapper(Recipes recipe) {

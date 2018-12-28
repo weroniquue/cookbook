@@ -54,8 +54,9 @@ public class RecipeController {
 	}
 	
 	@GetMapping("/{id}")
-	public RecipeResponse getRecipesById(@PathVariable(value = "id") Integer id){
-		return recipeService.getRecipeById(id);
+	public RecipeResponse getRecipesById(@PathVariable(value = "id") Integer id,
+			@RequestParam(value = "portion", defaultValue = AppConstants.DEFAULT_PORTION) int portion){
+		return recipeService.getRecipeById(id,portion);
 	}
 	
 	@PostMapping
