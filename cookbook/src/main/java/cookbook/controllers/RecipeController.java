@@ -66,6 +66,25 @@ public class RecipeController {
 
 	}
 	
+	@PostMapping("/{id}/edit")
+	@PreAuthorize("hasRole('USER')")
+	public ResponseEntity<?> editRecipe(@CurrentUser UserPrincipal currentUser,
+			@Valid @RequestBody CreateRecipeRequest modifyRecipeRequest,
+			@PathVariable(value = "id") Integer id){
+		return recipeService.modifyRecipe(modifyRecipeRequest, currentUser, id);
+	}
+	
+	@DeleteMapping("/{id}")
+	@PreAuthorize("hasRole('USER')")
+	public ResponseEntity<?> removeRecipe(
+			@PathVariable(value = "id") Integer id,
+			@CurrentUser UserPrincipal currentUser){
+		
+		return recipeService.deleteRecipe(id, currentUser);
+		
+	}
+	
+	
 	@GetMapping("/{id}/comments")
 	public List<CommentResponse> getAllComments(@PathVariable(value = "id") Integer id){
 		return recipeService.getAllComment(id);	
@@ -82,7 +101,7 @@ public class RecipeController {
 	    URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/{idComment}")
 				.buildAndExpand(comment.getId()).toUri();
 
-		return ResponseEntity.created(location).body(new ApiResponse(true, "Category added successfully"));
+		return ResponseEntity.created(location).body(new ApiResponse(true, "Comment added successfully with id: " + comment.getId()));
 	}
 
 	@DeleteMapping("/{id}/comments/{commentId}")

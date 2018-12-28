@@ -4,6 +4,7 @@ package cookbook.models;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -128,7 +129,7 @@ public class Recipes implements java.io.Serializable{
 		this.description = description;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "recipes")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "recipes", cascade =CascadeType.REMOVE)
 	public Set<Photos> getPhotoses() {
 		return this.photoses;
 	}
@@ -142,8 +143,8 @@ public class Recipes implements java.io.Serializable{
 		joinColumns = {
 			@JoinColumn(name = "recipes_id", nullable = false, updatable = false) },
 			inverseJoinColumns = {
-					@JoinColumn(name = "restaurants_name", nullable = false, updatable = false),
-					@JoinColumn(name = "restaurants_city", nullable = false, updatable = false)
+					@JoinColumn(name = "restaurants_name",referencedColumnName="name", nullable = false, updatable = false),
+					@JoinColumn(name = "restaurants_city",referencedColumnName="city", nullable = false, updatable = false)
 			})
 	public Set<Restaurants> getRestaurants() {
 		return this.restaurants;
@@ -153,7 +154,7 @@ public class Recipes implements java.io.Serializable{
 		this.restaurants = restaurants;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "recipes")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "recipes", cascade = CascadeType.REMOVE)
 	public Set<Amountingredients> getAmountingredientses() {
 		return this.amountingredientses;
 	}
@@ -162,7 +163,7 @@ public class Recipes implements java.io.Serializable{
 		this.amountingredientses = amountingredientses;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "recipes")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "recipes", cascade = CascadeType.REMOVE)
 	@OrderBy("number ASC")
 	public Set<Steps> getStepses() {
 		return this.stepses;
@@ -172,7 +173,7 @@ public class Recipes implements java.io.Serializable{
 		this.stepses = stepses;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "recipes")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "recipes", cascade = CascadeType.REMOVE)
 	public Set<Comments> getCommentses() {
 		return this.commentses;
 	}

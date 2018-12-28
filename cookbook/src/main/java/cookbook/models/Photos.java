@@ -1,6 +1,7 @@
 package cookbook.models;
 // Generated 2018-12-07 22:21:43 by Hibernate Tools 5.2.11.Final
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -45,7 +46,7 @@ public class Photos implements java.io.Serializable {
 		this.path = path;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade =CascadeType.REMOVE)
 	@JoinColumn(name = "recipes_id", nullable = false)
 	public Recipes getRecipes() {
 		return this.recipes;

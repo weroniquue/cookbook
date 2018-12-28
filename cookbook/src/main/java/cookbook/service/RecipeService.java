@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -206,7 +207,11 @@ public class RecipeService {
 		newRecipe.setCategory(category);
 		
 		Recipes result = recipeRepository.save(newRecipe);
-		recipe.getPhotos().forEach(photo -> photoRepository.save((new Photos(photo, result))));
+		recipe.getPhotos().forEach(
+				photo -> {
+					if(photoRepository.existsById(photo)) {throw new BadRequestException("Photo with name: "+photo +" exists!");}
+					photoRepository.save((new Photos(photo, result)));
+				});
 		
 		recipe.getSteps().forEach(step ->{
 			stepRepository.save(new Steps(new StepsId(step.getId(), step.getDescription(), result.getId()),result));
@@ -223,9 +228,94 @@ public class RecipeService {
 		URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/recipes/{id}")
 				.buildAndExpand(result.getId()).toUri();
 
-		return ResponseEntity.created(location).body(new ApiResponse(true, "Recipe was saved successfully."));
+		return ResponseEntity.created(location).body(new ApiResponse(true, "Recipe was saved successfully with id: " + result.getId()));
 
 	}
+	
+	
+	
+	//Font!! bo czyści wszytskie składniki zdjęcia itp 
+	public ResponseEntity<?> modifyRecipe(CreateRecipeRequest request, UserPrincipal user, int id) {
+			
+		Recipes recipe = recipeRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Recipe", "id", id));
+		
+		if(!recipe.getUsers().getUsername().equals(user.getUsername())) {
+			return new ResponseEntity<>(new ApiResponse(false, "It's not your recipe!"),HttpStatus.BAD_REQUEST);
+		}
+		
+		if(!request.getCuisineName().equals(null)) {
+			Cuisine cuisine = cuisineRepository.findById(request.getCuisineName())
+					.orElseThrow(() -> new ResourceNotFoundException("Cousine", "id", request.getCuisineName()));
+			recipe.setCuisine(cuisine);
+			
+		}
+		
+		if(!request.getCategory().equals(null)) {
+			Category category = categoryRepository.findById(request.getCategory())
+					.orElseThrow(() -> new ResourceNotFoundException("Category", "id", recipe.getCategory()));
+			recipe.setCategory(category);
+			
+		}
+		
+		if(!request.getTittle().equals(null)) {
+			recipe.setTittle(request.getTittle());
+		}
+		
+		if(!request.getDescription().equals(null)) {
+			recipe.setDescription(request.getDescription());
+		}
+		
+		
+		//czyszczenie listy kroków przed
+		if(!request.getSteps().equals(null)) {
+			
+			stepRepository.deleteAll(stepRepository.findByRecipes(recipe));
+			
+			request.getSteps().forEach(step ->{
+				stepRepository.save(new Steps(new StepsId(step.getId(), step.getDescription(), recipe.getId()), recipe));
+			});
+		}
+		
+		
+		
+		
+//		request.getIngredients()
+//		.forEach(ingredient -> {
+//			Ingredients foundIngredient =  ingredientRepository.findByName(ingredient.getName())
+//					.orElseThrow(()-> new ResourceNotFoundException("Ingredient", "name", ingredient.getName()));
+//			
+//			amountIngredientsRepository.save(new Amountingredients(new AmountingredientsId(ingredient.getAmount(), ingredient.getName(), result.getId()),
+//					foundIngredient, result));
+//		});
+		
+		
+//		Recipes result = recipeRepository.save(newRecipe);
+//		
+//		
+//
+
+
+
+		return new ResponseEntity<>(new ApiResponse(true, "Recipe was edited successfully."), HttpStatus.OK);
+		
+	}
+	
+	public ResponseEntity<?> deleteRecipe(int id,UserPrincipal user){
+		Recipes recipe = recipeRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Recipe", "id", id));
+		
+		
+		if(!recipe.getUsers().getUsername().equals(user.getUsername())) {
+			return new ResponseEntity<>(new ApiResponse(false, "It's not your recipe!"),HttpStatus.BAD_REQUEST);
+		}
+		
+		recipeRepository.delete(recipe);
+		
+		return new ResponseEntity<>(new ApiResponse(true, "Recipe was deleted successfully."), HttpStatus.OK);
+		
+	}
+	
 
 	public List<CommentResponse> getAllComment(int recipeId) {
 

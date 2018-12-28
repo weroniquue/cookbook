@@ -99,7 +99,7 @@ public class CategoryAndCuisineController {
 	public ResponseEntity<?> addCousine(@RequestParam Map<String, String> cuisine) {
 		
 		if (cuisineRepository.existsById(cuisine.get("cuisine"))) {
-			return new ResponseEntity<>(new ApiResponse(false, "Cousine exists!"), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(new ApiResponse(false, "Cuisine exists!"), HttpStatus.BAD_REQUEST);
 		}
 
 		Cuisine newCousine = new Cuisine(cuisine.get("cuisine"));
@@ -109,7 +109,7 @@ public class CategoryAndCuisineController {
 		URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/cuisine/{cuisine}")
 				.buildAndExpand(result.getName()).toUri();
 
-		return ResponseEntity.created(location).body(new ApiResponse(true, "Cousine added successfully"));
+		return ResponseEntity.created(location).body(new ApiResponse(true, "Cuisine added successfully"));
 
 	}
 
@@ -122,7 +122,7 @@ public class CategoryAndCuisineController {
 
 		cuisineRepository.deleteById(cuisine);
 
-		return new ResponseEntity<>(new ApiResponse(true, "Cousine removed successfully"), HttpStatus.OK);
+		return new ResponseEntity<>(new ApiResponse(true, "Cuisine removed successfully"), HttpStatus.OK);
 	}
 
 }

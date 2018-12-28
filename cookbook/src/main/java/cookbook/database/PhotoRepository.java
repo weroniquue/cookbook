@@ -15,4 +15,6 @@ public interface PhotoRepository extends JpaRepository<Photos, String>{
 	Optional<Photos> findByPath(String path);
 	
 	List<Photos> findAllByRecipes(Recipes recipe);
+	
+	boolean existsByPath(String path);
 }

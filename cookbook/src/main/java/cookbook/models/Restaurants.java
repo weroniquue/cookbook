@@ -85,8 +85,8 @@ public class Restaurants implements java.io.Serializable {
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "recipesinrestaurant", joinColumns = {
-			@JoinColumn(name = "restaurants_name", nullable = false, updatable = false),
-			@JoinColumn(name = "restaurants_city", nullable = false, updatable = false) },
+			@JoinColumn(name = "restaurants_name",referencedColumnName="name", nullable = false, updatable = false),
+			@JoinColumn(name = "restaurants_city",referencedColumnName="city", nullable = false, updatable = false) },
 	inverseJoinColumns = {
 					@JoinColumn(name = "recipes_id", nullable = false, updatable = false) })
 	

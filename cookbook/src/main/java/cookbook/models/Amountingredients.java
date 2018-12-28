@@ -3,6 +3,7 @@ package cookbook.models;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -60,7 +61,7 @@ public class Amountingredients implements java.io.Serializable {
 		this.ingredients = ingredients;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade =CascadeType.REMOVE)
 	@JoinColumn(name = "recipes_id", nullable = false, insertable = false, updatable = false)
 	public Recipes getRecipes() {
 		return this.recipes;

@@ -56,6 +56,7 @@ public class RestaurantController {
 		
 		//nie działa tutaj ale działa w przepisie?
 		Set<String> recipe = restaurant.getrecipes().stream().map(x -> x.getTittle()).collect(Collectors.toSet());
+		restaurant.getrecipes().forEach(x-> System.out.println(x.getTittle()));
 
 		RestaurantResponse response = new RestaurantResponse(restaurant.getId().getName(), restaurant.getAddress(),
 				restaurant.getCode(), restaurant.getId().getCity(), recipe);
