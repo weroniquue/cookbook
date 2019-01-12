@@ -14,13 +14,15 @@ import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { RecipeListComponent } from './recipe-list/recipe-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RecipeComponent,
     HeaderComponent,
-    LoginComponent
+    LoginComponent,
+    RecipeListComponent
   ],
   imports: [
     HttpClientModule,

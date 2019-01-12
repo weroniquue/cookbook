@@ -1,5 +1,5 @@
-import { Recipe } from './recipe';
-import { markParentViewsForCheckProjectedViews } from '@angular/core/src/view/util';
+import { Recipe } from './models/recipe';
+//import { markParentViewsForCheckProjectedViews } from '@angular/core/src/view/util';
 
 export const mock_recipes: Recipe[] = [
   {   

@@ -1,8 +1,10 @@
-<p>
-  recipe works!
-</p>
+<div *ngIf="recipe">
 
-<h2>Nazwa przepisu</h2>
-<p>
-  treść przepisu
-</p>
+  <h2>Selected recipe: {{recipe.title}}</h2>
+  <div>
+    <label>name:
+      <input [(ngModel)]="recipe.title" placeholder="title"/>
+    </label>
+  </div>
+
+</div>
