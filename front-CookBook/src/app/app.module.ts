@@ -1,12 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
-import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppComponent } from './app.component';
 import { RecipeComponent } from './recipe/recipe.component';
 import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './login/login.component';
+
+import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -20,7 +23,9 @@ import { MatButtonModule } from '@angular/material/button';
     LoginComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
+    FormsModule,
     BrowserAnimationsModule,
     MatFormFieldModule,
     MatInputModule,
