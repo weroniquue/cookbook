@@ -1,9 +1,10 @@
 <h2>My Recipes</h2>
 
 <ul>
-  <li [class.selected]="recipe === selectedRecipe" *ngFor="let recipe of recipe_list" (click)="onSelect(recipe)">
-    <span>{{recipe.title}}</span> {{recipe.description}}
+  <!-- <li [class.selected]="recipe === selectedRecipe" *ngFor="let recipe of recipe_list" (click)="onSelect(recipe)"> -->
+  <li *ngFor="let recipe of recipe_list">
+    <a routerLink="/recipes/{{recipe.id}}"><span>{{recipe.title}}</span> {{recipe.description}}</a>
   </li>
 </ul>
 
-<app-recipe [recipe]="selectedRecipe"></app-recipe>
+<!-- <app-recipe [recipe]="selectedRecipe"></app-recipe> -->

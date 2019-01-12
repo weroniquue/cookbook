@@ -15,6 +15,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { RecipeListComponent } from './recipe-list/recipe-list.component';
+import { MessagesComponent } from './messages/messages.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -22,12 +24,14 @@ import { RecipeListComponent } from './recipe-list/recipe-list.component';
     RecipeComponent,
     HeaderComponent,
     LoginComponent,
-    RecipeListComponent
+    RecipeListComponent,
+    MessagesComponent
   ],
   imports: [
     HttpClientModule,
     BrowserModule,
     FormsModule,
+    AppRoutingModule,
     BrowserAnimationsModule,
     MatFormFieldModule,
     MatInputModule,

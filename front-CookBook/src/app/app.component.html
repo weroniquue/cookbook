@@ -1,11 +1,8 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-</div>
+<h1>{{title}}</h1>
 
-<app-login></app-login>
-<app-recipe-list></app-recipe-list>
-<!-- <app-recipe [recipe]]="selectedRecipe"></app-recipe> -->
-<!-- <app-recipe></app-recipe> -->
+<nav>
+  <a routerLink="/recipes">Recipes</a>
+</nav>
+<router-outlet></router-outlet>
+<!-- <app-recipe-list></app-recipe-list> -->
+<app-messages></app-messages>

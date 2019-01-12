@@ -3,6 +3,7 @@ import { Recipe } from './models/recipe';
 
 export const mock_recipes: Recipe[] = [
   {   
+      id: 1,
       title: "Przepis1",
       description: "opis1",
       cuisineName: "włoska",
@@ -23,6 +24,7 @@ export const mock_recipes: Recipe[] = [
       }]
  },
  {   
+    id: 2,
     title: "Przepis2",
     description: "opis2",
     cuisineName: "polska",
@@ -43,6 +45,7 @@ export const mock_recipes: Recipe[] = [
     }]
 },
 {   
+    id: 3,
     title: "Przepis3",
     description: "opis3",
     cuisineName: "szkocka",

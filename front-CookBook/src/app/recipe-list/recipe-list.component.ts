@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { mock_recipes } from '../mock-recipes';
+//import { mock_recipes } from '../mock-recipes';
 import { Recipe } from '../models/recipe';
+
+import { RecipeService } from '../recipe.service';
 
 @Component({
   selector: 'app-recipe-list',
@@ -10,16 +12,22 @@ import { Recipe } from '../models/recipe';
 })
 export class RecipeListComponent implements OnInit {
 
-  recipe_list = mock_recipes;
-  selectedRecipe: Recipe;
+  recipe_list: Recipe[];
+  //selectedRecipe: Recipe;
 
-  constructor() { }
+  constructor(private recipeService: RecipeService) { }
 
   ngOnInit() {
+    this.getRecipes();
   }
 
-  onSelect(recipe: Recipe): void {
+  /*onSelect(recipe: Recipe): void {
     this.selectedRecipe = recipe;
+  }*/
+
+  getRecipes(): void {
+    //this.recipe_list = this.recipeService.getRecipes();
+    this.recipeService.getRecipes().subscribe(recipe_list => this.recipe_list = recipe_list);
   }
 
 }
