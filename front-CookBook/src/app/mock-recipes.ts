@@ -1,10 +1,10 @@
-import { Recipe } from './models/recipe';
+/*import { ReceivedRecipe } from './models/received-recipe';
 //import { markParentViewsForCheckProjectedViews } from '@angular/core/src/view/util';
 
-export const mock_recipes: Recipe[] = [
+export const mock_recipes: ReceivedReciipe[] = [
   {   
       id: 1,
-      title: "Przepis1",
+      tittle: "Przepis1",
       description: "opis1",
       cuisineName: "włoska",
       category: "śniadanie",
@@ -65,4 +65,4 @@ export const mock_recipes: Recipe[] = [
         description: "krok2przepisu3"
     }]
 }
-]
+]*/

@@ -2,12 +2,11 @@ import { Ingredient } from './ingredient';
 import { Step } from './step';
 
 export class Recipe {
-    id: number;
-    title: String;
-    description: String;
-    cuisineName: String;
-    category: String;
+    title: number;
+    description: string;
+    cuisineName: string;
+    category: string;
     ingredients: Ingredient[];
-    photos: String[];
+    photos: string[];
     steps: Step[];
 }

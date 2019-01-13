@@ -13,11 +13,11 @@ export class HeaderComponent implements OnInit {
   constructor(private recipeService: RecipeService) { }
  
   ngOnInit() {
-    this.getHeroes();
+    //this.getHeroes();
   }
  
-  getHeroes(): void {
+  /*getRecipes(): void {
     this.recipeService.getRecipes()
       .subscribe(recipe_list => this.recipe_list = recipe_list.slice(1, 5));
-  }
+  }*/
 }

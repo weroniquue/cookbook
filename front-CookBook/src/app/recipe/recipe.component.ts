@@ -20,13 +20,13 @@ export class RecipeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getRecipe();
+    //this.getRecipe();
   }
 
-  getRecipe(): void {
+  /*getRecipe(): void {
     const id = +this.route.snapshot.paramMap.get('id');
     this.recipeService.getRecipe(id).subscribe(recipe => this.recipe = recipe);
-  }
+  }*/
 
   goBack(): void {
     this.location.back();

@@ -1,4 +1,8 @@
 export class User {
-    name: String;
-    password: String;
+    username: string;
+    firstName: string;
+    secondName: string;
+    email: string;
+    recipeCount: number;
+    commentCount: number;
 }
