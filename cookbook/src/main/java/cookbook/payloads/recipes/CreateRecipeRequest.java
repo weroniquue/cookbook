@@ -7,7 +7,7 @@ import cookbook.payloads.ingredients.AddIngredientToRecipeRequest;
 
 public class CreateRecipeRequest {
 
-	String tittle;
+	String title;
 	String description;
 	String cuisineName;
 	String category;
@@ -16,12 +16,12 @@ public class CreateRecipeRequest {
 	private Set<String> photos = new HashSet<>();
 	private Set<StepsRequest> steps = new HashSet<>();
 
-	public String getTittle() {
-		return tittle;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setTittle(String tittle) {
-		this.tittle = tittle;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public String getDescription() {

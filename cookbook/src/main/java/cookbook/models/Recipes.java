@@ -36,7 +36,7 @@ public class Recipes implements java.io.Serializable{
 	private Category category;
 	private Cuisine cuisine;
 	private User user;
-	private String tittle;
+	private String title;
 	private String description;
 	private Set<Photos> photoses = new HashSet<Photos>(0);
 	private Set<Restaurants> restaurants = new HashSet<Restaurants>(0);
@@ -47,20 +47,20 @@ public class Recipes implements java.io.Serializable{
 	public Recipes() {
 	}
 
-	public Recipes(Cuisine cuisine, User user, String tittle, String description) {
+	public Recipes(Cuisine cuisine, User user, String title, String description) {
 		this.cuisine = cuisine;
 		this.user = user;
-		this.tittle = tittle;
+		this.title = title;
 		this.description = description;
 	}
 
-	public Recipes(Category category, Cuisine cuisine, User user, String tittle, String description,
+	public Recipes(Category category, Cuisine cuisine, User user, String title, String description,
 			Set<Photos> photoses, Set<Restaurants> restaurants, Set<Amountingredients> amountingredientses,
 			Set<Steps> stepses, Set<Comments> commentses) {
 		this.category = category;
 		this.cuisine = cuisine;
 		this.user = user;
-		this.tittle = tittle;
+		this.title = title;
 		this.description = description;
 		this.photoses = photoses;
 		this.restaurants = restaurants;
@@ -111,13 +111,13 @@ public class Recipes implements java.io.Serializable{
 		this.user = users;
 	}
 
-	@Column(name = "tittle", nullable = false, length = 100)
-	public String getTittle() {
-		return this.tittle;
+	@Column(name = "title", nullable = false, length = 100)
+	public String getTitle() {
+		return this.title;
 	}
 
-	public void setTittle(String tittle) {
-		this.tittle = tittle;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	@Column(name = "description", nullable = false, length = 300)
