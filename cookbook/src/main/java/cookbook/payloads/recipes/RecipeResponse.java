@@ -13,7 +13,7 @@ public class RecipeResponse {
 	private Integer id;
 	private String category;
 	private String cuisine;
-	private String tittle;
+	private String title;
 	private String description;
 	private UserProfile createdBy;
 
@@ -28,12 +28,12 @@ public class RecipeResponse {
 	public RecipeResponse() {
 	}
 
-	public RecipeResponse(Integer id, String category, String cuisine, String tittle, String description) {
+	public RecipeResponse(Integer id, String category, String cuisine, String title, String description) {
 		super();
 		this.id = id;
 		this.category = category;
 		this.cuisine = cuisine;
-		this.tittle = tittle;
+		this.title = title;
 		this.description = description;
 	}
 
@@ -65,12 +65,12 @@ public class RecipeResponse {
 		this.cuisine = cuisine;
 	}
 
-	public String getTittle() {
-		return tittle;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setTittle(String tittle) {
-		this.tittle = tittle;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public Set<StepsRequest> getSteps() {

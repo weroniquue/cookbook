@@ -28,7 +28,7 @@ public interface RecipeRepository extends JpaRepository<Recipes, Integer>{
 	
 	Page<Recipes> findByCuisine(Cuisine cuisine, Pageable pageable);
 	
-	List<Recipes> findByTittle(String tittle);
+	List<Recipes> findByTitle(String title);
 	
 	List<Recipes> findByCuisineName(String name);
 	

@@ -163,7 +163,7 @@ public class RecipeService {
 	public RecipeResponse recipeMapper(Recipes recipe) {
 
 		RecipeResponse response = new RecipeResponse(recipe.getId(), recipe.getCategory().getName(),
-				recipe.getCuisine().getName(), recipe.getTittle(), recipe.getDescription());
+				recipe.getCuisine().getName(), recipe.getTitle(), recipe.getDescription());
 
 		response.setRestaurants(recipe.getRestaurants()
 				.stream()
@@ -184,7 +184,8 @@ public class RecipeService {
 		response.setSteps(recipe.getStepses()
 				.stream()
 				.map(step -> {
-					return new StepsRequest(step.getId().getNumber(), step.getId().getDescription());
+					return new StepsRequest(step.getId().getNumber()
+							, step.getId().getDescription());
 				}).collect(Collectors.toSet()));
 
 		response.setComments(getAllComment(recipe.getId()));
@@ -192,14 +193,20 @@ public class RecipeService {
 		response.setIngredients(recipe.getAmountingredientses()
 				.stream()
 				.map(ingr ->{
-					return new IngredientResponse(ingr.getId().getAmount(), ingr.getId().getIngredientsName(), ingr.getIngredients().getUnit());
+					return new IngredientResponse(
+							ingr.getId().getAmount(),
+							ingr.getId().getIngredientsName(),
+							ingr.getIngredients().getUnit());
 				}).collect(Collectors.toSet()));
 
 		User user = recipe.getUsers();
 		response.setCreatedBy(
-				new UserProfile(user.getUsername(), user.getFirstname(), user.getSecondname(), user.getEmail()));
-		
-		
+				new UserProfile(user.getUsername(),
+						user.getFirstname(),
+						user.getSecondname(),
+						user.getEmail(),
+						new Long(user.getRecipeses().size()),
+						new Long(user.getCommentses().size())));
 		return response;
 	}
 
@@ -215,27 +222,36 @@ public class RecipeService {
 				.orElseThrow(() -> new ResourceNotFoundException("User", "username", user.getUsername()));
 
 		
-		Recipes newRecipe = new Recipes(cuisine, currentUser, "tittle", "description");
+		Recipes newRecipe = new Recipes(cuisine, currentUser, "title", "description");
 		newRecipe.setCategory(category);
 		
 		Recipes result = recipeRepository.save(newRecipe);
-		recipe.getPhotos().forEach(
-				photo -> {
-					if(photoRepository.existsById(photo)) {throw new BadRequestException("Photo with name: "+photo +" exists!");}
-					photoRepository.save((new Photos(photo, result)));
-				});
+		if(recipe.getPhotos() != null) {
+			recipe.getPhotos().forEach(
+					photo -> {
+						if(photoRepository.existsById(photo)) {throw new BadRequestException("Photo with name: "+photo +" exists!");}
+						photoRepository.save((new Photos(photo, result)));
+					});
+		}
+		
 		
 		recipe.getSteps().forEach(step ->{
 			stepRepository.save(new Steps(new StepsId(step.getId(), step.getDescription(), result.getId()),result));
 		});
 
-		recipe.getIngredients()
+		if(recipe.getIngredients()!=null) {
+			recipe.getIngredients()
 			.forEach(ingredient -> {
 				Ingredients foundIngredient =  ingredientRepository.findByName(ingredient.getName())
 						.orElseThrow(()-> new ResourceNotFoundException("Ingredient", "name", ingredient.getName()));
-				amountIngredientsRepository.save(new Amountingredients(new AmountingredientsId(ingredient.getAmount(), ingredient.getName(), result.getId()),
+				amountIngredientsRepository.save(new Amountingredients(
+						new AmountingredientsId(ingredient.getAmount(),
+									ingredient.getName(),
+									result.getId()),
 						foundIngredient, result));
 			});
+		}
+		
 
 		URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/recipes/{id}")
 				.buildAndExpand(result.getId()).toUri();
@@ -270,8 +286,8 @@ public class RecipeService {
 			
 		}
 		
-		if(!request.getTittle().equals(null)) {
-			recipe.setTittle(request.getTittle());
+		if(!request.getTitle().equals(null)) {
+			recipe.setTitle(request.getTitle());
 		}
 		
 		if(!request.getDescription().equals(null)) {
