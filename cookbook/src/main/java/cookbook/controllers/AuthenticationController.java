@@ -63,8 +63,13 @@ public class AuthenticationController {
 
         String jwt = tokenProvider.generateToken(authentication);
         
+        System.out.println(jwt);
         Cookie cookie = new Cookie("jwt", jwt);
+        System.out.println(cookie);
         cookie.setHttpOnly(true);
+        
+        cookie.setSecure(true);
+        
         response.addCookie(cookie);
         
         
