@@ -1,0 +1,24 @@
+<div *ngIf="loggedIn" class="example-container">
+  
+    <h2>Edycja konta</h2>
+    <mat-form-field>
+      <input [(ngModel)]="firstName" matInput placeholder="Zmień imię">
+    </mat-form-field>
+    
+    <mat-form-field>
+      <input [(ngModel)]="secondName" matInput placeholder="Zmień nazwisko">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input [(ngModel)]="email" matInput placeholder="Zmień adres email">
+    </mat-form-field>
+  
+    <button mat-button (click)="modifyAccount(firstName, secondName, email)">Zapisz zmiany</button>
+    
+  </div>
+  
+  <div *ngIf="!loggedIn">
+    <h2>Musisz być zalogowany aby edytować swoje konto</h2> 
+    <button mat-button routerLink="/login">Zaloguj się</button>
+  </div>
+  

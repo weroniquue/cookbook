@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ExportUser } from '../models/export-user';
 import { UserService } from '../user.service';
 import { User } from '../models/user';
+import { MessageService } from '../message.service';
 
 @Component({
   selector: 'app-login',
@@ -11,12 +12,14 @@ import { User } from '../models/user';
 export class LoginComponent implements OnInit {
 
   user: ExportUser = {
-    usernameOrEmail: "",
-    password: ""
+    usernameOrEmail: '',
+    password: ''
   };
-  accessToken: string;
+  accessToken = '';
+  loggedIn = false;
 
-  constructor (private userService: UserService) {}
+  constructor (private userService: UserService,
+    private messageService: MessageService) {}
 
   ngOnInit() {
   }
@@ -28,6 +31,19 @@ export class LoginComponent implements OnInit {
     this.userService.login(this.user).subscribe(data => this.accessToken = data['accessToken']);
     // zapisanie klucza użytkownika:
     this.userService.addAuthenticationToken(this.accessToken);
+    // informacja o zalogowaniu:
+    if (this.accessToken.length > 0) {
+      this.messageService.add(`Zalogowano, token dostępu to ${this.accessToken}`);
+      this.loggedIn = true;
+    } else this.loggedIn = false;
+  }
+
+  logOut(){
+    this.user.usernameOrEmail = '';
+    this.user.password = '';
+    this.accessToken = '';
+    this.userService.logout();
+    this.loggedIn = false;
   }
 
 }

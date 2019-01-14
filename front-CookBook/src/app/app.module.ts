@@ -18,6 +18,10 @@ import { MessagesComponent } from './messages/messages.component';
 import { AppRoutingModule } from './app-routing.module';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 
+import { CookieService } from 'ngx-cookie-service';
+import { AccountCreateComponent } from './account-create/account-create.component';
+import { AccountEditComponent } from './account-edit/account-edit.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +30,9 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     LoginComponent,
     RecipeListComponent,
     MessagesComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    AccountCreateComponent,
+    AccountEditComponent
   ],
   imports: [
     HttpClientModule,
@@ -38,7 +44,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     MatInputModule,
     MatButtonModule
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
