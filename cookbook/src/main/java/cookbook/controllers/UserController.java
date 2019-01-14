@@ -63,6 +63,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/myProfile")
+	@PreAuthorize("hasRole('USER')")
 	public UserProfile getMyProfile(@CurrentUser UserPrincipal currentUser) {
 		User user = userRepository.findByUsername(currentUser.getUsername())
 				.orElseThrow(() -> new ResourceNotFoundException("User", "username", currentUser.getUsername()));
