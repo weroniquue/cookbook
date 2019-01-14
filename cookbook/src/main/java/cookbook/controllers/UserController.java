@@ -54,12 +54,27 @@ public class UserController {
 				.orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
 
 		long recipeCount = recipeRepository.countByUsers(user);
-		long commentCount = 0;
+		long commentCount = user.getCommentses().size();
 
 		UserProfile userProfile = new UserProfile(user.getUsername(), user.getFirstname(), user.getSecondname(),
 				user.getEmail(), recipeCount, commentCount);
 
 		return userProfile;
+	}
+	
+	@GetMapping("/myProfile")
+	public UserProfile getMyProfile(@CurrentUser UserPrincipal currentUser) {
+		User user = userRepository.findByUsername(currentUser.getUsername())
+				.orElseThrow(() -> new ResourceNotFoundException("User", "username", currentUser.getUsername()));
+		
+		long recipeCount = recipeRepository.countByUsers(user);
+		long commentCount = user.getCommentses().size();
+		
+		UserProfile userProfile = new UserProfile(user.getUsername(), user.getFirstname(), user.getSecondname(),
+				user.getEmail(), recipeCount, commentCount);
+
+		return userProfile;
+	
 	}
 
 	@DeleteMapping("/{username}")
