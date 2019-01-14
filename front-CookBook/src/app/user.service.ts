@@ -71,8 +71,10 @@ export class UserService {
     /*if (this.cookieService.check('jwt')) {
       if (this.cookieService.get('jwt').length > 0) return true;
     } else return false*/
-    if (localStorage.getItem('jwt').length > 0) return true;
-    else return false;
+    if (localStorage.getItem('jwt') != null) {
+      if (localStorage.getItem('jwt').length > 0) return true
+      else return false;
+    } else return false;
   }
 
   whoAmI(): string {
