@@ -31,16 +31,19 @@ export class LoginComponent implements OnInit {
   onClick(username: string, password: string): void {
     this.user.usernameOrEmail = username;
     this.user.password = password;
+
+    this.userService.login(this.user).subscribe();
+
     // logowanie:
-    this.userService.login(this.user).subscribe(data => this.accessToken = data['accessToken']);
+    /*this.userService.login(this.user).subscribe(data => this.accessToken = data['accessToken']);
     // zapisanie klucza użytkownika:
-    this.userService.addAuthenticationToken(this.accessToken);
+    this.userService.addAuthenticationToken(this.accessToken);*/
     // informacja o zalogowaniu:
-    if (this.accessToken.length > 0) {
+    //if (this.accessToken.length > 0) {
       this.messageService.add(`Zalogowano, token dostępu to ${this.accessToken}`);
       this.loggedIn = true;
       localStorage.setItem('cookbook_username', this.user.usernameOrEmail);
-    } else this.loggedIn = false;
+    //} else this.loggedIn = false;
   }
 
   logOut(){
