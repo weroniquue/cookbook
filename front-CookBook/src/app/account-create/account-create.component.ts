@@ -36,13 +36,11 @@ export class AccountCreateComponent implements OnInit {
     password: string
   ) {
     if (firstName.length > 0 && secondName.length > 0 && username.length > 0 && email.length > 0 && password.length >= 5){
-      this.newAccount.firstName = firstName;
-      this.newAccount.secondName = secondName;
-      this.newAccount.username = username;
-      this.newAccount.email = email;
-      this.newAccount.password = password;
+      // utworzenie obiektu do przesłania na serwer:
+      this.newAccount = new AccountCreation(firstName, secondName, username, email, password);
       // założenie konta:
       this.userService.createAccount(this.newAccount).subscribe(data => this.message = data['message']);
+      // komunikat:
       this.messageService.add(this.message);
     } else this.messageService.add("Wszystkie pola muszą być wypełnione, spróbuj ponownie.");
   }

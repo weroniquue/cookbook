@@ -18,12 +18,16 @@ export class LoginComponent implements OnInit {
   accessToken = '';
   loggedIn = false;
 
-  constructor (private userService: UserService,
-    private messageService: MessageService) {}
+  constructor (
+    private userService: UserService,
+    private messageService: MessageService
+  ) {}
 
   ngOnInit() {
+    this.loggedIn = this.userService.amILoggedIn();
   }
 
+  // login function:
   onClick(username: string, password: string): void {
     this.user.usernameOrEmail = username;
     this.user.password = password;
@@ -35,6 +39,7 @@ export class LoginComponent implements OnInit {
     if (this.accessToken.length > 0) {
       this.messageService.add(`Zalogowano, token dostępu to ${this.accessToken}`);
       this.loggedIn = true;
+      localStorage.setItem('cookbook_username', this.user.usernameOrEmail);
     } else this.loggedIn = false;
   }
 

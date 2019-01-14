@@ -6,6 +6,7 @@ import { User } from './models/user';
 import { ExportUser } from './models/export-user';
 import { MessageService } from './message.service';
 import { AccountCreation } from './models/account-creation';
+import { AccountEdit } from './models/account-edit';
 
 import { CookieService } from 'ngx-cookie-service';
 
@@ -18,28 +19,31 @@ const httpOptions = {
 @Injectable({ providedIn: 'root' })
 export class UserService {
 
-  cookieValue = 'UNKNOWN';
-
   constructor(
     private http: HttpClient,
     private messageService: MessageService,
     private cookieService: CookieService
   ) {}
 
+  static readonly httpOptionsWithCredential = {
+    headers: new HttpHeaders({'Content-type': 'application/json'}),
+    withCredentials: true
+  };
+
   private loginUrl = 'http://localhost:8080/cookbook/api/auth/signin';
   private recipesUrl = 'http://localhost:8080/cookbook/api/user';
   private accountCreationUrl = 'http://localhost:8080/cookbook/api/auth/signup';
   private updateAccountUrl = 'http://localhost:8080/cookbook/api/user';
+  private whoAmIUrl = 'http://localhost:8080/cookbook/api/user/myProfile';
 
-  private log(message: string) {
-    this.messageService.add(`RecipeService: ${message}`);
-  }
+  accessToken = '';
 
   addAuthenticationToken(token: string){
-    this.cookieService.set('fwt', token);
+    //this.cookieService.set('fwt', token);
+    localStorage.setItem('jwt', token);
   }
 
-  getUser(username: string): Observable<User> {
+  getUserDetails(username: string): Observable<User> {
     const url = `${this.recipesUrl}/${username}`;
     return this.http.get<User>(url);
   }
@@ -49,22 +53,32 @@ export class UserService {
   }
 
   logout(){
-    this.cookieService.set('fwt', '');
+    //this.cookieService.set('fwt', '');
+    localStorage.setItem('jwt', '');
+    // odbiór - localStorage.getItem(key);
   }
 
   createAccount(newAccount: AccountCreation) {
     return this.http.post<AccountCreation>(this.accountCreationUrl, newAccount, httpOptions);
   }
 
-  updateAccount(newAccount: AccountCreation, username: string) {
+  updateAccount(newAccount: AccountEdit, username: string) {
     const url = `${this.updateAccountUrl}/${username}`;
-    return this.http.post<AccountCreation>(url, newAccount, httpOptions);
+    return this.http.post<AccountCreation>(url, newAccount, UserService.httpOptionsWithCredential);
   }
 
   amILoggedIn() {
-    if (this.cookieService.check('fwt')) {
-      if (this.cookieService.get('fwt').length > 0) return true;
-    } else return false
+    /*if (this.cookieService.check('jwt')) {
+      if (this.cookieService.get('jwt').length > 0) return true;
+    } else return false*/
+    if (localStorage.getItem('jwt').length > 0) return true;
+    else return false;
+  }
+
+  whoAmI(): string {
+    const username = localStorage.getItem('cookbook_username');
+    if (username.length > 0) return username;
+    else return 'undefined'; 
   }
 
 }

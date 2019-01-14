@@ -31,7 +31,7 @@ export class UserProfileComponent implements OnInit {
   }*/
 
   getUser(){
-    this.userService.getUser("W1ncenty")
+    this.userService.getUserDetails("W1ncenty")
       .subscribe((data: User) => this.profile = { ...data });
   }
 
