@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { User } from '../models/user';
+import { UserProfileData } from '../models/user-profile-data';
 import { UserService } from '../user.service';
 
 @Component({
@@ -16,23 +16,11 @@ export class UserProfileComponent implements OnInit {
     this.getUser();
   }
 
-  profile: User;
-  
-  /*getUser(){
-    this.userService.getUser("W1ncenty")
-      .subscribe((data: User) => this.profile = {
-        username: data['username'],
-        firstName: data['firstName'],
-        secondName: data['secondName'],
-        email: data['email'],
-        recipeCount: data['recipeCount'],
-        commentCount: data['commentCount']
-      });
-  }*/
+  profile: UserProfileData;
 
   getUser(){
     this.userService.getUserDetails("W1ncenty")
-      .subscribe((data: User) => this.profile = { ...data });
+      .subscribe((data: UserProfileData) => this.profile = { ...data });
   }
 
 }

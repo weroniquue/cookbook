@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ExportUser } from '../models/export-user';
+import { UserLoginData } from '../models/user-login-data';
 import { UserService } from '../user.service';
-import { User } from '../models/user';
 import { MessageService } from '../message.service';
 
 @Component({
@@ -11,10 +10,7 @@ import { MessageService } from '../message.service';
 })
 export class LoginComponent implements OnInit {
 
-  user: ExportUser = {
-    usernameOrEmail: '',
-    password: ''
-  };
+  user: UserLoginData;
   accessToken = '';
   loggedIn = false;
 
@@ -29,26 +25,18 @@ export class LoginComponent implements OnInit {
 
   // login function:
   onClick(username: string, password: string): void {
-    this.user.usernameOrEmail = username;
-    this.user.password = password;
-
+    this.user = new UserLoginData(username, password);
     this.userService.login(this.user).subscribe();
 
-    // logowanie:
-    /*this.userService.login(this.user).subscribe(data => this.accessToken = data['accessToken']);
-    // zapisanie klucza użytkownika:
-    this.userService.addAuthenticationToken(this.accessToken);*/
-    // informacja o zalogowaniu:
-    //if (this.accessToken.length > 0) {
-      this.messageService.add(`Zalogowano, token dostępu to ${this.accessToken}`);
+    if (localStorage.getItem('jwt') != null && localStorage.getItem('jwt').length > 0) {
+      this.messageService.add(`Zalogowano, token dostępu to ${localStorage.getItem('jwt')}`);
       this.loggedIn = true;
       localStorage.setItem('cookbook_username', this.user.usernameOrEmail);
-    //} else this.loggedIn = false;
+    }
+    else this.messageService.add("Nie udało się zalogować.");
   }
 
   logOut(){
-    this.user.usernameOrEmail = '';
-    this.user.password = '';
     this.accessToken = '';
     this.userService.logout();
     this.loggedIn = false;

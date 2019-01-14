@@ -2,14 +2,14 @@ import {Injectable, OnInit} from '@angular/core';
 import {Observable, of, throwError} from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { User } from './models/user';
-import { ExportUser } from './models/export-user';
+import { UserProfileData } from './models/user-profile-data';
+import { UserLoginData } from './models/user-login-data';
 import { MessageService } from './message.service';
 import { AccountCreation } from './models/account-creation';
 import { AccountEdit } from './models/account-edit';
 
 import { CookieService } from 'ngx-cookie-service';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
+//import { Cookie } from 'ng2-cookies/ng2-cookies';
 import {catchError, tap} from 'rxjs/operators';
 
 const httpOptions = {
@@ -35,39 +35,31 @@ export class UserService implements OnInit {
     // this.loginStatus = JSON.parse(sessionStorage.getItem('login'));
   }
 
-
-
-
   loginStatus: boolean;
-  user: ExportUser;
+  user: UserLoginData;
+  accessToken = '';
   error = '';
 
   private loginUrl = 'http://localhost:8080/cookbook/api/auth/signin';
   private recipesUrl = 'http://localhost:8080/cookbook/api/user';
   private accountCreationUrl = 'http://localhost:8080/cookbook/api/auth/signup';
   private updateAccountUrl = 'http://localhost:8080/cookbook/api/user';
-  private whoAmIUrl = 'http://localhost:8080/cookbook/api/user/myProfile';
-
-  accessToken = '';
 
   ngOnInit(): void {
     this.user = JSON.parse(sessionStorage.getItem('currentUser'));
   }
 
-
-
-  addAuthenticationToken(token: string) {
-    // this.cookieService.set('jwt', token);
+  addAuthenticationToken(token: string): void {
     localStorage.setItem('jwt', token);
   }
 
-  getUserDetails(username: string): Observable<User> {
+  getUserDetails(username: string): Observable<UserProfileData> {
     const url = `${this.recipesUrl}/${username}`;
-    return this.http.get<User>(url);
+    return this.http.get<UserProfileData>(url);
   }
 
-  login(user: ExportUser): Observable<ExportUser> {
-    return this.http.post<ExportUser>(this.loginUrl, JSON.stringify(user), httpOptionsWithCredential)
+  login(user: UserLoginData): Observable<UserLoginData> {
+    return this.http.post<UserLoginData>(this.loginUrl, JSON.stringify(user), httpOptionsWithCredential)
       .pipe(
         tap(data => {
           localStorage.setItem('jwt', data['accessToken']);
@@ -80,13 +72,9 @@ export class UserService implements OnInit {
       );
   }
 
-  logout() {
-    // this.cookieService.set('jwt', '');
-    // localStorage.setItem('jwt', '');
-    // odbiór - localStorage.getItem(key);
-
-     localStorage.removeItem('jwt');
-     localStorage.removeItem('cookbook_username');
+  logout(): void {
+    localStorage.removeItem('jwt');
+    localStorage.removeItem('cookbook_username');
   }
 
   createAccount(newAccount: AccountCreation) {
@@ -99,22 +87,18 @@ export class UserService implements OnInit {
       .pipe(
         tap(data => {
           console.log(data);
-        }),
-        catchError(err => {
-          this.error = err.error.message;
-          console.log(this.error);
-          return throwError(err);
-        })
-      );
+        }
+      ),
+      catchError(err => {
+        this.error = err.error.message;
+        console.log(this.error);
+        return throwError(err);
+      })
+    );
   }
 
-  amILoggedIn() {
-    /*if (this.cookieService.check('jwt')) {
-      if (this.cookieService.get('jwt').length > 0) return true;
-    } else return false*/
-    if (localStorage.getItem('jwt') != null && localStorage.getItem('jwt').length > 0) {
-      return true;
-    }
+  amILoggedIn(): boolean {
+    if (localStorage.getItem('jwt') != null && localStorage.getItem('jwt').length > 0) return true;
     return false;
   }
 

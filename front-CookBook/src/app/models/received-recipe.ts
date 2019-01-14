@@ -1,6 +1,6 @@
 import { Ingredient } from './ingredient';
 import { Step } from './step';
-import { User } from './user';
+import { UserProfileData } from './user-profile-data';
 import { Restaurant } from './restaurant';
 import { Comment } from './comment';
 
@@ -10,7 +10,7 @@ export class ReceivedRecipe {
     cuisine: string;
     tittle: string;
     description: string;
-    createdBy: User;
+    createdBy: UserProfileData;
     steps: Step[];
     photos: string[];
     restaurants: Restaurant[];
