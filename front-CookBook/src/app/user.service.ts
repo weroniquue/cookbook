@@ -39,7 +39,7 @@ export class UserService {
   accessToken = '';
 
   addAuthenticationToken(token: string){
-    //this.cookieService.set('fwt', token);
+    //this.cookieService.set('jwt', token);
     localStorage.setItem('jwt', token);
   }
 
@@ -53,7 +53,7 @@ export class UserService {
   }
 
   logout(){
-    //this.cookieService.set('fwt', '');
+    //this.cookieService.set('jwt', '');
     localStorage.setItem('jwt', '');
     // odbiór - localStorage.getItem(key);
   }

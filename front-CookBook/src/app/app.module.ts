@@ -17,6 +17,7 @@ import { RecipeListComponent } from './recipe-list/recipe-list.component';
 import { MessagesComponent } from './messages/messages.component';
 import { AppRoutingModule } from './app-routing.module';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { CookieService } from 'ngx-cookie-service';
 import { AccountCreateComponent } from './account-create/account-create.component';
@@ -42,7 +43,8 @@ import { AccountEditComponent } from './account-edit/account-edit.component';
     BrowserAnimationsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatToolbarModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]
