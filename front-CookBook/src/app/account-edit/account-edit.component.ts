@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { MessageService } from '../message.service';
-import { AccountEdit } from '../models/account-edit';
 
 @Component({
   selector: 'app-account-edit',
@@ -16,8 +15,15 @@ export class AccountEditComponent implements OnInit {
   ) { }
 
   loggedIn = false;
-  updatedAccount: AccountEdit;
+
+  updatedAccount = {
+    firstName: '',
+    secondName: '',
+    email: ''
+  }
+
   message: string;
+  currentUsername: string;
 
   ngOnInit() {
     this.loggedIn = this.userService.amILoggedIn();
@@ -32,8 +38,10 @@ export class AccountEditComponent implements OnInit {
       this.updatedAccount.firstName = firstName;
       this.updatedAccount.secondName = secondName;
       this.updatedAccount.email = email;
-      // założenie konta:
-      this.userService.updateAccount(this.updatedAccount, "lalala").subscribe(data => this.message = data['message']);
+      // ustalenie tożsamości:
+      this.currentUsername = this.userService.whoAmI();
+      // edycja konta:
+      this.userService.updateAccount(this.updatedAccount, this.currentUsername).subscribe(data => this.message = data['message']);
       this.messageService.add(this.message);
     } else this.messageService.add("Wszystkie pola muszą być wypełnione, spróbuj ponownie.");
   }
