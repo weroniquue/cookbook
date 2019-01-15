@@ -4,8 +4,8 @@ export class UserLoginData {
         usernameOrEmail: string,
         password: string
     ) {
-        usernameOrEmail = usernameOrEmail;
-        password = password;
+        this.usernameOrEmail = usernameOrEmail;
+        this.password = password;
     }
 
     usernameOrEmail: string;
