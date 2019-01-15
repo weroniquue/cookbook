@@ -26,14 +26,23 @@ export class LoginComponent implements OnInit {
   // login function:
   onClick(username: string, password: string): void {
     this.user = new UserLoginData(username, password);
-    this.userService.login(this.user).subscribe();
+    this.userService.login(this.user).subscribe(() =>{
+      this.messageService.add(`Zalogowano, token dostępu to ${localStorage.getItem('jwt')}`);
+      this.loggedIn = true;
+      localStorage.setItem('cookbook_username', this.user.usernameOrEmail);
+      },
+      err => {
+        console.log(err);
+        this.messageService.add("Nie udało się zalogować.");
+      }
+    );
 
-    if (localStorage.getItem('jwt') != null && localStorage.getItem('jwt').length > 0) {
+    /*if (localStorage.getItem('jwt') != null && localStorage.getItem('jwt').length > 0) {
       this.messageService.add(`Zalogowano, token dostępu to ${localStorage.getItem('jwt')}`);
       this.loggedIn = true;
       localStorage.setItem('cookbook_username', this.user.usernameOrEmail);
     }
-    else this.messageService.add("Nie udało się zalogować.");
+    else this.messageService.add("Nie udało się zalogować.");*/
   }
 
   logOut(){
