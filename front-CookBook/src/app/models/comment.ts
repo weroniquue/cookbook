@@ -1,4 +1,9 @@
 export class Comment {
-    author: string;
-    content: string;
+
+  constructor (
+    comment: string
+  ) {
+    this.comment = comment;
+  }
+  comment: string;
 }

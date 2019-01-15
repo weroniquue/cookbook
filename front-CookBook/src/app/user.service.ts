@@ -78,7 +78,18 @@ export class UserService implements OnInit {
   }
 
   createAccount(newAccount: UserProfileCreate) {
-    return this.http.post<UserProfileCreate>(this.accountCreationUrl, newAccount, httpOptions);
+    return this.http.post<UserProfileCreate>(this.accountCreationUrl, newAccount, httpOptionsWithCredential)
+      .pipe(
+        tap(data => {
+            console.log(data);
+          }
+        ),
+        catchError(err => {
+          this.error = err.error.message;
+          console.log(this.error);
+          return throwError(err);
+        })
+      );
   }
 
   updateAccount(newAccount: UserProfileEdit, username: string) {

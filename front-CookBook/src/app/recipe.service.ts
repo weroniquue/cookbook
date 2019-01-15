@@ -1,14 +1,22 @@
 import {Injectable, OnInit} from '@angular/core';
 import {Observable, of, throwError} from 'rxjs';
 
-import { Recipe } from './models/recipe';
+import { Comment } from './models/comment';
 import { ReceivedRecipe } from './models/received-recipe';
 //import { mock_recipes } from './mock-recipes';
+
 import { MessageService } from './message.service';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {PagedResponse} from './models/paged-response';
 import {catchError, tap} from 'rxjs/operators';
+import {UserService} from './user.service';
+import {CommentResponse} from './models/commentResponse';
+
+const httpOptionsWithCredential = {
+  headers: new HttpHeaders({'Content-type': 'application/json'}),
+  withCredentials: true
+};
 
 @Injectable({ providedIn: 'root' })
 export class RecipeService implements OnInit{
@@ -44,6 +52,27 @@ export class RecipeService implements OnInit{
           return throwError(err);
         })
       );
+  }
+
+  getComments(id: number): Observable<CommentResponse[]> {
+    const url = `${this.recipesUrl}/${id}/comments`;
+    console.log(url);
+    return this.http.get(url, httpOptionsWithCredential)
+      .pipe(catchError(err => {
+        console.log(err.error.message);
+        return throwError(err);
+      }));
+  }
+
+  createComment(id: number, comment: Comment) {
+    const url = `${this.recipesUrl}/${id}/comments`;
+    return this.http.post(url, comment , httpOptionsWithCredential)
+      .pipe(
+        catchError(err => {
+        console.log(err.error.message);
+        return throwError(err);
+      }));
+
   }
 
 

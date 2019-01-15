@@ -8,7 +8,7 @@ import { RecipeComponent } from './recipe/recipe.component';
 import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './login/login.component';
 
-import { FormsModule } from '@angular/forms'; // <-- NgModel here
+import {FormsModule, ReactiveFormsModule} from '@angular/forms'; // <-- NgModel here
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -54,7 +54,8 @@ import { AccountProfileComponent } from './account-profile/account-profile.compo
     MatExpansionModule,
     MatTreeModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    ReactiveFormsModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

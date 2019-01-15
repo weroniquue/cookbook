@@ -2,9 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { Recipe } from '../models/recipe';
+import { Comment } from '../models/comment';
 import { RecipeService } from '../recipe.service';
 import {ReceivedRecipe} from '../models/received-recipe';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {CommentResponse} from '../models/commentResponse';
 
 @Component({
   selector: 'app-recipe',
@@ -13,6 +15,10 @@ import {ReceivedRecipe} from '../models/received-recipe';
 })
 export class RecipeComponent implements OnInit {
   recipe: ReceivedRecipe;
+  allComments: CommentResponse[];
+
+  newComment: Comment;
+  createCommentForm: FormGroup;
 
   constructor(
     private route: ActivatedRoute,
@@ -22,6 +28,13 @@ export class RecipeComponent implements OnInit {
 
   ngOnInit(): void {
     this.getRecipe();
+    this.createCommentForm = new FormGroup({
+      commentInput: new FormControl('', [Validators.required, Validators.maxLength(100)])
+    });
+
+    this.getComments();
+
+
   }
 
   getRecipe(): void {
@@ -31,8 +44,30 @@ export class RecipeComponent implements OnInit {
     });
   }
 
+  getComments(): void {
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.recipeService.getComments(id)
+      .subscribe(comments => {
+        this.allComments = comments;
+      });
+  }
+
   goBack(): void {
     this.location.back();
+  }
+
+  addComments() {
+    this.newComment = new Comment(this.createCommentForm.controls['commentInput'].value);
+
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.recipeService.createComment(id, this.newComment)
+      .subscribe(data => {
+        console.log(data);
+      }, err =>
+        console.log(err));
+
+    this.getComments()
+
   }
 
   //@Input() recipe: Recipe;

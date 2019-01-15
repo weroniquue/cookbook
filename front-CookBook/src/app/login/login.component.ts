@@ -33,16 +33,9 @@ export class LoginComponent implements OnInit {
       },
       err => {
         console.log(err);
-        this.messageService.add("Nie udało się zalogować.");
+        this.messageService.add('Nie udało się zalogować.');
       }
     );
-
-    /*if (localStorage.getItem('jwt') != null && localStorage.getItem('jwt').length > 0) {
-      this.messageService.add(`Zalogowano, token dostępu to ${localStorage.getItem('jwt')}`);
-      this.loggedIn = true;
-      localStorage.setItem('cookbook_username', this.user.usernameOrEmail);
-    }
-    else this.messageService.add("Nie udało się zalogować.");*/
   }
 
   logOut(){
