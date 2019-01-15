@@ -360,7 +360,9 @@ public class RecipeService {
 									obj.getUsers().getUsername(),
 									obj.getUsers().getFirstname(),
 									obj.getUsers().getSecondname(),
-									obj.getUsers().getEmail()),
+									obj.getUsers().getEmail(),
+									Long.valueOf(obj.getUsers().getRecipeses().size()),
+									Long.valueOf(obj.getUsers().getCommentses().size())),
 							obj.getComment(),
 							obj.getDate());
 			return response;
