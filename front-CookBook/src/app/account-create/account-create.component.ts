@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { MessageService } from '../message.service';
-import { AccountCreation } from '../models/account-creation';
+import { UserProfileCreate } from '../models/user-profile-create';
 
 @Component({
   selector: 'app-account-create',
@@ -16,7 +16,7 @@ export class AccountCreateComponent implements OnInit {
   ) { }
 
   loggedIn = false;
-  newAccount: AccountCreation;
+  newAccount: UserProfileCreate;
   message: string;
 
   ngOnInit() {
@@ -37,7 +37,7 @@ export class AccountCreateComponent implements OnInit {
   ) {
     if (firstName.length > 0 && secondName.length > 0 && username.length > 0 && email.length > 0 && password.length >= 5){
       // utworzenie obiektu do przesłania na serwer:
-      this.newAccount = new AccountCreation(firstName, secondName, username, email, password);
+      this.newAccount = new UserProfileCreate(firstName, secondName, username, email, password);
       // założenie konta:
       this.userService.createAccount(this.newAccount).subscribe(data => this.message = data['message']);
       // komunikat:

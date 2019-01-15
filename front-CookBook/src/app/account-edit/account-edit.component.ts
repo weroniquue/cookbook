@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { MessageService } from '../message.service';
+import { UserProfileEdit } from '../models/user-profile-edit';
 
 @Component({
   selector: 'app-account-edit',
@@ -16,11 +17,7 @@ export class AccountEditComponent implements OnInit {
 
   loggedIn = false;
 
-  updatedAccount = {
-    firstName: '',
-    secondName: '',
-    email: ''
-  }
+  updatedAccount: UserProfileEdit;
 
   message: string;
   currentUsername: string;
@@ -35,9 +32,7 @@ export class AccountEditComponent implements OnInit {
     email: string
   ) {
     if (firstName.length > 0 && secondName.length > 0 && email.length > 0){
-      this.updatedAccount.firstName = firstName;
-      this.updatedAccount.secondName = secondName;
-      this.updatedAccount.email = email;
+      this.updatedAccount = new UserProfileEdit(firstName, secondName, email);
       // ustalenie tożsamości:
       this.currentUsername = this.userService.whoAmI();
       // edycja konta:

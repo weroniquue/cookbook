@@ -5,8 +5,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserProfileData } from './models/user-profile-data';
 import { UserLoginData } from './models/user-login-data';
 import { MessageService } from './message.service';
-import { AccountCreation } from './models/account-creation';
-import { AccountEdit } from './models/account-edit';
+import { UserProfileCreate } from './models/user-profile-create';
+import { UserProfileEdit } from './models/user-profile-edit';
 
 import { CookieService } from 'ngx-cookie-service';
 //import { Cookie } from 'ng2-cookies/ng2-cookies';
@@ -77,13 +77,13 @@ export class UserService implements OnInit {
     localStorage.removeItem('cookbook_username');
   }
 
-  createAccount(newAccount: AccountCreation) {
-    return this.http.post<AccountCreation>(this.accountCreationUrl, newAccount, httpOptions);
+  createAccount(newAccount: UserProfileCreate) {
+    return this.http.post<UserProfileCreate>(this.accountCreationUrl, newAccount, httpOptions);
   }
 
-  updateAccount(newAccount: AccountEdit, username: string) {
+  updateAccount(newAccount: UserProfileEdit, username: string) {
     const url = `${this.updateAccountUrl}/${username}`;
-    return this.http.post<AccountEdit>(url, newAccount, httpOptionsWithCredential)
+    return this.http.post<UserProfileEdit>(url, newAccount, httpOptionsWithCredential)
       .pipe(
         tap(data => {
           console.log(data);
