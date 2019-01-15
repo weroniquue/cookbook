@@ -4,6 +4,7 @@ import { ReceivedRecipe } from '../models/received-recipe';
 import { Recipe } from '../models/recipe';
 
 import { RecipeService } from '../recipe.service';
+import {RecipesListService} from '../recipes-list.service';
 
 @Component({
   selector: 'app-recipe-list',
@@ -12,11 +13,12 @@ import { RecipeService } from '../recipe.service';
 })
 export class RecipeListComponent implements OnInit {
 
-  //recipe_list: ReceivedRecipe[];
-  myRecipe: ReceivedRecipe;
+  recipe_list: ReceivedRecipe[];
+  //myRecipe: ReceivedRecipe;
   //selectedRecipe: Recipe;
 
-  constructor(private recipeService: RecipeService) { }
+  //constructor(private recipeService: RecipeService) { }
+  constructor(private recipeListService: RecipesListService) { }
 
   ngOnInit() {
     this.getRecipe();
@@ -32,8 +34,17 @@ export class RecipeListComponent implements OnInit {
   }*/
 
   getRecipe() {
-    this.recipeService.getRecipe(1)
-      .subscribe((data: ReceivedRecipe) => this.myRecipe = { ...data })
+    // this.recipeService.getRecipe(1)
+    //   .subscribe((data: ReceivedRecipe) => this.myRecipe = { ...data })
+
+    this.recipeListService.getRecipes()
+      .subscribe(data => {
+        console.log(data);
+        this.recipe_list = data.content;
+      });
   }
-  
+
+  displayRecipse() {
+
+  }
 }
