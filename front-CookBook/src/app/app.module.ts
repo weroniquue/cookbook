@@ -18,6 +18,7 @@ import { MessagesComponent } from './messages/messages.component';
 import { AppRoutingModule } from './app-routing.module';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
 
 import { CookieService } from 'ngx-cookie-service';
 import { AccountCreateComponent } from './account-create/account-create.component';
@@ -44,7 +45,8 @@ import { AccountEditComponent } from './account-edit/account-edit.component';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatCardModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

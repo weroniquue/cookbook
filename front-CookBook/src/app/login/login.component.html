@@ -1,5 +1,25 @@
-<div class="example-container">
+<mat-card>
+
+  <mat-card-title>
+    Logowanie
+  </mat-card-title>
+
   
+    <input [(ngModel)]="username" matInput placeholder="Login">
+    <input [(ngModel)]="password" matInput placeholder="Hasło" type="password">
+  
+
+  <mat-card-actions>
+    <button mat-button (click)="onClick(username, password)">Zaloguj</button>
+    <button mat-button routerLink="/account/create">Załóż konto</button>
+  </mat-card-actions>
+
+</mat-card>
+
+<br /><br />
+
+<div class="example-container">
+
   <mat-form-field *ngIf="!loggedIn">
     <input [(ngModel)]="username" matInput placeholder="Login">
   </mat-form-field>
@@ -12,5 +32,7 @@
   <button mat-button *ngIf="!loggedIn" routerLink="/account/create">Załóż konto</button>
   <button mat-button *ngIf="loggedIn" routerLink="/account/edit">Edytuj konto</button>
   <button mat-button *ngIf="loggedIn" (click)="logOut()">Wyloguj</button>
+
+
 
 </div>

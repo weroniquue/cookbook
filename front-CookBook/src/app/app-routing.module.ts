@@ -8,8 +8,8 @@ import { AccountCreateComponent } from './account-create/account-create.componen
 import { AccountEditComponent } from './account-edit/account-edit.component';
 
 const routes: Routes = [
-  //{ path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
+  { path: '', redirectTo: 'account/login', pathMatch: 'full' },
+  { path: 'account/login', component: LoginComponent },
   { path: 'recipes', component: RecipeListComponent },
   { path: 'recipes/:id', component: RecipeComponent },
   { path: 'account/create', component: AccountCreateComponent },
