@@ -23,8 +23,12 @@ import { MatCardModule } from '@angular/material/card';
 import { CookieService } from 'ngx-cookie-service';
 import { AccountCreateComponent } from './account-create/account-create.component';
 import { AccountEditComponent } from './account-edit/account-edit.component';
+<<<<<<< HEAD
 import {MatExpansionModule} from '@angular/material';
 import { AccountProfileComponent } from './account-profile/account-profile.component';
+=======
+import {MatExpansionModule, MatIconModule, MatListModule, MatTreeModule} from '@angular/material';
+>>>>>>> 9807729eb77e57c129dc85891627647d11bd6813
 
 @NgModule({
   declarations: [
@@ -50,7 +54,10 @@ import { AccountProfileComponent } from './account-profile/account-profile.compo
     MatButtonModule,
     MatToolbarModule,
     MatCardModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatTreeModule,
+    MatIconModule,
+    MatListModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]
