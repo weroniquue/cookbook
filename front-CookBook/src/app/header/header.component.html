@@ -1,4 +1,14 @@
-<mat-toolbar></mat-toolbar>
+<mat-toolbar>
+
+  <span class="title">Cookbook</span>
+  <span class="example-fill-remaining-space"></span>
+  <button *ngIf="!loggedIn" mat-button routerLink="account/login">Zaloguj się</button>
+  <button *ngIf="loggedIn" mat-button routerLink="account/profile">Twój profil</button>
+  <button mat-button routerLink="recipes">Przepisy</button>
+
+</mat-toolbar>
+<br /><br />
+
 
 
 <!--

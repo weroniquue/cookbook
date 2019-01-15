@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Recipe } from '../models/recipe';
-import { RecipeService } from '../recipe.service';
+import { UserService } from '../user.service';
  
 @Component({
   selector: 'app-header',
@@ -10,10 +10,12 @@ import { RecipeService } from '../recipe.service';
 export class HeaderComponent implements OnInit {
   recipe_list: Recipe[] = [];
  
-  constructor(private recipeService: RecipeService) { }
+  constructor(private userService: UserService) { }
  
+  loggedIn: boolean;
+
   ngOnInit() {
-    //this.getHeroes();
+    this.loggedIn = this.userService.amILoggedIn();
   }
  
   /*getRecipes(): void {
