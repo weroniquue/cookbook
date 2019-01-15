@@ -1,12 +1,53 @@
 <div *ngIf="recipe">
 
-  <h2>Selected recipe: {{recipe.title}}</h2>
-  <div>
-    <label>name:
-      <input [(ngModel)]="recipe.description" placeholder="description"/>
-    </label>
-  </div>
+  <mat-card>
+    <mat-card-title>{{recipe.title}}</mat-card-title>
+    <mat-card-content>
+      <p>
+        Kategoria: {{recipe.category}}
+        Typ kuchni: {{recipe.cuisine}}
+      </p>
+      <p>
+        {{recipe.description}}
+      </p>
+
+      <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>Składniki</mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <mat-list>
+
+            <mat-list-item *ngFor="let ingredient of recipe.ingredients">
+              <p>{{ingredient}}</p>
+              <h4 mat-line>{{folder.name}}</h4>
+              <p mat-line> {{folder.updated | date}} </p>
+            </mat-list-item>
+
+          </mat-list>
+        </mat-expansion-panel>
+
+
+        <mat-expansion-panel (opened)="panelOpenState = true"
+                             (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title> Krok po kroku</mat-panel-title>
+
+          </mat-expansion-panel-header>
+          <mat-list-item *ngFor="let step of recipe.steps">
+            <h4 mat-line>Krok {{step.id}}</h4>
+            <p mat-line> {{step.description}} </p>
+          </mat-list-item>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </mat-card-content>
+
+
+
+  </mat-card>
+
+
 
 </div>
 
-<button (click)="goBack()">go back</button>
