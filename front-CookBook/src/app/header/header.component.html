@@ -3,9 +3,10 @@
   <span class="title">Cookbook</span>
   <span class="example-fill-remaining-space"></span>
 
-  <button mat-button [matMenuTriggerFor]="menu">Kategoria</button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item *ngFor="let category of categories">{{category}}</button>
+  <button mat-button [matMenuTriggerFor]="category">Kategoria</button>
+  <mat-menu #category="matMenu">
+    <a routerLink="/recipes/category/{{category}}" mat-menu-item *ngFor="let category of categories">{{category}}</a>
+    <!--<button mat-menu-item *ngFor="let category of categories">{{category}}</button>-->
   </mat-menu>
 
   <button mat-button [matMenuTriggerFor]="menu">Typ kuchni</button>
