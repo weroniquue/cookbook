@@ -25,6 +25,7 @@ import { AccountCreateComponent } from './account-create/account-create.componen
 import { AccountEditComponent } from './account-edit/account-edit.component';
 import { MatExpansionModule, MatIconModule, MatListModule, MatTreeModule } from '@angular/material';
 import { AccountProfileComponent } from './account-profile/account-profile.component';
+import { FilterTitlePipe } from './recipe-list/filter-title.pipe';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { AccountProfileComponent } from './account-profile/account-profile.compo
     UserProfileComponent,
     AccountCreateComponent,
     AccountEditComponent,
-    AccountProfileComponent
+    AccountProfileComponent,
+    FilterTitlePipe
   ],
   imports: [
     HttpClientModule,

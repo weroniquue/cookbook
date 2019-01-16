@@ -6,23 +6,34 @@
   </li>
 </ul> -->
 
-<div *ngFor="let recipe of recipe_list">
-  <mat-card>
+<form>
+  <input [(ngModel)]="searchText" type="text" class="search-form"
+         placeholder="Title" name= "search"><i class="material-icons">search</i>
+
+  <div *ngFor="let recipe of recipe_list | filterTitle: searchText">
+    <mat-card>
       <mat-card-title>{{recipe.title}}</mat-card-title>
       <mat-card-subtitle>Kategoria: {{recipe.category}}</mat-card-subtitle>
 
-    <!--mały obrazek-->
+      <!--mały obrazek-->
 
-    <mat-card-content>
-      <p>
-        {{recipe.description}}
-      </p>
-    </mat-card-content>
-    <mat-card-actions>
-      <a mat-raised-button routerLink="/recipes/{{recipe.id}}">Zobacz przepis</a>
-    </mat-card-actions>
-  </mat-card>
-</div>
+      <mat-card-content>
+        <p>
+          {{recipe.description}}
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <a mat-raised-button routerLink="/recipes/{{recipe.id}}">Zobacz przepis</a>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+
+
+</form>
+
+
+
 
 <!--<div *ngIf="myRecipe">{{myRecipe.tittle}}</div>-->
 

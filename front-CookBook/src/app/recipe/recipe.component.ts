@@ -15,7 +15,7 @@ import {CommentResponse} from '../models/commentResponse';
 })
 export class RecipeComponent implements OnInit {
   recipe: ReceivedRecipe;
-  allComments: CommentResponse[];
+  allComments: any;
 
   newComment: Comment;
   createCommentForm: FormGroup;

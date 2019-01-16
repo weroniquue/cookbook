@@ -54,7 +54,7 @@ export class RecipeService implements OnInit{
       );
   }
 
-  getComments(id: number): Observable<CommentResponse[]> {
+  getComments(id: number) {
     const url = `${this.recipesUrl}/${id}/comments`;
     console.log(url);
     return this.http.get(url, httpOptionsWithCredential)
