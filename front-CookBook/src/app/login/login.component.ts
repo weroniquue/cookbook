@@ -23,10 +23,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loggedIn = this.userService.amILoggedIn();
-    if (this.loggedIn) {
-      //this.username = localStorage.getItem('cookbook_username');
-      this.getProfileInfo();
-    } 
+    if (this.loggedIn) this.getProfileInfo();
   }
 
   logIn(username: string, password: string): void {
@@ -39,10 +36,10 @@ export class LoginComponent implements OnInit {
       },
       err => {
         console.log(err);
-        this.messageService.add('Nie udało się zalogować.');
+        this.messageService.openSnackBar(err);
       }
     );
-    if (this.loggedIn) this.getProfileInfo();
+    if (this.userService.amILoggedIn()) this.getProfileInfo();
   }
 
   getProfileInfo(){
@@ -50,6 +47,7 @@ export class LoginComponent implements OnInit {
       .subscribe((data: UserProfileData) => this.userProfileData = { ...data },
       err => {
         console.log(err);
+        this.messageService.openSnackBar(err);
       });
   }
 
