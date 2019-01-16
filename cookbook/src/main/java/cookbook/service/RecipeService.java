@@ -222,7 +222,7 @@ public class RecipeService {
 				.orElseThrow(() -> new ResourceNotFoundException("User", "username", user.getUsername()));
 
 		
-		Recipes newRecipe = new Recipes(cuisine, currentUser, "title", "description");
+		Recipes newRecipe = new Recipes(cuisine, currentUser, recipe.getTitle(), recipe.getDescription());
 		newRecipe.setCategory(category);
 		
 		Recipes result = recipeRepository.save(newRecipe);
@@ -384,6 +384,27 @@ public class RecipeService {
 		return commentRepository.save(comment);
 	}
 
+	
+	public List<String> getAllCategories(){
+	
+		return categoryRepository.findAll()
+		.stream()
+		.map(x -> x.getName())
+		.collect(Collectors.toList());
+		
+	
+	}
+	
+	public List<String> getAllCuisine(){
+		
+		return cuisineRepository.findAll()
+		.stream()
+		.map(x -> x.getName())
+		.collect(Collectors.toList());
+		
+	
+	}
+	
 	private void validatePageNumberAndSize(int page, int size) {
 		if (page < 0) {
 			throw new BadRequestException("Page number cannot be less than zero.");

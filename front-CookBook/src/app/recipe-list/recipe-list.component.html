@@ -10,7 +10,21 @@
   <input [(ngModel)]="searchText" type="text" class="search-form"
          placeholder="Title" name= "search"><i class="material-icons">search</i>
 
-  <div *ngFor="let recipe of recipe_list | filterTitle: searchText">
+
+  <button mat-button [matMenuTriggerFor]="menu">Sortuj</button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="ascendingClik()">Alfabetycznie rosnąco</button>
+    <button mat-menu-item (click)="descendingClik()">Alfabetycznie malejąco</button>
+  </mat-menu>
+
+  <!--<button mat-button [matMenuTriggerFor]="menu">Filtruj</button>-->
+  <!--<mat-menu #menu="matMenu">-->
+    <!--<button mat-menu-item (click)="ascendingClik()">Alfabetycznie rosnąco</button>-->
+    <!--<button mat-menu-item (click)="descendingClik()">Alfabetycznie malejąco</button>-->
+  <!--</mat-menu>-->
+
+
+  <div *ngFor="let recipe of recipe_list | filterTitle: searchText| sort: order: ascending">
     <mat-card>
       <mat-card-title>{{recipe.title}}</mat-card-title>
       <mat-card-subtitle>Kategoria: {{recipe.category}}</mat-card-subtitle>

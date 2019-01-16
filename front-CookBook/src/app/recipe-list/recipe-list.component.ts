@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
-import { ReceivedRecipe } from '../models/received-recipe';
-import { Recipe } from '../models/recipe';
+import {ReceivedRecipe} from '../models/received-recipe';
 
-import { RecipeService } from '../recipe.service';
 import {RecipesListService} from '../recipes-list.service';
 
 @Component({
@@ -14,11 +12,13 @@ import {RecipesListService} from '../recipes-list.service';
 export class RecipeListComponent implements OnInit {
 
   recipe_list: ReceivedRecipe[];
+  order:string;
+  ascending: boolean;
   //myRecipe: ReceivedRecipe;
   //selectedRecipe: Recipe;
 
-  //constructor(private recipeService: RecipeService) { }
-  constructor(private recipeListService: RecipesListService) { }
+  constructor(private recipeListService: RecipesListService) {
+  }
 
   ngOnInit() {
     this.getRecipe();
@@ -34,9 +34,6 @@ export class RecipeListComponent implements OnInit {
   }*/
 
   getRecipe() {
-    // this.recipeService.getRecipe(1)
-    //   .subscribe((data: ReceivedRecipe) => this.myRecipe = { ...data })
-
     this.recipeListService.getRecipes()
       .subscribe(data => {
         console.log(data);
@@ -44,7 +41,17 @@ export class RecipeListComponent implements OnInit {
       });
   }
 
-  displayRecipse() {
+  ascendingClik() {
+    this.order = 'title';
+    this.ascending = true;
+  }
+
+
+  descendingClik() {
+    this.order = 'title';
+    this.ascending = false;
 
   }
+
+
 }
