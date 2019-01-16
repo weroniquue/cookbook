@@ -18,6 +18,7 @@ import { MessagesComponent } from './messages/messages.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { CookieService } from 'ngx-cookie-service';
 import { AccountCreateComponent } from './account-create/account-create.component';
@@ -58,7 +59,8 @@ import { RecipeByCategoryComponent } from './recipe-by-category/recipe-by-catego
     MatIconModule,
     MatListModule,
     ReactiveFormsModule,
-    MatMenuModule
+    MatMenuModule,
+    MatSnackBarModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]
