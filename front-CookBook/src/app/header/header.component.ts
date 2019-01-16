@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Recipe } from '../models/recipe';
 import { UserService } from '../user.service';
-import { LoginComponent } from '../login/login.component';
-import {RecipeService} from '../recipe.service';
+import { RecipeService } from '../recipe.service';
  
 @Component({
   selector: 'app-header',
