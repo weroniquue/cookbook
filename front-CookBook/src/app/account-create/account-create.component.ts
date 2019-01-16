@@ -5,6 +5,7 @@ import { UserProfileCreate } from '../models/user-profile-create';
 import { ErrorStateMatcher } from '@angular/material';
 import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
+import {ActivatedRoute, Router} from '@angular/router';
 
 export class MyErrorStateMatche implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -22,6 +23,7 @@ export class MyErrorStateMatche implements ErrorStateMatcher {
 export class AccountCreateComponent implements OnInit {
 
   constructor(
+    private router: Router,
     private userService: UserService,
     private messageService: MessageService,
     private location: Location
@@ -69,8 +71,12 @@ export class AccountCreateComponent implements OnInit {
       data => {
         this.message = data['message'];
         this.messageService.openSnackBar(this.message);
+        setTimeout(() => {
+          this.router.navigate(['account/profile']);
+        }, 1000);  //1s
       }, error => {
         console.log(error);
+        this.messageService.openSnackBar(this.message);
       }
     );
   }
