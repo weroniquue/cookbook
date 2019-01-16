@@ -33,12 +33,12 @@ export class LoginComponent implements OnInit {
       this.messageService.openSnackBar(`Zalogowano pomyślnie`);
       this.loggedIn = true;
       localStorage.setItem('cookbook_username', this.user.usernameOrEmail);
+      this.getProfileInfo();
       },
       err => {
         console.log(err);
       }
     );
-    this.getProfileInfo();
   }
 
   getProfileInfo(){
