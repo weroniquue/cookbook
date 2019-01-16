@@ -15,7 +15,7 @@ import {CommentResponse} from '../models/commentResponse';
 })
 export class RecipeComponent implements OnInit {
   recipe: ReceivedRecipe;
-  allComments: CommentResponse[];
+  allComments: any;//CommentResponse[];
 
   newComment: Comment;
   createCommentForm: FormGroup;
@@ -49,6 +49,7 @@ export class RecipeComponent implements OnInit {
     this.recipeService.getComments(id)
       .subscribe(comments => {
         this.allComments = comments;
+        console.log(comments);
       });
   }
 

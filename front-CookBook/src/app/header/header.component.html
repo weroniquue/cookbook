@@ -2,10 +2,8 @@
 
   <span class="title">Cookbook</span>
   <span class="example-fill-remaining-space"></span>
-  <button *ngIf="!loggedIn" mat-button routerLink="login">Zaloguj się</button>
-  <button *ngIf="loggedIn" mat-button routerLink="account/profile">Twój profil</button>
-  <button *ngIf="loggedIn" mat-button (click)="logOut()" routerLink="login">Wyloguj</button>
   <button mat-button routerLink="recipes">Przepisy</button>
+  <button mat-button routerLink="account/profile">Profil</button>
 
 </mat-toolbar>
 <br /><br />

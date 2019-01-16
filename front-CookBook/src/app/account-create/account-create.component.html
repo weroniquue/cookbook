@@ -46,7 +46,6 @@
         <mat-hint align="end">Not more then 40 characters long.</mat-hint>
         <mat-error *ngIf="hasError('email', 'required')">Second Name is required</mat-error>
         <mat-error *ngIf="hasError('email', 'maxLength')">You have more than 40 characters</mat-error>
-
       </mat-form-field>
 
       <mat-form-field>
@@ -56,7 +55,7 @@
       </mat-form-field>
 
      <mat-form-field>
-        <input matInput type="text" placeholder="Hasło" formControlName="password">
+        <input matInput placeholder="Hasło" formControlName="password" type="password">
         <mat-hint align="end">Minimum 6 characters</mat-hint>
         <mat-error *ngIf="hasError('password', 'required')">Password is required</mat-error>
         <mat-error *ngIf="hasError('password', 'minLength')">You have less than 6 characters</mat-error>

@@ -24,7 +24,6 @@ import { CookieService } from 'ngx-cookie-service';
 import { AccountCreateComponent } from './account-create/account-create.component';
 import { AccountEditComponent } from './account-edit/account-edit.component';
 import { MatExpansionModule, MatIconModule, MatListModule, MatTreeModule } from '@angular/material';
-import { AccountProfileComponent } from './account-profile/account-profile.component';
 
 
 @NgModule({
@@ -37,8 +36,7 @@ import { AccountProfileComponent } from './account-profile/account-profile.compo
     MessagesComponent,
     UserProfileComponent,
     AccountCreateComponent,
-    AccountEditComponent,
-    AccountProfileComponent
+    AccountEditComponent
   ],
   imports: [
     HttpClientModule,

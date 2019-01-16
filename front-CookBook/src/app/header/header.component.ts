@@ -9,21 +9,20 @@ import { LoginComponent } from '../login/login.component';
   styleUrls: [ './header.component.css' ]
 })
 export class HeaderComponent implements OnInit {
-  recipe_list: Recipe[] = [];
  
   constructor(
     private userService: UserService
   ) { }
  
-  loggedIn: boolean;
+  //loggedIn: boolean;
 
   ngOnInit() {
-    this.loggedIn = this.userService.amILoggedIn();
+    //this.loggedIn = this.userService.amILoggedIn();
   }
 
-  logOut() {
+  /*logOut() {
     this.userService.logout();
-  }
+  }*/
  
   /*getRecipes(): void {
     this.recipeService.getRecipes()

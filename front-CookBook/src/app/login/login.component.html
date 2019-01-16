@@ -22,6 +22,8 @@
 
 <div class="example-container">
 
+  <h2 *ngIf="loggedIn">Twój profil</h2>
+
   <mat-form-field *ngIf="!loggedIn">
     <input [(ngModel)]="username" matInput placeholder="Login">
   </mat-form-field>
@@ -30,7 +32,7 @@
     <input [(ngModel)]="password" matInput placeholder="Hasło" type="password">
   </mat-form-field>
 
-  <button mat-button *ngIf="!loggedIn" (click)="onClick(username, password)">Zaloguj</button>
+  <button mat-button *ngIf="!loggedIn" (click)="logIn(username, password)">Zaloguj</button>
   <button mat-button *ngIf="!loggedIn" routerLink="/account/create">Załóż konto</button>
   <button mat-button *ngIf="loggedIn" routerLink="/account/edit">Edytuj konto</button>
   <button mat-button *ngIf="loggedIn" (click)="logOut()">Wyloguj</button>

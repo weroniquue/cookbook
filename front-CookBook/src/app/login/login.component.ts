@@ -11,8 +11,8 @@ import { MessageService } from '../message.service';
 export class LoginComponent implements OnInit {
 
   user: UserLoginData;
-  accessToken = '';
   loggedIn = false;
+  username: string;
 
   constructor (
     private userService: UserService,
@@ -21,10 +21,11 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loggedIn = this.userService.amILoggedIn();
+    if (this.loggedIn) this.username = localStorage.getItem('cookbook_username');
   }
 
   // login function:
-  onClick(username: string, password: string): void {
+  logIn(username: string, password: string): void {
     this.user = new UserLoginData(username, password);
     this.userService.login(this.user).subscribe(() =>{
       this.messageService.add(`Zalogowano, token dostępu to ${localStorage.getItem('jwt')}`);
@@ -39,7 +40,6 @@ export class LoginComponent implements OnInit {
   }
 
   logOut(){
-    this.accessToken = '';
     this.userService.logout();
     this.loggedIn = false;
   }
