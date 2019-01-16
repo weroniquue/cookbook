@@ -1,5 +1,29 @@
-<div *ngIf="user">
+<div class="example-container">
 
-  <h2>{{user.firstName | uppercase}} Details</h2>
+    <h2>Profil użytkownika <b>{{userProfileData.username}}</b></h2>
   
-</div>
+    <div *ngIf="userProfileData">
+      
+      <mat-list>
+        <mat-list-item>
+          <b>Nazwa użytkownika: </b>{{userProfileData.username}} 
+        </mat-list-item>
+        <mat-list-item>
+          <b>Nazwisko: </b>{{userProfileData.firstName}} {{userProfileData.secondName}}
+        </mat-list-item>
+        <mat-list-item>
+          <b>Email: </b>{{userProfileData.email}}
+        </mat-list-item>
+        <mat-list-item>
+          <b>Dodane przepisy: </b>{{userProfileData.recipeCount}}
+        </mat-list-item>
+        <mat-list-item>
+          <b>Komentarze: </b>{{userProfileData.commentCount}}
+        </mat-list-item>
+      </mat-list>
+  
+    </div>
+  
+    <button mat-button (click)="goBack()">Powrót</button>
+  
+  </div>
