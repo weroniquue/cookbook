@@ -175,18 +175,21 @@ public class RecipeService {
 							null);//DO POPRAWY
 		}).collect(Collectors.toSet()));
 
+		
 		response.setPhotos(recipe.getPhotoses()
 				.stream()
 				.map(photo -> {
 					return photo.getPath();
 				}).collect(Collectors.toSet()));
 
-		response.setSteps(recipe.getStepses()
+		
+		
+		response.setSteps(stepRepository.findByRecipesOrderByIdAsc(recipe)//recipe.getStepses()
 				.stream()
 				.map(step -> {
 					return new StepsRequest(step.getId().getNumber()
 							, step.getId().getDescription());
-				}).collect(Collectors.toSet()));
+				}).collect(Collectors.toList()));
 
 		response.setComments(getAllComment(recipe.getId()));
 		
@@ -298,7 +301,7 @@ public class RecipeService {
 		//czyszczenie listy kroków przed
 		if(!request.getSteps().equals(null)) {
 			
-			stepRepository.deleteAll(stepRepository.findByRecipes(recipe));
+			stepRepository.deleteAll(stepRepository.findByRecipesOrderByIdAsc(recipe));
 			
 			request.getSteps().forEach(step ->{
 				stepRepository.save(new Steps(new StepsId(step.getId(), step.getDescription(), recipe.getId()), recipe));

@@ -17,7 +17,7 @@ public class RecipeResponse {
 	private String description;
 	private UserProfile createdBy;
 
-	private Set<StepsRequest> steps;
+	private List<StepsRequest> steps;
 	private Set<String> photos;
 
 	private Set<RestaurantResponse> restaurants;
@@ -73,11 +73,11 @@ public class RecipeResponse {
 		this.title = title;
 	}
 
-	public Set<StepsRequest> getSteps() {
+	public List<StepsRequest> getSteps() {
 		return steps;
 	}
 
-	public void setSteps(Set<StepsRequest> steps) {
+	public void setSteps(List<StepsRequest> steps) {
 		this.steps = steps;
 	}
 

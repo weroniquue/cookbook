@@ -164,7 +164,7 @@ public class Recipes implements java.io.Serializable{
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "recipes", cascade = CascadeType.REMOVE)
-	@OrderBy("number ASC")
+	@OrderBy("id ASC")
 	public Set<Steps> getStepses() {
 		return this.stepses;
 	}

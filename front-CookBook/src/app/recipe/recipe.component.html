@@ -3,6 +3,10 @@
   <mat-card>
     <mat-card-title>{{recipe.title}}</mat-card-title>
     <mat-card-content>
+      <div>
+        Stworzono przez: <a routerLink="/profiles/{{recipe.createdBy.username}}" >{{recipe.createdBy.username}}</a>
+
+      </div>
       <p>
         Kategoria: {{recipe.category}}
         Typ kuchni: {{recipe.cuisine}}
@@ -11,8 +15,19 @@
         {{recipe.description}}
       </p>
 
-      <mat-accordion>
-        <mat-expansion-panel>
+      <div>
+        Przepis spróbujesz w restauracjach:
+        <mat-list>
+          <mat-list-item *ngFor="let restaurant of recipe.restaurants">
+            <p>{{restaurant.name}}</p>
+          </mat-list-item>
+        </mat-list>
+      </div>
+
+
+
+      <mat-accordion multi="true">
+        <mat-expansion-panel >
           <mat-expansion-panel-header>
             <mat-panel-title>Składniki</mat-panel-title>
           </mat-expansion-panel-header>
@@ -20,7 +35,7 @@
           <mat-list>
 
             <mat-list-item *ngFor="let ingredient of recipe.ingredients">
-              <p>{{ingredient}}</p>
+              <p>{{ingredient.name}} {{ingredient.amount}} {{ingredient.unit}}</p>
             </mat-list-item>
 
           </mat-list>

@@ -15,6 +15,6 @@ public interface StepRepository extends JpaRepository<Steps, StepsId>{
 	
 	Optional<Steps> findById(StepsId id);
 	
-	List<Steps> findByRecipes(Recipes recipe);
+	List<Steps> findByRecipesOrderByIdAsc(Recipes recipe);
 
 }

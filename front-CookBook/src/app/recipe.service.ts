@@ -3,7 +3,6 @@ import {Observable, of, throwError} from 'rxjs';
 
 import { Comment } from './models/comment';
 import { ReceivedRecipe } from './models/received-recipe';
-//import { mock_recipes } from './mock-recipes';
 
 import { MessageService } from './message.service';
 
