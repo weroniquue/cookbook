@@ -74,9 +74,9 @@ export class RecipeService implements OnInit{
       );
   }
 
-  getRecipeByCategory(category:string) {
+  getRecipeByCategory(category:string) : Observable<PagedResponse>{
     const url = `${this.categoryUrl}/${category}`;
-    return this.http.get(url)
+    return this.http.get<PagedResponse>(url)
       .pipe(
         tap(data => {
             console.log(data);
@@ -89,9 +89,9 @@ export class RecipeService implements OnInit{
       );
   }
 
-  getRecipeByCuisine(cuisine:string) {
+  getRecipeByCuisine(cuisine:string): Observable<PagedResponse>{
     const url = `${this.cuisineUrl}/${cuisine}`;
-    return this.http.get(url)
+    return this.http.get<PagedResponse>(url)
       .pipe(
         tap(data => {
             console.log(data);

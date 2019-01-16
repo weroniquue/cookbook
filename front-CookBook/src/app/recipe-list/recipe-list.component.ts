@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 
 import {ReceivedRecipe} from '../models/received-recipe';
 
-import {RecipesListService} from '../recipes-list.service';
 import {RecipeService} from '../recipe.service';
 
 @Component({
