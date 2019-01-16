@@ -1,7 +1,10 @@
 <div *ngIf="recipe">
 
   <mat-card>
-    <mat-card-title>{{recipe.title}} </mat-card-title>
+    <mat-card-title>
+      {{recipe.title}}
+
+    </mat-card-title>
     <mat-card-content>
       <div>
         Stworzono przez: <a routerLink="/profiles/{{recipe.createdBy.username}}" >{{recipe.createdBy.username}}</a>

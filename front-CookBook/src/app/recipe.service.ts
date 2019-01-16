@@ -18,7 +18,7 @@ const httpOptionsWithCredential = {
 };
 
 @Injectable({ providedIn: 'root' })
-export class RecipeService implements OnInit{
+export class RecipeService implements OnInit {
 
   private recipesUrl = 'http://localhost:8080/cookbook/api/recipes';
   categoryUrl = 'http://localhost:8080/cookbook/api/category';
@@ -59,7 +59,6 @@ export class RecipeService implements OnInit{
   }
 
   getRecipes(): Observable<PagedResponse> {
-    console.log('get recipes servixe');
     return this.http.get<PagedResponse>(this.recipesUrl)
       .pipe(
         tap(data => {
@@ -73,7 +72,7 @@ export class RecipeService implements OnInit{
       );
   }
 
-  getRecipeByCategory(category:string) : Observable<PagedResponse>{
+  getRecipeByCategory(category: string): Observable<PagedResponse> {
     const url = `${this.categoryUrl}/${category}`;
     return this.http.get<PagedResponse>(url)
       .pipe(
@@ -88,19 +87,27 @@ export class RecipeService implements OnInit{
       );
   }
 
-  getRecipeByCuisine(cuisine:string): Observable<PagedResponse>{
+  getRecipeByCuisine(cuisine: string): Observable<PagedResponse> {
     const url = `${this.cuisineUrl}/${cuisine}`;
     return this.http.get<PagedResponse>(url)
       .pipe(
-        tap(data => {
-            console.log(data);
-          }
-        ),
+        tap(),
         catchError(err => {
-          console.log(err.error.message);
           return throwError(err);
         })
       );
+  }
+
+  deleteRecipe(id: number) {
+    const url = `${this.recipesUrl}/${id}`;
+    return this.http.delete(url, httpOptionsWithCredential)
+      .pipe(
+        tap(),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+
   }
 
   getComments(id: number) {

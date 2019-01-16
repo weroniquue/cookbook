@@ -8,6 +8,7 @@ import {ReceivedRecipe} from '../models/received-recipe';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {MatDialog} from '@angular/material';
 import {DeleteConfirmDialogComponent} from '../delete-confirm-dialog/delete-confirm-dialog.component';
+import {CommentResponse} from '../models/commentResponse';
 
 @Component({
   selector: 'app-recipe',
@@ -82,7 +83,7 @@ export class RecipeComponent implements OnInit {
 
   }
 
-  deleteComment(comment: Comment): void {
+  deleteComment(comment: CommentResponse): void {
     const id = +this.route.snapshot.paramMap.get('id');
     this.dialog.open(DeleteConfirmDialogComponent, {
       data: { title: 'Are you sure?',
