@@ -2,7 +2,7 @@
   
   <h2>Utwórz przepis</h2>
     
-  <form [formGroup]="createRecipeForm" autocomplete="off" novalidate (ngSubmit)="createRecipe()">
+  <form [formGroup]="createRecipeForm" autocomplete="off" novalidate (ngSubmit)="createRecipe(createRecipeForm.value)">
         
     <mat-card-content>
          
@@ -10,50 +10,94 @@
       <mat-form-field class="pad">
         <input matInput type="text" placeholder="Tytuł" formControlName="title">
         <mat-hint align="end">Maksymalnie 50 znaków</mat-hint>
-        <mat-error *ngIf="hasError('firstName', 'required')">Tytuł jest wymagany.</mat-error>
-        <mat-error *ngIf="hasError('firstName', 'maxLength')">Tytuł przekroczył 50 znaków.</mat-error>
+        <mat-error *ngIf="hasError('title', 'required')">Tytuł jest wymagany.</mat-error>
+        <mat-error *ngIf="hasError('title', 'maxLength')">Tytuł przekroczył 50 znaków.</mat-error>
       </mat-form-field>
         
       <!-- opis -->
       <mat-form-field class="pad">
         <input matInput type="text" placeholder="Opis" formControlName="description">
         <mat-hint align="end">Maksymalnie 150 znaków</mat-hint>
-        <mat-error *ngIf="hasError('secondName', 'required')">Opis jest wymagany.</mat-error>
-        <mat-error *ngIf="hasError('secondName', 'maxLength')">Opis przekroczył 150 znaków.</mat-error>
+        <mat-error *ngIf="hasError('description', 'required')">Opis jest wymagany.</mat-error>
+        <mat-error *ngIf="hasError('description', 'maxLength')">Opis przekroczył 150 znaków.</mat-error>
       </mat-form-field>
         
       <!-- typ kuchni -->
       <mat-form-field class="pad">
-        <mat-select placeholder="Typ kuchni...">
-          <mat-option *ngFor="let cuis of cuisine" value="cuis">{{cuis}}</mat-option>
+        <mat-select placeholder="Typ kuchni..." matInput formControlName="cuisineName">
+          <mat-option *ngFor="let x of cuisine" value="{{x}}">{{x}}</mat-option>
         </mat-select>
       </mat-form-field>
     
       <!-- kategoria -->
       <mat-form-field class="pad">
-        <mat-select placeholder="Kategoria...">
-          <mat-option *ngFor="let category of categories" value="category">{{category}}</mat-option>
+        <mat-select placeholder="Kategoria..." matInput formControlName="category">
+          <mat-option *ngFor="let category of categories" value="{{category}}">{{category}}</mat-option>
         </mat-select>
       </mat-form-field>
     
       <!-- składniki -->
-      <mat-form-field class="pad">
-        // składniki
-      </mat-form-field>
+      <div formArrayName="ingredients">
+
+        <section [formGroupName]="i" *ngFor="let ingredient of createRecipeForm.controls.ingredients.controls; let i = index">
+          <mat-form-field class="pad">
+            <mat-select placeholder="Składnik..." matInput>
+              <mat-option *ngFor="let ingr of ingredientList"  formControlName="name">{{ingr.name}} {{ingr.unit}}</mat-option>
+            </mat-select>
+
+          </mat-form-field>
+
+          <!-- Allow generated input field to be removed -->
+          <span
+            *ngIf="createRecipeForm.controls.ingredients.length > 1"
+            (click)="removeIngredientField(i)">
+                     Remove
+                  </span>
+        </section>
+      </div>
+
+      <span
+        (click)="addNewIngredientField()">
+              Dodaj kolejny składnik
+         </span>
   
       <!-- zdjęcia tutaj -->
-      <mat-form-field class="pad">
-        <input matInput type="text" placeholder="Opis" formControlName="description">
-      </mat-form-field>
+      <!--<mat-form-field class="pad">-->
+        <!--<input matInput type="text" placeholder="Opis" formControlName="description">-->
+      <!--</mat-form-field>-->
   
       <!-- steps -->
-    
+      <div formArrayName="steps">
 
-      
+        <section
+          [formGroupName]="i" *ngFor="let step of createRecipeForm.controls.steps.controls; let i = index">
+
+          <mat-form-field class="pad">
+            <input matInput type="text" placeholder="Krok {{i+1}}" formControlName="name">
+            <mat-hint align="end">Maksymalnie 150 znaków</mat-hint>
+            <!--<mat-error *ngIf="hasError('name', 'required')">Opis jest wymagany.</mat-error>-->
+            <!--<mat-error *ngIf="hasError('name', 'maxLength')">Opis przekroczył 150 znaków.</mat-error>-->
+          </mat-form-field>
+
+            <!-- Allow generated input field to be removed -->
+            <span
+              *ngIf="createRecipeForm.controls.steps.length > 1"
+              (click)="removeInputField(i)">
+                     Remove
+                  </span>
+        </section>
+      </div>
+
+      <span
+        (click)="addNewInputField()">
+              Dodaj kolejny krok
+         </span>
+
     </mat-card-content>
-    
+
+    <!--[disabled]="!createRecipeForm.valid"-->
     <mat-card-actions align="center">
-      <button mat-raised-button color="primary" [disabled]="!createAccountForm.valid" class="pad">Stwórz przepis</button>
+      <button mat-raised-button color="primary"  class="pad">Stwórz przepis</button>
       <button mat-button (click)="goBack()" class="pad">Powrót</button>
     </mat-card-actions>
       
@@ -66,4 +110,3 @@
   <h2>Zaloguj się aby móc utworzyć nowy przepis</h2> 
   <button mat-button (click)="goBack()">Powrót</button>
 </div>
-    
