@@ -25,6 +25,7 @@ export class RecipeService implements OnInit{
   categoryUrl = 'http://localhost:8080/cookbook/api/category';
   cuisineUrl = 'http://localhost:8080/cookbook/api/cuisine';
 
+
   constructor(
     private http: HttpClient,
     private messageService: MessageService
@@ -46,6 +47,51 @@ export class RecipeService implements OnInit{
   getRecipeById(id: number): Observable<ReceivedRecipe> {
     const url = `${this.recipesUrl}/${id}`;
     return this.http.get<ReceivedRecipe>(url)
+      .pipe(
+        tap(data => {
+            console.log(data);
+          }
+        ),
+        catchError(err => {
+          console.log(err.error.message);
+          return throwError(err);
+        })
+      );
+  }
+
+  getRecipes(): Observable<PagedResponse> {
+    console.log('get recipes servixe');
+    return this.http.get<PagedResponse>(this.recipesUrl)
+      .pipe(
+        tap(data => {
+            console.log(data);
+          }
+        ),
+        catchError(err => {
+          console.log(err.error.message);
+          return throwError(err);
+        })
+      );
+  }
+
+  getRecipeByCategory(category:string) {
+    const url = `${this.categoryUrl}/${category}`;
+    return this.http.get(url)
+      .pipe(
+        tap(data => {
+            console.log(data);
+          }
+        ),
+        catchError(err => {
+          console.log(err.error.message);
+          return throwError(err);
+        })
+      );
+  }
+
+  getRecipeByCuisine(cuisine:string) {
+    const url = `${this.cuisineUrl}/${cuisine}`;
+    return this.http.get(url)
       .pipe(
         tap(data => {
             console.log(data);

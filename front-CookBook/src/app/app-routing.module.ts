@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'recipes/:id', component: RecipeComponent },
   { path: 'account/create', component: AccountCreateComponent },
   { path: 'account/edit', component: AccountEditComponent },
-  { path: 'recipes/category/:category', component: RecipeByCategoryComponent }
+  { path: 'recipes/:categoryOrCuisine/:categoryOrCuisineName', component: RecipeByCategoryComponent }
 ];
 
 @NgModule({

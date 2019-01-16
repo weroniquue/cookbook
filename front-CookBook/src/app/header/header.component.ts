@@ -33,8 +33,4 @@ export class HeaderComponent implements OnInit {
     this.userService.logout();
   }
 
-  /*getRecipes(): void {
-    this.recipeService.getRecipes()
-      .subscribe(recipe_list => this.recipe_list = recipe_list.slice(1, 5));
-  }*/
 }
