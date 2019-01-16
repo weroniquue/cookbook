@@ -23,7 +23,10 @@ import { MatCardModule } from '@angular/material/card';
 import { CookieService } from 'ngx-cookie-service';
 import { AccountCreateComponent } from './account-create/account-create.component';
 import { AccountEditComponent } from './account-edit/account-edit.component';
-import { MatExpansionModule, MatIconModule, MatListModule, MatTreeModule } from '@angular/material';
+import { MatExpansionModule, MatIconModule, MatListModule, MatMenuModule, MatTreeModule } from '@angular/material';
+import { FilterTitlePipe } from './recipe-list/filter-title.pipe';
+import { SortPipe } from './recipe-list/sort.pipe';
+import { RecipeByCategoryComponent } from './recipe-by-category/recipe-by-category.component';
 
 
 @NgModule({
@@ -36,7 +39,10 @@ import { MatExpansionModule, MatIconModule, MatListModule, MatTreeModule } from 
     MessagesComponent,
     UserProfileComponent,
     AccountCreateComponent,
-    AccountEditComponent
+    AccountEditComponent,
+    FilterTitlePipe,
+    SortPipe,
+    RecipeByCategoryComponent
   ],
   imports: [
     HttpClientModule,
@@ -53,7 +59,8 @@ import { MatExpansionModule, MatIconModule, MatListModule, MatTreeModule } from 
     MatTreeModule,
     MatIconModule,
     MatListModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatMenuModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

@@ -1,3 +1,24 @@
 .selected {
     color: red !important;
 }
+
+
+input {
+  width: 100%;
+  padding: 20px;
+}
+
+.search-form {
+  max-width: 900px;
+  margin: 50px auto;
+}
+
+
+
+
+
+
+.fa-trash-o{
+  font-size: 24px;
+  cursor: pointer;
+}

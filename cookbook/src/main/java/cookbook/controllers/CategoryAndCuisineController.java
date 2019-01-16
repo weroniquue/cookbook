@@ -1,6 +1,7 @@
 package cookbook.controllers;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,10 @@ public class CategoryAndCuisineController {
 		
 	}
 	
+	@GetMapping("/category/all")
+	public List<String> getCategories() {
+		return recipeService.getAllCategories();
+	}
 	
 	@PostMapping("/category")
 	@PreAuthorize("hasRole('USER')")
@@ -125,6 +130,11 @@ public class CategoryAndCuisineController {
 		cuisineRepository.deleteById(cuisine);
 
 		return new ResponseEntity<>(new ApiResponse(true, "Cuisine removed successfully"), HttpStatus.OK);
+	}
+	
+	@GetMapping("/cuisine/all")
+	public List<String> getCuisine() {
+		return recipeService.getAllCuisine();
 	}
 
 }
