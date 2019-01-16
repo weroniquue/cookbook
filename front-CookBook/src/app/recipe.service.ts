@@ -21,6 +21,10 @@ const httpOptionsWithCredential = {
 @Injectable({ providedIn: 'root' })
 export class RecipeService implements OnInit{
 
+  private recipesUrl = 'http://localhost:8080/cookbook/api/recipes';
+  categoryUrl = 'http://localhost:8080/cookbook/api/category';
+  cuisineUrl = 'http://localhost:8080/cookbook/api/cuisine';
+
   constructor(
     private http: HttpClient,
     private messageService: MessageService
@@ -28,7 +32,7 @@ export class RecipeService implements OnInit{
 
   ngOnInit(): void {}
 
-  private recipesUrl = 'http://localhost:8080/cookbook/api/recipes';
+
 
   private log(message: string) {
     this.messageService.add(`RecipeService: ${message}`);
@@ -74,6 +78,26 @@ export class RecipeService implements OnInit{
       }));
 
   }
+
+  getCategories() {
+    const url = `${this.categoryUrl}/all`;
+    return this.http.get(url, httpOptionsWithCredential)
+      .pipe(catchError(err => {
+        console.log(err.error.message);
+        return throwError(err);
+      }));
+  }
+
+  getCuisine() {
+    const url = `${this.cuisineUrl}/all`;
+    return this.http.get(url, httpOptionsWithCredential)
+      .pipe(catchError(err => {
+        console.log(err.error.message);
+        return throwError(err);
+      }));
+  }
+
+
 
 
 

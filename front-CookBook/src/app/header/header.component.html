@@ -2,6 +2,17 @@
 
   <span class="title">Cookbook</span>
   <span class="example-fill-remaining-space"></span>
+
+  <button mat-button [matMenuTriggerFor]="menu">Kategoria</button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item *ngFor="let category of categories">{{category}}</button>
+  </mat-menu>
+
+  <button mat-button [matMenuTriggerFor]="menu">Typ kuchni</button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item *ngFor="let name of cuisine">{{name}}</button>
+  </mat-menu>
+
   <button *ngIf="!loggedIn" mat-button routerLink="login">Zaloguj się</button>
   <button *ngIf="loggedIn" mat-button routerLink="account/profile">Twój profil</button>
   <button *ngIf="loggedIn" mat-button (click)="logOut()" routerLink="login">Wyloguj</button>
