@@ -13,9 +13,7 @@
     <a routerLink="/recipes/cuisine/{{name}}" mat-menu-item *ngFor="let name of cuisine">{{name}}</a>
   </mat-menu>
 
-  <button *ngIf="!loggedIn" mat-button routerLink="account/profile">Zaloguj się</button>
-  <button *ngIf="loggedIn" mat-button routerLink="account/profile">Twój profil</button>
-  <button *ngIf="loggedIn" mat-button (click)="logOut()" routerLink="login">Wyloguj</button>
+  <button mat-button routerLink="account/profile">Twój profil</button>
   <button mat-button routerLink="recipes">Przepisy</button>
 
 </mat-toolbar>
