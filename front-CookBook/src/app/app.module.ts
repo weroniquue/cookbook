@@ -27,6 +27,7 @@ import { MatExpansionModule, MatIconModule, MatListModule, MatMenuModule, MatTre
 import { FilterTitlePipe } from './recipe-list/filter-title.pipe';
 import { SortPipe } from './recipe-list/sort.pipe';
 import { RecipeByCategoryComponent } from './recipe-by-category/recipe-by-category.component';
+import { RecipeNewComponent } from './recipe-new/recipe-new.component';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { RecipeByCategoryComponent } from './recipe-by-category/recipe-by-catego
     AccountEditComponent,
     FilterTitlePipe,
     SortPipe,
-    RecipeByCategoryComponent
+    RecipeByCategoryComponent,
+    RecipeNewComponent
   ],
   imports: [
     HttpClientModule,

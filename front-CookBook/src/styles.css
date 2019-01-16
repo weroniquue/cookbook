@@ -15,6 +15,10 @@
     width: 100%;
   }
 
+  .exampler-container * {
+    width: 100%;
+  }
+
   .wide {
     width: 100%;
   }

@@ -8,8 +8,7 @@ import { MessagesComponent } from './messages/messages.component';
 export class MessageService {
 
   constructor(
-    public snackBar: MatSnackBar,
-    //public messagesComponent: MessagesComponent
+    public snackBar: MatSnackBar
   ){ }
 
   messages: string[] = [];
@@ -26,7 +25,7 @@ export class MessageService {
     const snackBarRef = this.snackBar.open(message, 'close', {
       verticalPosition: 'top',
       horizontalPosition: 'center',
-      duration : 10000
+      duration : 5000
     });
 
     snackBarRef.onAction()

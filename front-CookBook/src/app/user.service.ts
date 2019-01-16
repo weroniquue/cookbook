@@ -67,6 +67,7 @@ export class UserService implements OnInit {
         catchError(err => {
           this.error = err.error.message;
           console.log(this.error);
+          this.messageService.openSnackBar(this.error);
           return throwError(err);
         })
       );
@@ -87,6 +88,7 @@ export class UserService implements OnInit {
         catchError(err => {
           this.error = err.error.message;
           console.log(this.error);
+          this.messageService.openSnackBar(this.error);
           return throwError(err);
         })
       );

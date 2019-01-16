@@ -29,17 +29,16 @@ export class LoginComponent implements OnInit {
   logIn(username: string, password: string): void {
     this.user = new UserLoginData(username, password);
     // login:
-    this.userService.login(this.user).subscribe(() =>{
-      this.messageService.add(`Zalogowano, token dostępu to ${localStorage.getItem('jwt')}`);
+    this.userService.login(this.user).subscribe(() => {
+      this.messageService.openSnackBar(`Zalogowano pomyślnie`);
       this.loggedIn = true;
       localStorage.setItem('cookbook_username', this.user.usernameOrEmail);
       },
       err => {
         console.log(err);
-        this.messageService.openSnackBar(err);
       }
     );
-    if (this.userService.amILoggedIn()) this.getProfileInfo();
+    this.getProfileInfo();
   }
 
   getProfileInfo(){
@@ -47,7 +46,6 @@ export class LoginComponent implements OnInit {
       .subscribe((data: UserProfileData) => this.userProfileData = { ...data },
       err => {
         console.log(err);
-        this.messageService.openSnackBar(err);
       });
   }
 

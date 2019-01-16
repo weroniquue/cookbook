@@ -1,49 +1,28 @@
-<div *ngIf="!loggedIn" class="example-container">
+<div *ngIf="!loggedIn" class="example-container exampler-container">
   
   <h2>Utwórz konto</h2>
-  <!--<mat-form-field>-->
-    <!--<input [(ngModel)]="firstName" matInput placeholder="Imię">-->
-  <!--</mat-form-field>-->
-
-  <!--<mat-form-field>-->
-    <!--<input [(ngModel)]="secondName" matInput placeholder="Nazwisko">-->
-  <!--</mat-form-field>-->
-
-  <!--<mat-form-field>-->
-    <!--<input [(ngModel)]="username" matInput placeholder="Login">-->
-  <!--</mat-form-field>-->
-
-  <!--<mat-form-field>-->
-    <!--<input [(ngModel)]="email" matInput placeholder="Adres email">-->
-  <!--</mat-form-field>-->
-
-  <!--<mat-form-field>-->
-    <!--<input [(ngModel)]="password" matInput placeholder="Hasło" type="password">-->
-  <!--</mat-form-field>-->
-
-  <!--<button mat-button (click)="createAccount(firstName, secondName, username, email, password)">Załóż konto</button>-->
-
-
 
   <form [formGroup]="createAccountForm" autocomplete="off" novalidate (ngSubmit)="createAccount()">
+    
     <mat-card-content>
+     
       <mat-form-field>
         <input matInput type="text" placeholder="Imię" formControlName="firstName" id="firstName">
-        <mat-hint align="end">Not more then 40 characters long.</mat-hint>
+        <mat-hint align="end">Maksymalnie 40 znaków</mat-hint>
         <mat-error *ngIf="hasError('firstName', 'required')">Name is required</mat-error>
         <mat-error *ngIf="hasError('firstName', 'maxLength')">You have more than 60 characters</mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <input matInput type="text" placeholder="Nazwisko" formControlName="secondName">
-        <mat-hint align="end">Not more then 40 characters long.</mat-hint>
+        <mat-hint align="end">Maksymalnie 40 znaków</mat-hint>
         <mat-error *ngIf="hasError('secondName', 'required')">Second Name is required</mat-error>
         <mat-error *ngIf="hasError('secondName', 'maxLength')">You have more than 40 characters</mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <input matInput type="text" placeholder="Email" formControlName="email">
-        <mat-hint align="end">Not more then 40 characters long.</mat-hint>
+        <mat-hint align="end">Maksymalnie 40 znaków</mat-hint>
         <mat-error *ngIf="hasError('email', 'required')">Second Name is required</mat-error>
         <mat-error *ngIf="hasError('email', 'maxLength')">You have more than 40 characters</mat-error>
       </mat-form-field>
@@ -56,7 +35,7 @@
 
      <mat-form-field>
         <input matInput placeholder="Hasło" formControlName="password" type="password">
-        <mat-hint align="end">Minimum 6 characters</mat-hint>
+        <mat-hint align="end">Conajmniej 6 znaków</mat-hint>
         <mat-error *ngIf="hasError('password', 'required')">Password is required</mat-error>
         <mat-error *ngIf="hasError('password', 'minLength')">You have less than 6 characters</mat-error>
       </mat-form-field>
@@ -64,15 +43,14 @@
     </mat-card-content>
 
     <mat-card-actions align="center">
-      <button mat-raised-button color="primary" [disabled]="!createAccountForm.valid">Create</button>
+      <button mat-raised-button color="primary" [disabled]="!createAccountForm.valid">Utwórz</button>
+      <button mat-button (click)="goBack()">Powrót</button>
     </mat-card-actions>
+  
   </form>
 
-
-
-
-
 </div>
+
 
 <div *ngIf="loggedIn">
   <h2>Wyloguj się z konta aby móc utworzyć nowe</h2> 

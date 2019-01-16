@@ -10,8 +10,7 @@ import { MatSnackBar } from '@angular/material';
 export class MessagesComponent implements OnInit {
 
   constructor(
-    public messageService: MessageService,
-    public snackBar: MatSnackBar
+    public messageService: MessageService
   ) { }
 
   ngOnInit() {
