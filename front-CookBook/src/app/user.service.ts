@@ -41,9 +41,9 @@ export class UserService implements OnInit {
   error = '';
 
   private loginUrl = 'http://localhost:8080/cookbook/api/auth/signin';
-  private recipesUrl = 'http://localhost:8080/cookbook/api/user';
   private accountCreationUrl = 'http://localhost:8080/cookbook/api/auth/signup';
   private updateAccountUrl = 'http://localhost:8080/cookbook/api/user';
+  private profileInfoUrl = 'http://localhost:8080/cookbook/api/user';
 
   ngOnInit(): void {
     this.user = JSON.parse(sessionStorage.getItem('currentUser'));
@@ -54,7 +54,7 @@ export class UserService implements OnInit {
   }
 
   getUserDetails(username: string): Observable<UserProfileData> {
-    const url = `${this.recipesUrl}/${username}`;
+    const url = `${this.profileInfoUrl}/${username}`;
     return this.http.get<UserProfileData>(url);
   }
 

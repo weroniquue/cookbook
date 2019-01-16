@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { MessageService } from '../message.service';
 import { UserProfileEdit } from '../models/user-profile-edit';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-account-edit',
@@ -12,7 +13,8 @@ export class AccountEditComponent implements OnInit {
 
   constructor(
     private messageService: MessageService,
-    private userService: UserService
+    private userService: UserService,
+    private location: Location
   ) { }
 
   loggedIn = false;
@@ -39,6 +41,10 @@ export class AccountEditComponent implements OnInit {
       this.userService.updateAccount(this.updatedAccount, this.currentUsername).subscribe(data => this.message = data['message']);
       this.messageService.add(this.message);
     } else this.messageService.add("Wszystkie pola muszą być wypełnione, spróbuj ponownie.");
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
 }

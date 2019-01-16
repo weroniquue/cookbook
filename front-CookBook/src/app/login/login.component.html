@@ -1,22 +1,51 @@
-<br /><br />
 
-<div class="example-container">
+<!-- login form -->
 
-  <h2 *ngIf="loggedIn">Twój profil</h2>
+<div *ngIf="!loggedIn" class="example-container">
 
-  <mat-form-field *ngIf="!loggedIn">
+  <mat-form-field>
     <input [(ngModel)]="username" matInput placeholder="Login">
   </mat-form-field>
 
-  <mat-form-field *ngIf="!loggedIn">
+  <mat-form-field>
     <input [(ngModel)]="password" matInput placeholder="Hasło" type="password">
   </mat-form-field>
 
-  <button mat-button *ngIf="!loggedIn" (click)="logIn(username, password)">Zaloguj</button>
-  <button mat-button *ngIf="!loggedIn" routerLink="/account/create">Załóż konto</button>
-  <button mat-button *ngIf="loggedIn" routerLink="/account/edit">Edytuj konto</button>
-  <button mat-button *ngIf="loggedIn" (click)="logOut()">Wyloguj</button>
+  <button mat-button (click)="logIn(username, password)">Zaloguj</button>
+  <button mat-button routerLink="/account/create">Załóż konto</button>
+
+</div>
 
 
+<!-- profile -->
+
+<div *ngIf="loggedIn" class="example-container">
+
+  <h2>Twój profil</h2>
+
+  <div *ngIf="userProfileData">
+    
+    <mat-list>
+      <mat-list-item>
+        <b>Nazwa użytkownika: </b>{{userProfileData.username}} 
+      </mat-list-item>
+      <mat-list-item>
+        <b>Nazwisko: </b>{{userProfileData.firstName}} {{userProfileData.secondName}}
+      </mat-list-item>
+      <mat-list-item>
+        <b>Email: </b>{{userProfileData.email}}
+      </mat-list-item>
+      <mat-list-item>
+        <b>Dodane przepisy: </b>{{userProfileData.recipeCount}}
+      </mat-list-item>
+      <mat-list-item>
+        <b>Komentarze: </b>{{userProfileData.commentCount}}
+      </mat-list-item>
+    </mat-list>
+
+  </div>
+
+  <button mat-button routerLink="/account/edit">Edytuj konto</button>
+  <button mat-button (click)="logOut()">Wyloguj</button>
 
 </div>

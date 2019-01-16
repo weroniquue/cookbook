@@ -16,7 +16,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { RecipeListComponent } from './recipe-list/recipe-list.component';
 import { MessagesComponent } from './messages/messages.component';
 import { AppRoutingModule } from './app-routing.module';
-import { UserProfileComponent } from './user-profile/user-profile.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 
@@ -37,7 +36,6 @@ import { RecipeByCategoryComponent } from './recipe-by-category/recipe-by-catego
     LoginComponent,
     RecipeListComponent,
     MessagesComponent,
-    UserProfileComponent,
     AccountCreateComponent,
     AccountEditComponent,
     FilterTitlePipe,

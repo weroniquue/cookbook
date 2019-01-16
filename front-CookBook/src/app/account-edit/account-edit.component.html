@@ -14,7 +14,8 @@
     </mat-form-field>
   
     <button mat-button (click)="modifyAccount(firstName, secondName, email)">Zapisz zmiany</button>
-    
+    <button mat-button (click)="goBack()">Wróć</button>
+
   </div>
   
   <div *ngIf="!loggedIn">
