@@ -60,14 +60,14 @@ export class RecipeNewComponent implements OnInit {
     );
 
     // utworzenie przepisu:
-    this.recipeService.createRecipe(this.newRecipe).subscribe(
+    /*this.recipeService.createRecipe(this.newRecipe).subscribe(
       data => {
         this.message = data['message'];
         this.messageService.openSnackBar(this.message);
       }, error => {
         console.log(error);
       }
-    );
+    );*/
   }
 
   goBack() {

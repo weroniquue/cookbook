@@ -38,7 +38,7 @@ import { RecipeByCategoryComponent } from './recipe-by-category/recipe-by-catego
 import { RecipeNewComponent } from './recipe-new/recipe-new.component';
 import { AccountProfileComponent } from './account-profile/account-profile.component';
 import { DeleteConfirmDialogComponent } from './delete-confirm-dialog/delete-confirm-dialog.component';
-
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -75,7 +75,8 @@ import { DeleteConfirmDialogComponent } from './delete-confirm-dialog/delete-con
     ReactiveFormsModule,
     MatMenuModule,
     MatSnackBarModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSelectModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent],
