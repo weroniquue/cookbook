@@ -1,8 +1,6 @@
-<div class="example-container">
+<div *ngIf="userProfileData" class="example-container">
 
     <h2>Profil użytkownika <b>{{userProfileData.username}}</b></h2>
-  
-    <div *ngIf="userProfileData">
       
       <mat-list>
         <mat-list-item>
@@ -21,8 +19,6 @@
           <b>Komentarze: </b>{{userProfileData.commentCount}}
         </mat-list-item>
       </mat-list>
-  
-    </div>
   
     <button mat-button (click)="goBack()">Powrót</button>
   
