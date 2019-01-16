@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'account/edit', component: AccountEditComponent },
   { path: 'recipes/:categoryOrCuisine/:categoryOrCuisineName', component: RecipeByCategoryComponent },
   { path: 'profiles/:username', component: AccountProfileComponent },
-  { path: 'recipes/create', component: RecipeNewComponent }
+  { path: 'recipe/new', component: RecipeNewComponent }
 ];
 
 @NgModule({

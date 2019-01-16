@@ -23,8 +23,8 @@
       </mat-form-field>
         
       <!-- typ kuchni -->
-      <mat-form-field class="Typ kuchni...">
-        <mat-select placeholder="Select">
+      <mat-form-field class="pad">
+        <mat-select placeholder="Typ kuchni...">
           <mat-option *ngFor="let cuis of cuisine" value="cuis">{{cuis}}</mat-option>
         </mat-select>
       </mat-form-field>
@@ -51,8 +51,8 @@
     </mat-card-content>
     
     <mat-card-actions align="center">
-      <button mat-raised-button color="primary" [disabled]="!createAccountForm.valid" class="pad">Stwórz przepiss</button>
-      <button mat-button (click)="goBack()">Powrót</button>
+      <button mat-raised-button color="primary" [disabled]="!createAccountForm.valid" class="pad">Stwórz przepis</button>
+      <button mat-button (click)="goBack()" class="pad">Powrót</button>
     </mat-card-actions>
       
   </form>
@@ -60,8 +60,8 @@
 </div>
     
     
-<div *ngIf="loggedIn">
-  <h2>Wyloguj się z konta aby móc utworzyć nowy przepis</h2> 
-  <button mat-button (click)="logOut()">Wyloguj</button>
+<div *ngIf="!loggedIn">
+  <h2>Zaloguj się aby móc utworzyć nowy przepis</h2> 
+  <button mat-button (click)="goBack()">Powrót</button>
 </div>
     
