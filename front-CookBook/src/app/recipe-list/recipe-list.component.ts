@@ -14,24 +14,14 @@ export class RecipeListComponent implements OnInit {
   recipe_list: ReceivedRecipe[];
   order:string;
   ascending: boolean;
-  //myRecipe: ReceivedRecipe;
-  //selectedRecipe: Recipe;
 
-  constructor(private recipeListService: RecipesListService) {
-  }
+  constructor(
+    private recipeListService: RecipesListService
+  ) { }
 
   ngOnInit() {
     this.getRecipe();
   }
-
-  /*onSelect(recipe: Recipe): void {
-    this.selectedRecipe = recipe;
-  }*/
-
-  /*getRecipes(): void {
-    //this.recipe_list = this.recipeService.getRecipes();
-    this.recipeService.getRecipes().subscribe(recipe_list => this.recipe_list = recipe_list);
-  }*/
 
   getRecipe() {
     this.recipeListService.getRecipes()
@@ -46,12 +36,9 @@ export class RecipeListComponent implements OnInit {
     this.ascending = true;
   }
 
-
   descendingClik() {
     this.order = 'title';
     this.ascending = false;
-
   }
-
 
 }

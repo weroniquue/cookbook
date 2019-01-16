@@ -9,7 +9,7 @@ import { AccountEditComponent } from './account-edit/account-edit.component';
 import { RecipeByCategoryComponent } from './recipe-by-category/recipe-by-category.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'account/profile', pathMatch: 'full' },
+  { path: '', redirectTo: 'recipes', pathMatch: 'full' },
   { path: 'account/profile', component: LoginComponent },
   { path: 'recipes', component: RecipeListComponent },
   { path: 'recipes/:id', component: RecipeComponent },
