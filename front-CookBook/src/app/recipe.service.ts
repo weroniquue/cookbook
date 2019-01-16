@@ -124,6 +124,18 @@ export class RecipeService implements OnInit{
 
   }
 
+  deleteComment(id: number, comment: CommentResponse) {
+    const idComment = comment.id;
+    const url = `${this.recipesUrl}/${id}/comments/${idComment}`;
+    return this.http.delete(url, httpOptionsWithCredential)
+      .pipe(
+        catchError(err => {
+          console.log(err.error.message);
+          return throwError(err);
+        }));
+
+  }
+
   getCategories() {
     const url = `${this.categoryUrl}/all`;
     return this.http.get(url, httpOptionsWithCredential)

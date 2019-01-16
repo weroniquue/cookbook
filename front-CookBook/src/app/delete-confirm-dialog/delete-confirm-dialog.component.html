@@ -1,0 +1,16 @@
+<div class="cancel" *ngIf="!login">
+  <mat-icon (click)="cancel()">close</mat-icon>
+  <h3>Zaloguj się, aby usunąć!</h3>
+</div>
+
+<div *ngIf="login">
+  <h1 mat-dialog-title>{{data.title}}</h1>
+  <mat-dialog-content>
+    <p>{{data.content}}</p>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button (click)="cancel()">Cancel</button>
+    <button mat-button (click)="delete()" color="primary">Delete</button>
+  </mat-dialog-actions>
+</div>
+

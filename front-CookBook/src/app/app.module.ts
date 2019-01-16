@@ -23,12 +23,21 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CookieService } from 'ngx-cookie-service';
 import { AccountCreateComponent } from './account-create/account-create.component';
 import { AccountEditComponent } from './account-edit/account-edit.component';
-import { MatExpansionModule, MatIconModule, MatListModule, MatMenuModule, MatTreeModule } from '@angular/material';
+import {
+  MatDialog,
+  MatDialogModule,
+  MatExpansionModule,
+  MatIconModule,
+  MatListModule,
+  MatMenuModule,
+  MatTreeModule
+} from '@angular/material';
 import { FilterTitlePipe } from './recipe-list/filter-title.pipe';
 import { SortPipe } from './recipe-list/sort.pipe';
 import { RecipeByCategoryComponent } from './recipe-by-category/recipe-by-category.component';
 import { RecipeNewComponent } from './recipe-new/recipe-new.component';
 import { AccountProfileComponent } from './account-profile/account-profile.component';
+import { DeleteConfirmDialogComponent } from './delete-confirm-dialog/delete-confirm-dialog.component';
 
 
 @NgModule({
@@ -45,7 +54,8 @@ import { AccountProfileComponent } from './account-profile/account-profile.compo
     SortPipe,
     RecipeByCategoryComponent,
     RecipeNewComponent,
-    AccountProfileComponent
+    AccountProfileComponent,
+    DeleteConfirmDialogComponent
   ],
   imports: [
     HttpClientModule,
@@ -64,9 +74,11 @@ import { AccountProfileComponent } from './account-profile/account-profile.compo
     MatListModule,
     ReactiveFormsModule,
     MatMenuModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDialogModule
   ],
   providers: [CookieService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [DeleteConfirmDialogComponent],
 })
 export class AppModule { }

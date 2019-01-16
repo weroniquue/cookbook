@@ -6,7 +6,8 @@ import { Comment } from '../models/comment';
 import { RecipeService } from '../recipe.service';
 import {ReceivedRecipe} from '../models/received-recipe';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {CommentResponse} from '../models/commentResponse';
+import {MatDialog} from '@angular/material';
+import {DeleteConfirmDialogComponent} from '../delete-confirm-dialog/delete-confirm-dialog.component';
 
 @Component({
   selector: 'app-recipe',
@@ -23,7 +24,8 @@ export class RecipeComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private recipeService: RecipeService,
-    private location: Location
+    private location: Location,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -68,6 +70,32 @@ export class RecipeComponent implements OnInit {
         console.log(err));
 
     this.getComments()
+
+  }
+
+  checkIfYourComment(username: string){
+    if(username === localStorage.getItem('cookbook_username')) {
+      return true;
+    } else {
+      return false;
+    }
+
+  }
+
+  deleteComment(comment: Comment): void {
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.dialog.open(DeleteConfirmDialogComponent, {
+      data: { title: 'Are you sure?',
+        content: 'Do you want to delete your comment?'},
+    }).afterClosed()
+      .subscribe(data => {
+        if (data === 'yes') {
+          this.allComments = this.allComments.filter(h => h !== comment);
+          this.recipeService.deleteComment(id, comment).subscribe();
+
+        }
+      });
+
 
   }
 
