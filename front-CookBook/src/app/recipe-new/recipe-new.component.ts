@@ -36,7 +36,14 @@ export class RecipeNewComponent implements OnInit {
     this.recipeService.getCuisine()
       .subscribe( cuisineList => this.cuisine = cuisineList);
 
-    this.createRecipeForm
+    this.createRecipeForm = new FormGroup({
+      title: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+      description: new FormControl('', [Validators.required, Validators.maxLength(150)])
+    });
+  }
+
+  public hasError(controlName: string, errorName: string) {
+    return this.createRecipeForm.controls[controlName].hasError(errorName);
   }
 
   createRecipe() {

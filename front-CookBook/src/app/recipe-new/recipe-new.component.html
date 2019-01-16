@@ -6,31 +6,47 @@
       
     <mat-card-content>
        
+      <!-- tytuł -->
       <mat-form-field class="pad">
         <input matInput type="text" placeholder="Tytuł" formControlName="title">
         <mat-hint align="end">Maksymalnie 50 znaków</mat-hint>
         <mat-error *ngIf="hasError('firstName', 'required')">Tytuł jest wymagany.</mat-error>
         <mat-error *ngIf="hasError('firstName', 'maxLength')">Tytuł przekroczył 50 znaków.</mat-error>
       </mat-form-field>
-  
+      
+      <!-- opis -->
       <mat-form-field class="pad">
         <input matInput type="text" placeholder="Opis" formControlName="description">
         <mat-hint align="end">Maksymalnie 150 znaków</mat-hint>
         <mat-error *ngIf="hasError('secondName', 'required')">Opis jest wymagany.</mat-error>
         <mat-error *ngIf="hasError('secondName', 'maxLength')">Opis przekroczył 150 znaków.</mat-error>
       </mat-form-field>
-  
-      <mat-form-field class="pad">
-        // dropdown typ kuchni
+      
+      <!-- typ kuchni -->
+      <mat-form-field class="Typ kuchni...">
+        <mat-select placeholder="Select">
+          <mat-option *ngFor="cuis of cuisine" value="cuis">{{cuis}}</mat-option>
+        </mat-select>
       </mat-form-field>
   
+      <!-- kategoria -->
       <mat-form-field class="pad">
-        // dropdown kategoria
+        <mat-select placeholder="Kategoria...">
+          <mat-option *ngFor="category of categories" value="category">{{category}}</mat-option>
+        </mat-select>
       </mat-form-field>
   
+      <!-- składniki -->
       <mat-form-field class="pad">
         // składniki
       </mat-form-field>
+
+      <!-- zdjęcia tutaj -->
+      <mat-form-field class="pad">
+        <input matInput type="text" placeholder="Opis" formControlName="description">
+      </mat-form-field>
+
+      <!-- steps -->
   
     </mat-card-content>
   
