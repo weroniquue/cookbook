@@ -1,27 +1,31 @@
 <h2>My Recipes</h2>
 
-<!--<ul>
-  <li *ngFor="let recipe of recipe_list">
-    <a routerLink="/recipes/{{recipe.id}}"><span>{{recipe.title}}</span> {{recipe.description}}</a>
-  </li>
-</ul> -->
-
 <form>
-  <input [(ngModel)]="searchText" type="text" class="search-form"
-         placeholder="Title" name= "search"><i class="material-icons">search</i>
 
+  <mat-toolbar class="pad">
 
-  <button mat-button [matMenuTriggerFor]="menu">Sortuj</button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="ascendingClik()">Alfabetycznie rosnąco</button>
-    <button mat-menu-item (click)="descendingClik()">Alfabetycznie malejąco</button>
-  </mat-menu>
+    <i class="material-icons">search</i>
+    <input [(ngModel)]="searchText" type="text" class="search-form" placeholder="Wyszukaj..." name="search">
+
+    
+    <span class="example-fill-remaining-space"></span>
+    <!-- dzięki powyższej linijce kolejne przyciski będą po prawej stronie -->
+
+    <button mat-button [matMenuTriggerFor]="menu">Sortuj</button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="ascendingClik()">Alfabetycznie rosnąco</button>
+        <button mat-menu-item (click)="descendingClik()">Alfabetycznie malejąco</button>
+      </mat-menu>
+    
+    <!-- miejsce na guzik filtrujący-->
+
+  </mat-toolbar>
 
 
   <div *ngFor="let recipe of recipe_list | filterTitle: searchText| sort: order: ascending">
-    <mat-card>
+    <mat-card class="pad">
       <mat-card-title>{{recipe.title}}</mat-card-title>
-      <mat-card-subtitle>Kategoria: {{recipe.category}}</mat-card-subtitle>
+      <mat-card-subtitle><span class="category">Kategoria: </span>{{recipe.category}}</mat-card-subtitle>
 
       <!--mały obrazek-->
 
@@ -36,13 +40,4 @@
     </mat-card>
   </div>
 
-
-
 </form>
-
-
-
-
-<!--<div *ngIf="myRecipe">{{myRecipe.tittle}}</div>-->
-
-<!-- <app-recipe [recipe]="selectedRecipe"></app-recipe> -->

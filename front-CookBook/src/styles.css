@@ -2,27 +2,47 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 .example-container {
-    display: flex;
-    flex-direction: column;
-    width: 70%;
-    margin: auto;
-    width: 50%;
-    border: 3px solid #555555;
-    padding: 10px;
-  }
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  margin: auto;
+  width: 50%;
+  border: 3px solid #555555;
+  padding: 10px;
+}
   
-  .example-container > * {
-    width: 100%;
-  }
+.example-container > * {
+  width: 100%;
+}
 
-  .exampler-container * {
-    width: 100%;
-  }
+.exampler-container * {
+  width: 100%;
+}
 
-  .wide {
-    width: 100%;
-  }
+.wide {
+  width: 100%;
+}
 
-  .pad {
-    margin-bottom: 5px;
+.pad {
+  margin-bottom: 10px;
+}
+
+.flex {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex > * {
+  width: 100%;
+  padding: 5px;
+}
+
+.example-fill-remaining-space {
+  /* This fills the remaining space, by using flexbox. 
+     Every toolbar row uses a flexbox row layout. */
+  flex: 1 1 auto;
+}
+
+.eighty {
+  width: 80%;
 }

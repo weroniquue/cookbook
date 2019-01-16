@@ -1,14 +1,13 @@
 <div *ngIf="recipe">
 
   <mat-card>
-    <mat-card-title>
-      {{recipe.title}}
-      <div *ngIf="checkIfYourComment(recipe.createdBy.username)">
-        <button mat-raised-button color="accent" (click)="deleteRecipe()">Usuń</button>
-        <button mat-raised-button color="accent" (click)="editRecipe()">Edytuj</button>
-      </div>
+    <mat-card-title>{{recipe.title}}</mat-card-title>
 
-    </mat-card-title>
+    <div *ngIf="checkIfYourComment(recipe.createdBy.username)" class="pad">
+      <button mat-raised-button (click)="deleteRecipe()">Usuń</button>
+      <button mat-raised-button (click)="editRecipe()">Edytuj</button>
+    </div>
+
     <mat-card-content>
       <div>
         Stworzono przez: <a routerLink="/profiles/{{recipe.createdBy.username}}" >{{recipe.createdBy.username}}</a>
