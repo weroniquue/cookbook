@@ -17,12 +17,6 @@
     <button mat-menu-item (click)="descendingClik()">Alfabetycznie malejąco</button>
   </mat-menu>
 
-  <!--<button mat-button [matMenuTriggerFor]="menu">Filtruj</button>-->
-  <!--<mat-menu #menu="matMenu">-->
-    <!--<button mat-menu-item (click)="ascendingClik()">Alfabetycznie rosnąco</button>-->
-    <!--<button mat-menu-item (click)="descendingClik()">Alfabetycznie malejąco</button>-->
-  <!--</mat-menu>-->
-
 
   <div *ngFor="let recipe of recipe_list | filterTitle: searchText| sort: order: ascending">
     <mat-card>

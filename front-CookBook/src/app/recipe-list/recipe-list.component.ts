@@ -3,6 +3,7 @@ import {Component, OnInit} from '@angular/core';
 import {ReceivedRecipe} from '../models/received-recipe';
 
 import {RecipesListService} from '../recipes-list.service';
+import {RecipeService} from '../recipe.service';
 
 @Component({
   selector: 'app-recipe-list',
@@ -16,7 +17,7 @@ export class RecipeListComponent implements OnInit {
   ascending: boolean;
 
   constructor(
-    private recipeListService: RecipesListService
+    private recipeService: RecipeService
   ) { }
 
   ngOnInit() {
@@ -24,7 +25,7 @@ export class RecipeListComponent implements OnInit {
   }
 
   getRecipe() {
-    this.recipeListService.getRecipes()
+    this.recipeService.getRecipes()
       .subscribe(data => {
         console.log(data);
         this.recipe_list = data.content;

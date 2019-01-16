@@ -1,3 +1,18 @@
-<p>
-  recipe-by-category works!
-</p>
+<h1>Przepisy</h1>
+<div *ngFor="let recipe of recipe_list">
+  <mat-card>
+    <mat-card-title>{{recipe.title}}</mat-card-title>
+    <mat-card-subtitle>Kategoria: {{recipe.category}}</mat-card-subtitle>
+
+    <!--mały obrazek-->
+
+    <mat-card-content>
+      <p>
+        {{recipe.description}}
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <a mat-raised-button routerLink="/recipes/{{recipe.id}}">Zobacz przepis</a>
+    </mat-card-actions>
+  </mat-card>
+</div>

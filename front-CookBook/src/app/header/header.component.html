@@ -6,12 +6,11 @@
   <button mat-button [matMenuTriggerFor]="category">Kategoria</button>
   <mat-menu #category="matMenu">
     <a routerLink="/recipes/category/{{category}}" mat-menu-item *ngFor="let category of categories">{{category}}</a>
-    <!--<button mat-menu-item *ngFor="let category of categories">{{category}}</button>-->
   </mat-menu>
 
   <button mat-button [matMenuTriggerFor]="menu">Typ kuchni</button>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item *ngFor="let name of cuisine">{{name}}</button>
+    <a routerLink="/recipes/cuisine/{{name}}" mat-menu-item *ngFor="let name of cuisine">{{name}}</a>
   </mat-menu>
 
   <button *ngIf="!loggedIn" mat-button routerLink="login">Zaloguj się</button>
@@ -23,17 +22,3 @@
 <br /><br />
 
 
-
-<!--
-<div class="grid grid-pad">
-  <a *ngFor="let recipe of recipe_list" class="col-1-4">
-    <div class="module hero">
-      <h4>{{recipe.name}}</h4>
-    </div>
-  </a>
-</div>
-
-<nav>
-  <a routerLink="/recipe/{{recipe.id}}"></a> działa dla *ngFor
-</nav>
--->
