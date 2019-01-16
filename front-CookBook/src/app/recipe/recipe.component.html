@@ -4,25 +4,25 @@
     <mat-card-title>{{recipe.title}}</mat-card-title>
 
     <div *ngIf="checkIfYourComment(recipe.createdBy.username)" class="pad">
-      <button mat-raised-button (click)="deleteRecipe()">Usuń</button>
+      <button style="margin-right: 5px" mat-raised-button (click)="deleteRecipe()">Usuń</button>
       <button mat-raised-button (click)="editRecipe()">Edytuj</button>
     </div>
 
     <mat-card-content>
+      
       <div>
         Stworzono przez: <a routerLink="/profiles/{{recipe.createdBy.username}}" >{{recipe.createdBy.username}}</a>
-
       </div>
       <p>
-        Kategoria: {{recipe.category}}
-        Typ kuchni: {{recipe.cuisine}}
+        <span style="color: #888">Kategoria: </span>{{recipe.category}}<br />
+        <span style="color: #888">Typ kuchni: </span>{{recipe.cuisine}}
       </p>
       <p>
         {{recipe.description}}
       </p>
 
       <div>
-        Przepis spróbujesz w restauracjach:
+        Dania spróbujesz w restauracjach:
         <mat-list>
           <mat-list-item *ngFor="let restaurant of recipe.restaurants">
             <p>{{restaurant.name}}</p>
@@ -30,28 +30,29 @@
         </mat-list>
       </div>
 
-
-
       <mat-accordion multi="true">
+        
         <mat-expansion-panel >
+          
           <mat-expansion-panel-header>
             <mat-panel-title>Składniki</mat-panel-title>
           </mat-expansion-panel-header>
 
           <mat-list>
-
             <mat-list-item *ngFor="let ingredient of recipe.ingredients">
-              <p>{{ingredient.name}} {{ingredient.amount}} {{ingredient.unit}}</p>
+              <p>{{ingredient.name}}: {{ingredient.amount}} {{ingredient.unit}}</p>
             </mat-list-item>
-
           </mat-list>
+
         </mat-expansion-panel>
 
 
-        <mat-expansion-panel (opened)="panelOpenState = true"
-                             (closed)="panelOpenState = false">
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
           <mat-expansion-panel-header>
-            <mat-panel-title> Krok po kroku</mat-panel-title>
+            
+            <mat-panel-title>
+              Krok po kroku
+            </mat-panel-title>
 
           </mat-expansion-panel-header>
           <mat-list-item *ngFor="let step of recipe.steps">
@@ -65,7 +66,7 @@
       <div>
         <form [formGroup]="createCommentForm" novalidate (ngSubmit)="addComments()">
           <mat-form-field class="example-full-width">
-            <input matInput placeholder="Komentarz" formControlName="commentInput">
+            <input matInput placeholder="Skomentuj" formControlName="commentInput">
           </mat-form-field>
 
           <mat-card-actions align="center">
@@ -76,11 +77,14 @@
 
       <mat-list>
         <mat-list-item *ngFor="let comment of allComments">
+          
           <p>{{comment.comment}}</p>
-          <p>{{comment.date}}</p>
-          <p>{{comment.users.username}}</p>
-          <span *ngIf="checkIfYourComment(comment.users.username)" (click) = "deleteComment(comment)"><i class="material-icons">delete</i></span>
+          <span style="color: #888; font-size: 11px; margin: 10px;">{{comment.users.username}}, {{comment.date}}</span>
+          
+          <span *ngIf="checkIfYourComment(comment.users.username)" (click)="deleteComment(comment)"><i class="material-icons">delete</i></span>
+          <mat-divider></mat-divider>
         </mat-list-item>
+        
 
       </mat-list>
 
