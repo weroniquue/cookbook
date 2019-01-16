@@ -12,6 +12,7 @@ import { Location } from '@angular/common';
 export class AccountProfileComponent implements OnInit {
 
   userProfileData: UserProfileData;
+  
 
   constructor(
     private route: ActivatedRoute,

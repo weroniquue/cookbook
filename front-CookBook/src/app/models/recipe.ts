@@ -2,7 +2,7 @@ import { Ingredient } from './ingredient';
 import { Step } from './step';
 
 export class Recipe {
-    title: number;
+    title: string;
     description: string;
     cuisineName: string;
     category: string;
