@@ -3,6 +3,7 @@ import { UserLoginData } from '../models/user-login-data';
 import { UserProfileData } from '../models/user-profile-data';
 import { UserService } from '../user.service';
 import { MessageService } from '../message.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,7 @@ export class LoginComponent implements OnInit {
   //username: string;
 
   constructor (
+    private router: Router,
     private userService: UserService,
     private messageService: MessageService
   ) {}
@@ -34,6 +36,9 @@ export class LoginComponent implements OnInit {
       this.loggedIn = true;
       localStorage.setItem('cookbook_username', this.user.usernameOrEmail);
       this.getProfileInfo();
+        setTimeout(() => {
+          this.router.navigate(['recipes']);
+        }, 10);  //1s
       },
       err => {
         console.log(err);
