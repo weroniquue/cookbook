@@ -68,7 +68,7 @@ export class AccountCreateComponent implements OnInit {
     this.userService.createAccount(this.newAccount).subscribe(
       data => {
         this.message = data['message'];
-        this.messageService.add(this.message);
+        this.messageService.openSnackBar(this.message);
       }, error => {
         console.log(error);
       }

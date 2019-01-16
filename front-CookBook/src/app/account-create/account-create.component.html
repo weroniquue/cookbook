@@ -6,34 +6,34 @@
     
     <mat-card-content>
      
-      <mat-form-field>
+      <mat-form-field class="pad">
         <input matInput type="text" placeholder="Imię" formControlName="firstName" id="firstName">
         <mat-hint align="end">Maksymalnie 40 znaków</mat-hint>
         <mat-error *ngIf="hasError('firstName', 'required')">Name is required</mat-error>
         <mat-error *ngIf="hasError('firstName', 'maxLength')">You have more than 60 characters</mat-error>
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field class="pad">
         <input matInput type="text" placeholder="Nazwisko" formControlName="secondName">
         <mat-hint align="end">Maksymalnie 40 znaków</mat-hint>
         <mat-error *ngIf="hasError('secondName', 'required')">Second Name is required</mat-error>
         <mat-error *ngIf="hasError('secondName', 'maxLength')">You have more than 40 characters</mat-error>
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field class="pad">
         <input matInput type="text" placeholder="Email" formControlName="email">
         <mat-hint align="end">Maksymalnie 40 znaków</mat-hint>
         <mat-error *ngIf="hasError('email', 'required')">Second Name is required</mat-error>
         <mat-error *ngIf="hasError('email', 'maxLength')">You have more than 40 characters</mat-error>
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field class="pad">
         <input matInput type="text" placeholder="Login" formControlName="username">
         <mat-error *ngIf="hasError('username', 'required')">Login is required</mat-error>
         <mat-error *ngIf="hasError('username', 'maxLength')">You have more than 15 characters</mat-error>
       </mat-form-field>
 
-     <mat-form-field>
+     <mat-form-field class="pad">
         <input matInput placeholder="Hasło" formControlName="password" type="password">
         <mat-hint align="end">Conajmniej 6 znaków</mat-hint>
         <mat-error *ngIf="hasError('password', 'required')">Password is required</mat-error>
@@ -43,7 +43,7 @@
     </mat-card-content>
 
     <mat-card-actions align="center">
-      <button mat-raised-button color="primary" [disabled]="!createAccountForm.valid">Utwórz</button>
+      <button mat-raised-button color="primary" [disabled]="!createAccountForm.valid" class="pad">Utwórz</button>
       <button mat-button (click)="goBack()">Powrót</button>
     </mat-card-actions>
   
