@@ -22,3 +22,7 @@
   .wide {
     width: 100%;
   }
+
+  .pad {
+    margin-bottom: 5px;
+}
