@@ -28,6 +28,7 @@ import { FilterTitlePipe } from './recipe-list/filter-title.pipe';
 import { SortPipe } from './recipe-list/sort.pipe';
 import { RecipeByCategoryComponent } from './recipe-by-category/recipe-by-category.component';
 import { RecipeNewComponent } from './recipe-new/recipe-new.component';
+import { AccountProfileComponent } from './account-profile/account-profile.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { RecipeNewComponent } from './recipe-new/recipe-new.component';
     FilterTitlePipe,
     SortPipe,
     RecipeByCategoryComponent,
-    RecipeNewComponent
+    RecipeNewComponent,
+    AccountProfileComponent
   ],
   imports: [
     HttpClientModule,

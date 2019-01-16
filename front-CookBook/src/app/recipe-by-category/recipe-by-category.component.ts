@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {ReceivedRecipe} from '../models/received-recipe';
-import {RecipeService} from '../recipe.service';
-import {ActivatedRoute} from '@angular/router';
-import {Location} from '@angular/common';
+import { ReceivedRecipe } from '../models/received-recipe';
+import { RecipeService } from '../recipe.service';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-recipe-by-category',

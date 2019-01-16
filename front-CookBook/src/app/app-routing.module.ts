@@ -7,6 +7,7 @@ import { RecipeComponent } from './recipe/recipe.component';
 import { AccountCreateComponent } from './account-create/account-create.component';
 import { AccountEditComponent } from './account-edit/account-edit.component';
 import { RecipeByCategoryComponent } from './recipe-by-category/recipe-by-category.component';
+import { AccountProfileComponent } from './account-profile/account-profile.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'recipes', pathMatch: 'full' },
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: 'recipes/:id', component: RecipeComponent },
   { path: 'account/create', component: AccountCreateComponent },
   { path: 'account/edit', component: AccountEditComponent },
-  { path: 'recipes/:categoryOrCuisine/:categoryOrCuisineName', component: RecipeByCategoryComponent }
+  { path: 'recipes/:categoryOrCuisine/:categoryOrCuisineName', component: RecipeByCategoryComponent },
+  { path: 'profiles/:username', component: AccountProfileComponent }
 ];
 
 @NgModule({
