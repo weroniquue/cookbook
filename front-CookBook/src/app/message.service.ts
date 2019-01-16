@@ -23,9 +23,9 @@ export class MessageService {
 
   openSnackBar(message: string) {
     const snackBarRef = this.snackBar.open(message, 'close', {
-      verticalPosition: 'top',
+      verticalPosition: 'bottom',
       horizontalPosition: 'center',
-      duration : 5000
+      duration : 1000
     });
 
     snackBarRef.onAction()
