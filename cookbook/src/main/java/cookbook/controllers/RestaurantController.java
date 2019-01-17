@@ -32,6 +32,7 @@ import cookbook.payloads.ObjectAvailability;
 import cookbook.payloads.recipes.RecipeResponse;
 import cookbook.payloads.restaurants.CreateRestaurantRequest;
 import cookbook.payloads.restaurants.RestaurantResponse;
+import cookbook.payloads.users.UserProfile;
 
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
@@ -130,6 +131,13 @@ public class RestaurantController {
 						RecipeResponse response = new RecipeResponse(
 								x.getId(), x.getCategory().getName(),
 								x.getCuisine().getName(), x.getTitle(), x.getDescription());
+						
+						response.setCreatedBy(new UserProfile(x.getUsers().getUsername(),
+								x.getUsers().getFirstname(),
+								x.getUsers().getSecondname(),
+								x.getUsers().getEmail(),
+								Long.valueOf(x.getUsers().getRecipeses().size()),
+								Long.valueOf(x.getUsers().getCommentses().size())));
 						return response;
 					})
 					.collect(Collectors.toSet());
