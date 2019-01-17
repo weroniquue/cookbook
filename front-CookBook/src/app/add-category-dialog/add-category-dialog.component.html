@@ -1,0 +1,14 @@
+<div>
+  <h1 mat-dialog-title>Dodaj {{data.typeName}}</h1>
+  <mat-dialog-content>
+    <mat-form-field>
+      <input matInput [(ngModel)]="data.categoryOrCuisine">
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button mat-button (click)="cancel()">Zamknij</button>
+    <button mat-button [mat-dialog-close]="data.categoryOrCuisine" cdkFocusInitial color="primary">OK</button>
+  </mat-dialog-actions>
+</div>
+

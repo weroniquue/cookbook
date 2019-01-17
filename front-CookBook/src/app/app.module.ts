@@ -24,6 +24,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { AccountCreateComponent } from './account-create/account-create.component';
 import { AccountEditComponent } from './account-edit/account-edit.component';
 import {
+  MAT_DIALOG_DEFAULT_OPTIONS,
   MatDialog,
   MatDialogModule,
   MatExpansionModule,
@@ -42,6 +43,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { RestaurantListComponent } from './restaurant-list/restaurant-list.component';
 import {RecipeEditComponent} from './recipe-edit/recipe-edit.component';
 import { RestaurantAddComponent } from './restaurant-add/restaurant-add.component';
+import { AddCategoryDialogComponent } from './add-category-dialog/add-category-dialog.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +63,8 @@ import { RestaurantAddComponent } from './restaurant-add/restaurant-add.componen
     DeleteConfirmDialogComponent,
     RestaurantListComponent,
     RecipeEditComponent,
-    RestaurantAddComponent
+    RestaurantAddComponent,
+    AddCategoryDialogComponent
   ],
   imports: [
     HttpClientModule,
@@ -84,8 +87,11 @@ import { RestaurantAddComponent } from './restaurant-add/restaurant-add.componen
     MatDialogModule,
     MatSelectModule
   ],
-  providers: [CookieService],
+  providers: [CookieService,
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}}
+    ],
   bootstrap: [AppComponent],
-  entryComponents: [DeleteConfirmDialogComponent],
+  entryComponents: [DeleteConfirmDialogComponent,
+  AddCategoryDialogComponent],
 })
 export class AppModule { }

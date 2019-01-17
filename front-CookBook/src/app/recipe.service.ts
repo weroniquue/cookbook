@@ -165,9 +165,27 @@ export class RecipeService implements OnInit {
 
   }
 
+  createCategory(categoryName:string){
+    const url = 'http://localhost:8080/cookbook/api/category?category=' + categoryName;
+    return this.http.post(url, null, httpOptionsWithCredential)
+      .pipe(catchError(err => {
+        console.log(err.error.message);
+        return throwError(err);
+      }));
+  }
+
   getCategories() {
     const url = `${this.categoryUrl}/all`;
     return this.http.get(url, httpOptionsWithCredential)
+      .pipe(catchError(err => {
+        console.log(err.error.message);
+        return throwError(err);
+      }));
+  }
+
+  createCuisine(cuisineName: string) {
+    const url = 'http://localhost:8080/cookbook/api/cuisine?cuisine=' + cuisineName;
+    return this.http.post(url, null, httpOptionsWithCredential)
       .pipe(catchError(err => {
         console.log(err.error.message);
         return throwError(err);

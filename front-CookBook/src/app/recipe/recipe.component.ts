@@ -19,7 +19,6 @@ import {MessageService} from '../message.service';
 export class RecipeComponent implements OnInit {
   recipe: ReceivedRecipe;
   allComments: any;
-
   newComment: Comment;
   createCommentForm: FormGroup;
 

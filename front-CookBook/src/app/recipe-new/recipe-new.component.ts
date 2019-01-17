@@ -6,6 +6,14 @@ import {Location} from '@angular/common';
 import {Recipe} from '../models/recipe';
 import {FormArray, FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
+import {MatDialog} from '@angular/material';
+import {AddCategoryDialogComponent} from '../add-category-dialog/add-category-dialog.component';
+
+
+export interface Dialogdata {
+  typeName: string;
+  categoryOrCuisine: string;
+}
 
 @Component({
   selector: 'app-recipe-new',
@@ -14,6 +22,9 @@ import {Router} from '@angular/router';
 })
 export class RecipeNewComponent implements OnInit {
 
+  categoryOrCuisine: string;
+  typeName: string;
+
   constructor(
     private recipeService: RecipeService,
     private userService: UserService,
@@ -21,6 +32,7 @@ export class RecipeNewComponent implements OnInit {
     private location: Location,
     private fb: FormBuilder,
     private router: Router,
+    private categoryDialog: MatDialog,
   ) {
     this.createRecipeForm = this.fb.group({
       title: new FormControl('', [Validators.required, Validators.maxLength(50)]),
@@ -100,9 +112,10 @@ export class RecipeNewComponent implements OnInit {
 
     if (val === 'newCategory') {
       console.log('Utworz nowa kategorie');
+      this.openCategoryDialog();
     }
 
-    if(val === 'create') {
+    if (val === 'create') {
       console.log('Przepis');
       // utworzenie przepisu:
       this.recipeService.createRecipe(this.createRecipeForm.value).subscribe(
@@ -111,13 +124,35 @@ export class RecipeNewComponent implements OnInit {
           const id = data['message'].substring(data['message'].indexOf(':') + 2);
           this.messageService.openSnackBar(this.message);
           setTimeout(() => {
-            this.router.navigate(['recipes/'  +  id]);
+            this.router.navigate(['recipes/' + id]);
           }, 1500);  //1s
         }, error => {
           console.log(error);
         }
       );
     }
+
+  }
+
+  openCategoryDialog(): void {
+    const dialogRef = this.categoryDialog.open(AddCategoryDialogComponent, {
+      width: '250px',
+      data: {
+        typeName: 'kategorię:',
+        categoryOrCuisine: this.categoryOrCuisine,
+      }
+    }).afterClosed()
+      .subscribe(data => {
+        console.log(data);
+        this.recipeService.createCategory(data)
+          .subscribe(result => {
+            this.messageService.openSnackBar(result['message']);
+            this.recipeService.getCategories()
+              .subscribe(categoryList => this.categories = categoryList);
+          }, err=> {
+            console.log(err);
+          });
+      });
 
   }
 
