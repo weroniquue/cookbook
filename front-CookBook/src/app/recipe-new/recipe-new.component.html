@@ -66,7 +66,7 @@
                  class="addContainer">
           <mat-form-field class="pad">
             <mat-select placeholder="Składnik..." matInput formControlName="name">
-              <mat-option *ngFor="let ingr of ingredientList" value="{{ingr.name}}">{{ingr.name}} {{ingr.unit}}
+              <mat-option *ngFor="let ingr of ingredientList" value="{{ingr.name}}">{{ingr.name}} [{{ingr.unit}}]
               </mat-option>
             </mat-select>
           </mat-form-field>
