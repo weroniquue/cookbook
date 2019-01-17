@@ -6,6 +6,7 @@ import {Location} from '@angular/common';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Recipe} from '../models/recipe';
 import { ActivatedRoute } from '@angular/router';
+import { ReceivedRecipe } from '../models/received-recipe';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -19,6 +20,7 @@ export class RecipeEditComponent implements OnInit {
   cuisine: any;
   ingredientList:any;
   editRecipe: Recipe;
+  recipe: ReceivedRecipe;
   message: string;
   editRecipeForm: FormGroup;
 
@@ -39,7 +41,15 @@ export class RecipeEditComponent implements OnInit {
 
   ngOnInit() {
 
-    const id = this.route.snapshot.paramMap.get('id');
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.recipeService.getRecipeById(id).subscribe(data => {
+      this.recipe = data;
+      this.message = data['message'];
+      this.messageService.openSnackBar(this.message);
+    }, error => {
+      console.log(error);
+    }
+  );
 
     this.loggedIn = this.userService.amILoggedIn();
 

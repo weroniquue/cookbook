@@ -40,8 +40,6 @@ export class RecipeComponent implements OnInit {
     });
 
     this.getComments();
-
-
   }
 
   getRecipe(): void {
