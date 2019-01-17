@@ -41,12 +41,13 @@ import { AccountProfileComponent } from './account-profile/account-profile.compo
 import { DeleteConfirmDialogComponent } from './delete-confirm-dialog/delete-confirm-dialog.component';
 import { MatSelectModule } from '@angular/material/select';
 import { RestaurantListComponent } from './restaurant-list/restaurant-list.component';
-import {RecipeEditComponent} from './recipe-edit/recipe-edit.component';
+import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
 import { RestaurantAddComponent } from './restaurant-add/restaurant-add.component';
 import { AddCategoryDialogComponent } from './add-category-dialog/add-category-dialog.component';
 import { AddIngredientComponent } from './add-ingredient/add-ingredient.component';
 import { DeleteElementsComponent } from './delete-elements/delete-elements.component';
 import { RestaurantEditComponent } from './restaurant-edit/restaurant-edit.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -92,7 +93,8 @@ import { RestaurantEditComponent } from './restaurant-edit/restaurant-edit.compo
     MatSnackBarModule,
     MatDialogModule,
     MatSelectModule,
-    MatTableModule
+    MatTableModule,
+    MatCheckboxModule
   ],
   providers: [CookieService,
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}}

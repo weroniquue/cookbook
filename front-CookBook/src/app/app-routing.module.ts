@@ -25,7 +25,7 @@ const routes: Routes = [
   { path: 'recipe/new', component: RecipeNewComponent },
   { path: 'recipes/:id/edit', component: RecipeEditComponent },
   { path: 'restaurants', component: RestaurantListComponent },
-  { path: 'restaurants/edit/:id', component: RestaurantEditComponent }
+  { path: 'restaurants/:city/:name', component: RestaurantEditComponent }
 ];
 
 @NgModule({

@@ -15,13 +15,8 @@ import { ReceivedRecipe } from '../models/received-recipe';
 })
 export class RestaurantEditComponent implements OnInit {
 
-  loggedIn: boolean;
-  categories: any;
-  cuisine: any;
-  ingredientList:any;
-  editRecipe: Recipe;
-  recipe: ReceivedRecipe;
-  message: string;
+  cityR: string;
+  nameR: string;
   editRestaurantForm: FormGroup;
 
   constructor(private recipeService: RecipeService,
@@ -40,6 +35,9 @@ export class RestaurantEditComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.cityR = this.route.snapshot.paramMap.get('city');
+    this.nameR = this.route.snapshot.paramMap.get('name');
+
   }
 
 }

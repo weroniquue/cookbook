@@ -252,4 +252,18 @@ export class RecipeService implements OnInit {
       );
   }
 
+  getRestaurantById(city: string, name: string) {
+    return this.http.get<Restaurant>(`http://localhost:8080/cookbook/api/restaurants/${city}/${name}`)
+      .pipe(
+        tap(data => {
+            console.log(data);
+          }
+        ),
+        catchError(err => {
+          console.log(err.error.message);
+          return throwError(err);
+        })
+      );
+  }
+
 }
