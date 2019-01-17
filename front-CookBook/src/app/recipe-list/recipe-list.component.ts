@@ -3,6 +3,7 @@ import {Component, OnInit} from '@angular/core';
 import {ReceivedRecipe} from '../models/received-recipe';
 
 import {RecipeService} from '../recipe.service';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-recipe-list',
@@ -14,13 +15,16 @@ export class RecipeListComponent implements OnInit {
   recipe_list: ReceivedRecipe[];
   order:string;
   ascending: boolean;
+  loggedIn: boolean;
 
   constructor(
-    private recipeService: RecipeService
+    private recipeService: RecipeService,
+    private userService: UserService
   ) { }
 
   ngOnInit() {
     this.getRecipe();
+    this.loggedIn = this.userService.amILoggedIn();
   }
 
   getRecipe() {
