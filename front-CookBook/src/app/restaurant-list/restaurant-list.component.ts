@@ -27,12 +27,7 @@ export class RestaurantListComponent implements OnInit {
     this.recipeService.getRestaurants().subscribe(data => {
       console.log(data);
       this.restaurant_list = data.content;
-    },
-    err => this.messageService.openSnackBar(err));
-  }
-
-  onClick() {
-    this.getRestaurantList();
+    });
   }
 
 }
