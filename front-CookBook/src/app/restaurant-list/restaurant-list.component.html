@@ -3,11 +3,30 @@
 <button *ngIf="loggedIn" mat-button routerLink="../restaurant/new">Dodaj restaurację</button>
 
 <div *ngFor="let restaurant of restaurant_list">
-    <mat-card class="pad">
-      <mat-card-title>{{restaurant.name}}</mat-card-title>
-      <mat-card-subtitle><span>Adres: </span>{{restaurant.address}}, {{restaurant.code}} {{restaurant.city}}</mat-card-subtitle>
-    
-      <mat-card-content></mat-card-content>
-    
+  <mat-card class="pad">
+    <mat-card-title>{{restaurant.name}}</mat-card-title>
+    <mat-card-subtitle><span>Adres: </span>{{restaurant.address}}, {{restaurant.code}} {{restaurant.city}}
+    </mat-card-subtitle>
+
+    <div>
+      <mat-card-content>
+        <h3>Dostępne przepisy w restauracji:</h3>
+        <mat-list *ngIf="restaurant.recipes.length">
+          <mat-list-item *ngFor="let recipe of restaurant.recipes">
+            <mat-icon matListIcon>free_breakfast</mat-icon>
+            <a matLine mat-tab-link [routerLink]="['/recipes', recipe.id]"> {{recipe.title}} </a>
+
+            <p matLine>
+              <span> Stworzony przez: {{recipe.createdBy.username}} </span>
+            </p>
+          </mat-list-item>
+        </mat-list>
+
+        <div *ngIf="!restaurant.recipes.length">
+          <p>Brak dodanych przepisów dla tej restauracji</p>
+        </div>
+      </mat-card-content>
+    </div>
     </mat-card>
-  </div>
+
+</div>
