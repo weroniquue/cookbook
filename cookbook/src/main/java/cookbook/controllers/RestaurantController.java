@@ -29,6 +29,7 @@ import cookbook.models.Restaurants;
 import cookbook.models.RestaurantsId;
 import cookbook.payloads.ApiResponse;
 import cookbook.payloads.ObjectAvailability;
+import cookbook.payloads.recipes.RecipeResponse;
 import cookbook.payloads.restaurants.CreateRestaurantRequest;
 import cookbook.payloads.restaurants.RestaurantResponse;
 
@@ -56,8 +57,17 @@ public class RestaurantController {
 		Restaurants restaurant = restaurantRepository.findById(new RestaurantsId(name, city))
 				.orElseThrow(() -> new ResourceNotFoundException("Restaurant", "name and city", name + " " + city));
 		
-		//nie działa tutaj ale działa w przepisie?
-		Set<String> recipe = restaurant.getrecipes().stream().map(x -> x.getTitle()).collect(Collectors.toSet());
+		
+		Set<RecipeResponse> recipe = restaurant.getrecipes()
+				.stream()
+				.map(x ->{
+					RecipeResponse response = new RecipeResponse(
+							x.getId(), x.getCategory().getName(),
+							x.getCuisine().getName(), x.getTitle(), x.getDescription());
+					return response;
+				})
+				.collect(Collectors.toSet());
+		
 		restaurant.getrecipes().forEach(x-> System.out.println(x.getTitle()));
 
 		RestaurantResponse response = new RestaurantResponse(restaurant.getId().getName(), restaurant.getAddress(),
@@ -114,11 +124,16 @@ public class RestaurantController {
 
 		List<RestaurantResponse> restaurants = restaurantRepository.findAll().stream().map(obj -> {
 
-			Set<String> recipe = obj.getrecipes()
+			Set<RecipeResponse> recipe = obj.getrecipes()
 					.stream()
-					.map(x -> x.getTitle())
+					.map(x ->{
+						RecipeResponse response = new RecipeResponse(
+								x.getId(), x.getCategory().getName(),
+								x.getCuisine().getName(), x.getTitle(), x.getDescription());
+						return response;
+					})
 					.collect(Collectors.toSet());
-
+			
 			RestaurantResponse response = new RestaurantResponse(
 					obj.getId().getName(), 
 					obj.getAddress(),
