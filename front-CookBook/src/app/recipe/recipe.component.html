@@ -5,7 +5,7 @@
 
     <div *ngIf="checkIfYourComment(recipe.createdBy.username)" class="pad">
       <button style="margin-right: 5px" mat-raised-button (click)="deleteRecipe()">Usuń</button>
-      <button mat-raised-button (click)="editRecipe()">Edytuj</button>
+      <button mat-raised-button (click)="editRecipe()" routerLink="./edit">Edytuj</button>
     </div>
 
     <mat-card-content>

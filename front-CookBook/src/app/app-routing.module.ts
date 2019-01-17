@@ -10,7 +10,7 @@ import { RecipeByCategoryComponent } from './recipe-by-category/recipe-by-catego
 import { AccountProfileComponent } from './account-profile/account-profile.component';
 import { RecipeNewComponent } from './recipe-new/recipe-new.component';
 import { RestaurantListComponent } from './restaurant-list/restaurant-list.component';
-import {RecipeEditComponent} from './recipe-edit/recipe-edit.component';
+import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'recipes', pathMatch: 'full' },

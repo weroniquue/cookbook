@@ -13,7 +13,6 @@ export class AccountProfileComponent implements OnInit {
 
   userProfileData: UserProfileData;
   
-
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,

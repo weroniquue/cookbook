@@ -5,6 +5,7 @@ import {MessageService} from '../message.service';
 import {Location} from '@angular/common';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Recipe} from '../models/recipe';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -25,18 +26,20 @@ export class RecipeEditComponent implements OnInit {
               private userService: UserService,
               private messageService: MessageService,
               private location: Location,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private route: ActivatedRoute
+    ) {
     this.editRecipeForm = this.fb.group({
       title: new FormControl('', [Validators.required, Validators.maxLength(50)]),
       description: new FormControl('', [Validators.required, Validators.maxLength(150)]),
       cuisineName: new FormControl('', [Validators.required]),
       category: new FormControl('', [Validators.required])
     });
-
-
   }
 
   ngOnInit() {
+
+    const id = this.route.snapshot.paramMap.get('id');
 
     this.loggedIn = this.userService.amILoggedIn();
 
@@ -48,13 +51,21 @@ export class RecipeEditComponent implements OnInit {
 
     this.recipeService.getIngredients()
       .subscribe(data => this.ingredientList = data);
-
-
   }
 
-  editRecipe(data:any){
+  editRecipee(data:any){
+    const newData = {
+      title: this.editRecipeForm.controls['title'].value,
+      description: this.editRecipeForm.controls['description'].value
+    }
+
+    this.recipeService.createRecipe(newData);
+
     console.log(data);
   }
 
+  goBack(){
+    this.location.back();
+  }
 
 }
