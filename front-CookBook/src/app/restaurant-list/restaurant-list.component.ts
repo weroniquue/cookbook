@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { RecipeService } from '../recipe.service';
+import { Restaurant } from '../models/restaurant';
+import { MessageService } from '../message.service';
 
 @Component({
   selector: 'app-restaurant-list',
@@ -11,10 +13,26 @@ export class RestaurantListComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private recipeService: RecipeService
+    private recipeService: RecipeService,
+    private messageService: MessageService
   ) { }
 
   ngOnInit() {
+    this.getRestaurantList();
+  }
+
+  restaurant_list: Restaurant[];
+
+  getRestaurantList() {
+    this.recipeService.getRestaurants().subscribe(data => {
+      console.log(data);
+      this.restaurant_list = data.content;
+    },
+    err => this.messageService.openSnackBar(err));
+  }
+
+  onClick() {
+    this.getRestaurantList();
   }
 
 }
