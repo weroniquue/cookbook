@@ -25,6 +25,7 @@
         <div *ngIf="!restaurant.recipes.length">
           <p>Brak dodanych przepisów dla tej restauracji</p>
         </div>
+        <button mat-button routerLink="{{restaurant.city}}/{{restaurant.name}}">Edytuj</button>
       </mat-card-content>
     </div>
     </mat-card>
