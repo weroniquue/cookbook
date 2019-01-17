@@ -3,19 +3,21 @@ package cookbook.payloads.restaurants;
 import java.util.HashSet;
 import java.util.Set;
 
+import cookbook.payloads.recipes.RecipeResponse;
+
 public class RestaurantResponse {
 
 	private String name;
 	private String address;
 	private String code;
 	private String city;
-	private Set<String> recipes = new HashSet<String>(0);
+	private Set<RecipeResponse> recipes = new HashSet<RecipeResponse>(0);
 
 	public RestaurantResponse() {
 		super();
 	}
 
-	public RestaurantResponse(String name, String address, String code, String city, Set<String> recipes) {
+	public RestaurantResponse(String name, String address, String code, String city, Set<RecipeResponse> recipes) {
 		super();
 		this.name = name;
 		this.address = address;
@@ -56,11 +58,11 @@ public class RestaurantResponse {
 		this.city = city;
 	}
 
-	public Set<String> getRecipes() {
+	public Set<RecipeResponse> getRecipes() {
 		return recipes;
 	}
 
-	public void setRecipes(Set<String> recipes) {
+	public void setRecipes(Set<RecipeResponse> recipes) {
 		this.recipes = recipes;
 	}
 
