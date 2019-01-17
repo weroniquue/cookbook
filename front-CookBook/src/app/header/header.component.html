@@ -8,12 +8,12 @@
 
   <button mat-button [matMenuTriggerFor]="category">Kategorie</button>
   <mat-menu #category="matMenu">
-    <a routerLink="/recipes/category/{{category}}" mat-menu-item *ngFor="let category of categories">{{category}}</a>
+    <a routerLink="/recipes/category/{{category}}" mat-menu-item *ngFor="let category of categories_taken">{{category}}</a>
   </mat-menu>
 
   <button mat-button [matMenuTriggerFor]="menu">Typy kuchni</button>
   <mat-menu #menu="matMenu">
-    <a routerLink="/recipes/cuisine/{{name}}" mat-menu-item *ngFor="let name of cuisine">{{name}}</a>
+    <a routerLink="/recipes/cuisine/{{name}}" mat-menu-item *ngFor="let name of cuisine_taken">{{name}}</a>
   </mat-menu>
 
   <button mat-button routerLink="account/profile">Twój profil</button>
