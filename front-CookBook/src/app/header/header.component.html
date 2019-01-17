@@ -5,12 +5,12 @@
 
   <button mat-button routerLink="recipes">Przepisy</button>
 
-  <button mat-button [matMenuTriggerFor]="category">Kategoria</button>
+  <button mat-button [matMenuTriggerFor]="category">Kategorie</button>
   <mat-menu #category="matMenu">
     <a routerLink="/recipes/category/{{category}}" mat-menu-item *ngFor="let category of categories">{{category}}</a>
   </mat-menu>
 
-  <button mat-button [matMenuTriggerFor]="menu">Typ kuchni</button>
+  <button mat-button [matMenuTriggerFor]="menu">Typy kuchni</button>
   <mat-menu #menu="matMenu">
     <a routerLink="/recipes/cuisine/{{name}}" mat-menu-item *ngFor="let name of cuisine">{{name}}</a>
   </mat-menu>

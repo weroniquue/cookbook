@@ -11,7 +11,7 @@
     <span class="example-fill-remaining-space"></span>
     <!-- dzięki powyższej linijce kolejne przyciski będą po prawej stronie -->
 
-    <button *ngIf="loggedIn" mat-button routerLink="recipe/new">Dodaj przepis</button>
+    <button *ngIf="loggedIn" mat-button routerLink="../recipe/new">Dodaj przepis</button>
     <button mat-button [matMenuTriggerFor]="menu">Sortuj</button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item (click)="ascendingClik()">Alfabetycznie rosnąco</button>
