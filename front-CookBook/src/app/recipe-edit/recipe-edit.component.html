@@ -2,7 +2,7 @@
 
   <h2>Utwórz przepis</h2>
 
-  <form [formGroup]="editRecipeForm" autocomplete="off" novalidate (ngSubmit)="createRecipe(editRecipeForm.value)">
+  <form [formGroup]="editRecipeForm" autocomplete="off" novalidate (ngSubmit)="editRecipe(editRecipeForm.value)">
 
     <mat-card-content>
       <!-- tytuł -->
@@ -35,63 +35,6 @@
         </mat-select>
       </mat-form-field>
 
-      <!-- składniki -->
-      <div formArrayName="ingredients">
-        <section [formGroupName]="i" *ngFor="let ingredient of createRecipeForm.controls.ingredients.controls; let i = index">
-          <mat-form-field class="pad">
-            <mat-select placeholder="Składnik..." matInput formControlName="name">
-              <mat-option *ngFor="let ingr of ingredientList" value="{{ingr.name}}">{{ingr.name}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field class="pad">
-            <input matInput type="text" placeholder="ilość" formControlName="amount"> <p>{{ingredient.unit}}</p>
-            <mat-hint align="end">Tylko liczby</mat-hint>
-            <mat-error>Tylko liczby</mat-error>
-          </mat-form-field>
-
-          <span
-            *ngIf="createRecipeForm.controls.ingredients.length > 1"
-            (click)="removeIngredientField(i)">
-                     Remove
-                  </span>
-        </section>
-      </div>
-
-      <span
-        (click)="addNewIngredientField()">
-              Dodaj kolejny składnik
-         </span>
-
-      <!-- zdjęcia tutaj -->
-      <!--<mat-form-field class="pad">-->
-      <!--<input matInput type="text" placeholder="Opis" formControlName="description">-->
-      <!--</mat-form-field>-->
-
-      <!-- steps -->
-      <div formArrayName="steps">
-
-        <section
-          [formGroupName]="i" *ngFor="let step of createRecipeForm.controls.steps.controls; let i = index">
-
-          <mat-form-field class="pad">
-            <input matInput type="text" placeholder="Krok {{i+1}}" formControlName="description">
-            <mat-hint align="end">Maksymalnie 150 znaków</mat-hint>
-          </mat-form-field>
-
-          <!-- Allow generated input field to be removed -->
-          <span
-            *ngIf="createRecipeForm.controls.steps.length > 1"
-            (click)="removeInputField(i)">
-                     Remove
-                  </span>
-        </section>
-      </div>
-
-      <span
-        (click)="addNewInputField()">
-              Dodaj kolejny krok
-         </span>
 
     </mat-card-content>
 
