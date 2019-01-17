@@ -308,26 +308,22 @@ public class RecipeService {
 			});
 		}
 		
+		if(!request.getIngredients().equals(null)) {
+			recipe.getAmountingredientses().clear();
+			
+			request.getIngredients()
+			.forEach(ingredient -> {
+				Ingredients foundIngredient =  ingredientRepository.findByName(ingredient.getName())
+						.orElseThrow(()-> new ResourceNotFoundException("Ingredient", "name", ingredient.getName()));
+			
+				amountIngredientsRepository.save(new Amountingredients(new AmountingredientsId(ingredient.getAmount(), ingredient.getName(), recipe.getId()),
+						foundIngredient, recipe));
+			});
+			
+		}
 		
+		Recipes result = recipeRepository.save(recipe);
 		
-		
-//		request.getIngredients()
-//		.forEach(ingredient -> {
-//			Ingredients foundIngredient =  ingredientRepository.findByName(ingredient.getName())
-//					.orElseThrow(()-> new ResourceNotFoundException("Ingredient", "name", ingredient.getName()));
-//			
-//			amountIngredientsRepository.save(new Amountingredients(new AmountingredientsId(ingredient.getAmount(), ingredient.getName(), result.getId()),
-//					foundIngredient, result));
-//		});
-		
-		
-//		Recipes result = recipeRepository.save(newRecipe);
-//		
-//		
-//
-
-
-
 		return new ResponseEntity<>(new ApiResponse(true, "Recipe was edited successfully."), HttpStatus.OK);
 		
 	}

@@ -40,6 +40,7 @@ import { AccountProfileComponent } from './account-profile/account-profile.compo
 import { DeleteConfirmDialogComponent } from './delete-confirm-dialog/delete-confirm-dialog.component';
 import { MatSelectModule } from '@angular/material/select';
 import { RestaurantListComponent } from './restaurant-list/restaurant-list.component';
+import {RecipeEditComponent} from './recipe-edit/recipe-edit.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { RestaurantListComponent } from './restaurant-list/restaurant-list.compo
     RecipeNewComponent,
     AccountProfileComponent,
     DeleteConfirmDialogComponent,
-    RestaurantListComponent
+    RestaurantListComponent,
+    RecipeEditComponent
   ],
   imports: [
     HttpClientModule,

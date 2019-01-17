@@ -26,6 +26,7 @@ export class RecipeNewComponent implements OnInit {
       cuisineName: new FormControl('', [Validators.required]),
       category: new FormControl('', [Validators.required]),
       ingredients: this.fb.array([this.initIngredientsFields()]),
+      photos:null,
       steps: this.fb.array([this.initStepFields(1)])
     });
 
@@ -68,7 +69,7 @@ export class RecipeNewComponent implements OnInit {
     control.push(this.initIngredientsFields());
   }
 
-  removeIngredientField(i : number) : void
+  removeIngredientField(i: number) : void
   {
     const control = <FormArray>this.createRecipeForm.controls.ingredients;
     control.removeAt(i);
@@ -77,7 +78,7 @@ export class RecipeNewComponent implements OnInit {
   {
     return this.fb.group({
       id: [id],
-      name : ['', Validators.required]
+      description : ['', Validators.required]
     });
   }
 

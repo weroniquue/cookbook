@@ -1,0 +1,112 @@
+<div *ngIf="loggedIn" class="example-container exampler-container" style="margin-bottom: 50px;">
+
+  <h2>Utwórz przepis</h2>
+
+  <form [formGroup]="editRecipeForm" autocomplete="off" novalidate (ngSubmit)="createRecipe(editRecipeForm.value)">
+
+    <mat-card-content>
+      <!-- tytuł -->
+      <mat-form-field class="pad">
+        <input matInput type="text" placeholder="Tytuł" formControlName="title">
+        <mat-hint align="end">Maksymalnie 50 znaków</mat-hint>
+        <mat-error *ngIf="hasError('title', 'required')">Tytuł jest wymagany.</mat-error>
+        <mat-error *ngIf="hasError('title', 'maxLength')">Tytuł przekroczył 50 znaków.</mat-error>
+      </mat-form-field>
+
+      <!-- opis -->
+      <mat-form-field class="pad">
+        <input matInput type="text" placeholder="Opis" formControlName="description">
+        <mat-hint align="end">Maksymalnie 150 znaków</mat-hint>
+        <mat-error *ngIf="hasError('description', 'required')">Opis jest wymagany.</mat-error>
+        <mat-error *ngIf="hasError('description', 'maxLength')">Opis przekroczył 150 znaków.</mat-error>
+      </mat-form-field>
+
+      <!-- typ kuchni -->
+      <mat-form-field class="pad">
+        <mat-select placeholder="Typ kuchni..." matInput formControlName="cuisineName">
+          <mat-option *ngFor="let x of cuisine" value="{{x}}">{{x}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- kategoria -->
+      <mat-form-field class="pad">
+        <mat-select placeholder="Kategoria..." matInput formControlName="category">
+          <mat-option *ngFor="let category of categories" value="{{category}}">{{category}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- składniki -->
+      <div formArrayName="ingredients">
+        <section [formGroupName]="i" *ngFor="let ingredient of createRecipeForm.controls.ingredients.controls; let i = index">
+          <mat-form-field class="pad">
+            <mat-select placeholder="Składnik..." matInput formControlName="name">
+              <mat-option *ngFor="let ingr of ingredientList" value="{{ingr.name}}">{{ingr.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="pad">
+            <input matInput type="text" placeholder="ilość" formControlName="amount"> <p>{{ingredient.unit}}</p>
+            <mat-hint align="end">Tylko liczby</mat-hint>
+            <mat-error>Tylko liczby</mat-error>
+          </mat-form-field>
+
+          <span
+            *ngIf="createRecipeForm.controls.ingredients.length > 1"
+            (click)="removeIngredientField(i)">
+                     Remove
+                  </span>
+        </section>
+      </div>
+
+      <span
+        (click)="addNewIngredientField()">
+              Dodaj kolejny składnik
+         </span>
+
+      <!-- zdjęcia tutaj -->
+      <!--<mat-form-field class="pad">-->
+      <!--<input matInput type="text" placeholder="Opis" formControlName="description">-->
+      <!--</mat-form-field>-->
+
+      <!-- steps -->
+      <div formArrayName="steps">
+
+        <section
+          [formGroupName]="i" *ngFor="let step of createRecipeForm.controls.steps.controls; let i = index">
+
+          <mat-form-field class="pad">
+            <input matInput type="text" placeholder="Krok {{i+1}}" formControlName="description">
+            <mat-hint align="end">Maksymalnie 150 znaków</mat-hint>
+          </mat-form-field>
+
+          <!-- Allow generated input field to be removed -->
+          <span
+            *ngIf="createRecipeForm.controls.steps.length > 1"
+            (click)="removeInputField(i)">
+                     Remove
+                  </span>
+        </section>
+      </div>
+
+      <span
+        (click)="addNewInputField()">
+              Dodaj kolejny krok
+         </span>
+
+    </mat-card-content>
+
+    <!---->
+    <mat-card-actions align="center">
+      <button mat-raised-button color="primary" [disabled]="!createRecipeForm.valid" class="pad">Stwórz przepis</button>
+      <button mat-button (click)="goBack()" class="pad">Powrót</button>
+    </mat-card-actions>
+
+  </form>
+
+</div>
+
+
+<div *ngIf="!loggedIn">
+  <h2>Zaloguj się aby móc utworzyć nowy przepis</h2>
+  <button mat-button (click)="goBack()">Powrót</button>
+</div>

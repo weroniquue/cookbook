@@ -47,7 +47,8 @@
 
           <mat-form-field class="pad">
             <input matInput type="text" placeholder="ilość" formControlName="amount"> <p>{{ingredient.unit}}</p>
-            <mat-hint align="end">Maksymalnie 150 znaków</mat-hint>
+            <mat-hint align="end">Tylko liczby</mat-hint>
+            <mat-error>Tylko liczby</mat-error>
           </mat-form-field>
 
           <!-- Allow generated input field to be removed -->
@@ -76,7 +77,7 @@
           [formGroupName]="i" *ngFor="let step of createRecipeForm.controls.steps.controls; let i = index">
 
           <mat-form-field class="pad">
-            <input matInput type="text" placeholder="Krok {{i+1}}" formControlName="name">
+            <input matInput type="text" placeholder="Krok {{i+1}}" formControlName="description">
             <mat-hint align="end">Maksymalnie 150 znaków</mat-hint>
           </mat-form-field>
 
@@ -96,9 +97,9 @@
 
     </mat-card-content>
 
-    <!--[disabled]="!createRecipeForm.valid"-->
+    <!---->
     <mat-card-actions align="center">
-      <button mat-raised-button color="primary"  class="pad">Stwórz przepis</button>
+      <button mat-raised-button color="primary" [disabled]="!createRecipeForm.valid" class="pad">Stwórz przepis</button>
       <button mat-button (click)="goBack()" class="pad">Powrót</button>
     </mat-card-actions>
       
