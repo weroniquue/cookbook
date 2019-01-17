@@ -180,7 +180,19 @@ export class RecipeService implements OnInit {
       }));
   }
 
-
+  getRestaurants() {
+    return this.http.get<PagedResponse>('http://localhost:8080/cookbook/api/restaurants/')
+      .pipe(
+        tap(data => {
+            console.log(data);
+          }
+        ),
+        catchError(err => {
+          console.log(err.error.message);
+          return throwError(err);
+        })
+      );
+  }
 
 
 
