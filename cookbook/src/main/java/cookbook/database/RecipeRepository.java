@@ -34,6 +34,8 @@ public interface RecipeRepository extends JpaRepository<Recipes, Integer>{
 	
 	long countByCuisineName(String name);
 	
+	long countByCategoryName(String name);
+	
 	long countByUsers(User user);
 	
 	@Query(nativeQuery = true,value = "SELECT PORTION(:amount,:ratio)")

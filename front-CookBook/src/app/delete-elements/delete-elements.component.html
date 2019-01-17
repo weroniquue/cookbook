@@ -1,0 +1,48 @@
+<div *ngIf="loggedIn">
+  <mat-accordion>
+    <mat-expansion-panel (opened)="categoryStatus= true"
+                         (closed)="categoryStatus = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Usuń kategorie:
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <mat-list>
+        <mat-list-item *ngFor="let cat of categories">
+
+          <p>{{cat}}</p>
+          <span (click)="delete(cat)"><i class="material-icons">delete</i></span>
+          <mat-divider></mat-divider>
+        </mat-list-item>
+      </mat-list>
+
+
+    </mat-expansion-panel>
+
+
+    <mat-expansion-panel (opened)="cuisineStatus = true"
+                         (closed)="cuisineStatus = false">
+
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Usuń typ kuchni:
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+
+      <mat-list>
+        <mat-list-item *ngFor="let cui of cuisine">
+
+          <p>{{cui}}</p>
+          <span (click)="delete(cui)"><i class="material-icons">delete</i></span>
+          <mat-divider></mat-divider>
+        </mat-list-item>
+      </mat-list>
+
+
+    </mat-expansion-panel>
+  </mat-accordion>
+
+
+</div>

@@ -45,6 +45,7 @@ import {RecipeEditComponent} from './recipe-edit/recipe-edit.component';
 import { RestaurantAddComponent } from './restaurant-add/restaurant-add.component';
 import { AddCategoryDialogComponent } from './add-category-dialog/add-category-dialog.component';
 import { AddIngredientComponent } from './add-ingredient/add-ingredient.component';
+import { DeleteElementsComponent } from './delete-elements/delete-elements.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { AddIngredientComponent } from './add-ingredient/add-ingredient.componen
     RecipeEditComponent,
     RestaurantAddComponent,
     AddCategoryDialogComponent,
-    AddIngredientComponent
+    AddIngredientComponent,
+    DeleteElementsComponent
   ],
   imports: [
     HttpClientModule,

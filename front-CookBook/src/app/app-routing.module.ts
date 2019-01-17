@@ -12,6 +12,7 @@ import { RecipeNewComponent } from './recipe-new/recipe-new.component';
 import { RestaurantListComponent } from './restaurant-list/restaurant-list.component';
 import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
 import {RestaurantAddComponent} from './restaurant-add/restaurant-add.component';
+import {DeleteElementsComponent} from './delete-elements/delete-elements.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'recipes', pathMatch: 'full' },
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'recipes/:id/edit', component: RecipeEditComponent},
   { path: 'restaurants', component: RestaurantListComponent },
   { path: 'restaurant/new', component: RestaurantAddComponent},
+  { path: 'modify', component: DeleteElementsComponent}
 
 ];
 

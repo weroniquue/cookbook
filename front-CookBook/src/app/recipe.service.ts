@@ -1,24 +1,24 @@
 import {Injectable, OnInit} from '@angular/core';
 import {Observable, of, throwError} from 'rxjs';
 
-import { Comment } from './models/comment';
-import { ReceivedRecipe } from './models/received-recipe';
+import {Comment} from './models/comment';
+import {ReceivedRecipe} from './models/received-recipe';
 
-import { MessageService } from './message.service';
+import {MessageService} from './message.service';
 
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { PagedResponse } from './models/paged-response';
-import { catchError, tap } from 'rxjs/operators';
-import { UserService } from './user.service';
-import { CommentResponse } from './models/commentResponse';
-import { Restaurant } from './models/restaurant';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {PagedResponse} from './models/paged-response';
+import {catchError, tap} from 'rxjs/operators';
+import {UserService} from './user.service';
+import {CommentResponse} from './models/commentResponse';
+import {Restaurant} from './models/restaurant';
 
 const httpOptionsWithCredential = {
   headers: new HttpHeaders({'Content-type': 'application/json'}),
   withCredentials: true
 };
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class RecipeService implements OnInit {
 
   private recipesUrl = 'http://localhost:8080/cookbook/api/recipes';
@@ -29,10 +29,11 @@ export class RecipeService implements OnInit {
   constructor(
     private http: HttpClient,
     private messageService: MessageService
-  ) { }
+  ) {
+  }
 
-  ngOnInit(): void {}
-
+  ngOnInit(): void {
+  }
 
 
   private log(message: string) {
@@ -111,7 +112,7 @@ export class RecipeService implements OnInit {
 
   }
 
-  createRecipe(data: any){
+  createRecipe(data: any) {
     return this.http.post(this.recipesUrl, data, httpOptionsWithCredential)
       .pipe(
         tap(),
@@ -121,7 +122,7 @@ export class RecipeService implements OnInit {
       );
   }
 
-  editRecipe(data:any, id:number){
+  editRecipe(data: any, id: number) {
     const url = `${this.recipesUrl}/${id}/edit`;
     return this.http.post(url, data, httpOptionsWithCredential)
       .pipe(
@@ -144,12 +145,12 @@ export class RecipeService implements OnInit {
 
   createComment(id: number, comment: Comment) {
     const url = `${this.recipesUrl}/${id}/comments`;
-    return this.http.post(url, comment , httpOptionsWithCredential)
+    return this.http.post(url, comment, httpOptionsWithCredential)
       .pipe(
         catchError(err => {
-        console.log(err.error.message);
-        return throwError(err);
-      }));
+          console.log(err.error.message);
+          return throwError(err);
+        }));
 
   }
 
@@ -165,7 +166,7 @@ export class RecipeService implements OnInit {
 
   }
 
-  createCategory(categoryName:string){
+  createCategory(categoryName: string) {
     const url = 'http://localhost:8080/cookbook/api/category?category=' + categoryName;
     return this.http.post(url, null, httpOptionsWithCredential)
       .pipe(catchError(err => {
@@ -183,8 +184,17 @@ export class RecipeService implements OnInit {
       }));
   }
 
+  deleteCategory(name: string) {
+    const url = `${this.categoryUrl}/` + name;
+    return this.http.delete(url, httpOptionsWithCredential)
+      .pipe(catchError(err => {
+        console.log(err.error.message);
+        return throwError(err);
+      }));
+  }
+
   createCuisine(cuisineName: string) {
-    const url = 'http://localhost:8080/cookbook/api/cuisine?cuisine=' + cuisineName;
+    const url = `${this.cuisineUrl}` + '?cuisine=' + cuisineName;
     return this.http.post(url, null, httpOptionsWithCredential)
       .pipe(catchError(err => {
         console.log(err.error.message);
@@ -201,6 +211,15 @@ export class RecipeService implements OnInit {
       }));
   }
 
+  deleteCuisine(name: string) {
+    const url = `${this.cuisineUrl}/` + name;
+    return this.http.delete(url, httpOptionsWithCredential)
+      .pipe(catchError(err => {
+        console.log(err.error.message);
+        return throwError(err);
+      }));
+  }
+
   getIngredients() {
     const url = `http://localhost:8080/cookbook/api/ingredients/`;
     return this.http.get(url, httpOptionsWithCredential)
@@ -210,7 +229,7 @@ export class RecipeService implements OnInit {
       }));
   }
 
-  createIngredient(data:any) {
+  createIngredient(data: any) {
     const url = `http://localhost:8080/cookbook/api/ingredients/`;
     return this.http.post(url, data, httpOptionsWithCredential)
       .pipe(catchError(err => {
