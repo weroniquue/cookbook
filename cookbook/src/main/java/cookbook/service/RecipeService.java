@@ -275,12 +275,17 @@ public class RecipeService {
 			return new ResponseEntity<>(new ApiResponse(false, "It's not your recipe!"),HttpStatus.BAD_REQUEST);
 		}
 		
-		if(!request.getCuisineName().equals(null)) {
+		System.out.println(request.getCuisineName());
+		System.out.println(request.getDescription());
+		
+		/*if(request.getCuisineName() != null) {
 			Cuisine cuisine = cuisineRepository.findById(request.getCuisineName())
 					.orElseThrow(() -> new ResourceNotFoundException("Cousine", "id", request.getCuisineName()));
 			recipe.setCuisine(cuisine);
 			
-		}
+		} else {
+			System.out.println("To null");
+		}*/
 		
 		if(!request.getCategory().equals(null)) {
 			Category category = categoryRepository.findById(request.getCategory())
@@ -309,7 +314,6 @@ public class RecipeService {
 		}
 		
 		if(!request.getIngredients().equals(null)) {
-			recipe.getAmountingredientses().clear();
 			
 			request.getIngredients()
 			.forEach(ingredient -> {

@@ -121,6 +121,17 @@ export class RecipeService implements OnInit {
       );
   }
 
+  editRecipe(data:any, id:number){
+    const url = `${this.recipesUrl}/${id}/edit`;
+    return this.http.post(url, data, httpOptionsWithCredential)
+      .pipe(
+        tap(),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
   getComments(id: number) {
     const url = `${this.recipesUrl}/${id}/comments`;
     console.log(url);

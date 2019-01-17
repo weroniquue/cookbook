@@ -11,6 +11,9 @@ import { MessageService } from '../message.service';
 })
 export class RestaurantListComponent implements OnInit {
 
+  restaurant_list: Restaurant[];
+  loggedIn: boolean;
+
   constructor(
     private userService: UserService,
     private recipeService: RecipeService,
@@ -19,9 +22,8 @@ export class RestaurantListComponent implements OnInit {
 
   ngOnInit() {
     this.getRestaurantList();
+    this.loggedIn = this.userService.amILoggedIn();
   }
-
-  restaurant_list: Restaurant[];
 
   getRestaurantList() {
     this.recipeService.getRestaurants()
@@ -30,5 +32,6 @@ export class RestaurantListComponent implements OnInit {
         this.restaurant_list = data;
       });
   }
+
 
 }

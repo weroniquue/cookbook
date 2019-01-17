@@ -1,5 +1,7 @@
 <h2>Restauracje</h2>
 
+<button *ngIf="loggedIn" mat-button routerLink="../restaurant/new">Dodaj restaurację</button>
+
 <div *ngFor="let restaurant of restaurant_list">
     <mat-card class="pad">
       <mat-card-title>{{restaurant.name}}</mat-card-title>
