@@ -30,7 +30,7 @@ import {
   MatExpansionModule,
   MatIconModule,
   MatListModule,
-  MatMenuModule,
+  MatMenuModule, MatTableModule,
   MatTreeModule
 } from '@angular/material';
 import { FilterTitlePipe } from './recipe-list/filter-title.pipe';
@@ -89,7 +89,8 @@ import { DeleteElementsComponent } from './delete-elements/delete-elements.compo
     MatMenuModule,
     MatSnackBarModule,
     MatDialogModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTableModule
   ],
   providers: [CookieService,
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}}

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {RecipeService} from '../recipe.service';
 import {UserService} from '../user.service';
 import {MessageService} from '../message.service';
@@ -36,6 +36,7 @@ export class RecipeNewComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private categoryDialog: MatDialog,
+    private cd: ChangeDetectorRef
   ) {
     this.createRecipeForm = this.fb.group({
       title: new FormControl('', [Validators.required, Validators.maxLength(50)]),
@@ -43,7 +44,7 @@ export class RecipeNewComponent implements OnInit {
       cuisineName: new FormControl('', [Validators.required]),
       category: new FormControl('', [Validators.required]),
       ingredients: this.fb.array([this.initIngredientsFields()]),
-      photos: null,
+      photos: this.fb.array([]),
       steps: this.fb.array([this.initStepFields(1)])
     });
 
@@ -216,12 +217,18 @@ export class RecipeNewComponent implements OnInit {
               this.recipeService.getIngredients()
                 .subscribe(ing => {this.ingredientList = ing });
             }, err => {
-              console.log(err);
+              this.messageService.openSnackBar(err.error.message);
             });
 
 
       }
   });
+  }
+
+  onFileChange(fileInput) {
+    const file = fileInput.target.files[0];
+    const fileName = file.name;
+    console.log(fileName);
   }
 
   goBack() {

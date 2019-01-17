@@ -9,12 +9,12 @@
     </div>
 
     <mat-card-content>
-      
+
       <div>
-        Stworzono przez: <a routerLink="/profiles/{{recipe.createdBy.username}}" >{{recipe.createdBy.username}}</a>
+        Stworzono przez: <a routerLink="/profiles/{{recipe.createdBy.username}}">{{recipe.createdBy.username}}</a>
       </div>
       <p>
-        <span style="color: #888">Kategoria: </span>{{recipe.category}}<br />
+        <span style="color: #888">Kategoria: </span>{{recipe.category}}<br/>
         <span style="color: #888">Typ kuchni: </span>{{recipe.cuisine}}
       </p>
       <p>
@@ -25,31 +25,57 @@
         Dania spróbujesz w restauracjach:
         <mat-list>
           <mat-list-item *ngFor="let restaurant of recipe.restaurants">
-            <p>{{restaurant.name}}</p>
+            <mat-icon matListIcon>star</mat-icon>
+            <p>Restauracja: {{restaurant.name}} Adres: {{restaurant.address}}, {{restaurant.code}} {{restaurant.city}}</p>
           </mat-list-item>
         </mat-list>
       </div>
 
       <mat-accordion multi="true">
-        
-        <mat-expansion-panel >
-          
+
+        <mat-expansion-panel>
+
           <mat-expansion-panel-header>
             <mat-panel-title>Składniki</mat-panel-title>
           </mat-expansion-panel-header>
 
-          <mat-list>
-            <mat-list-item *ngFor="let ingredient of recipe.ingredients">
-              <p>{{ingredient.name}}: {{ingredient.amount}} {{ingredient.unit}}</p>
-            </mat-list-item>
-          </mat-list>
+          <!--<mat-list>-->
+          <!--<mat-list-item *ngFor="let ingredient of recipe.ingredients">-->
+          <!--<p>{{ingredient.name}}: {{ingredient.amount}} {{ingredient.unit}}</p>-->
+          <!--</mat-list-item>-->
+          <!--</mat-list>-->
+
+
+          <table mat-table [dataSource]="recipe.ingredients" class="mat-elevation-z8">
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="nazwa">
+              <th mat-header-cell *matHeaderCellDef> Nazwa składnika</th>
+              <td mat-cell *matCellDef="let element"> {{element.name}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="ilość">
+              <th mat-header-cell *matHeaderCellDef> Ilość</th>
+              <td mat-cell *matCellDef="let element"> {{element.amount}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="jednostka">
+              <th mat-header-cell *matHeaderCellDef> Jednostka</th>
+              <td mat-cell *matCellDef="let element"> {{element.unit}}</td>
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+
 
         </mat-expansion-panel>
 
 
         <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
           <mat-expansion-panel-header>
-            
+
             <mat-panel-title>
               Krok po kroku
             </mat-panel-title>
@@ -77,11 +103,12 @@
 
       <mat-list>
         <mat-list-item *ngFor="let comment of allComments">
-          
+
           <p>{{comment.comment}}</p>
           <span style="color: #888; font-size: 11px; margin: 10px;">{{comment.users.username}}, {{comment.date}}</span>
-          
-          <span *ngIf="checkIfYourComment(comment.users.username)" (click)="deleteComment(comment)"><i class="material-icons">delete</i></span>
+
+          <span *ngIf="checkIfYourComment(comment.users.username)" (click)="deleteComment(comment)"><i
+            class="material-icons">delete</i></span>
           <mat-divider></mat-divider>
         </mat-list-item>
       </mat-list>

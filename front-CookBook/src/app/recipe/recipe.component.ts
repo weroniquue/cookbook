@@ -21,6 +21,7 @@ export class RecipeComponent implements OnInit {
   allComments: any;
   newComment: Comment;
   createCommentForm: FormGroup;
+  displayedColumns: string[] = ['nazwa', 'ilość', 'jednostka'];
 
   constructor(
     private router: Router,
@@ -132,6 +133,7 @@ export class RecipeComponent implements OnInit {
 
 
   }
+
 
   //@Input() recipe: Recipe;
 

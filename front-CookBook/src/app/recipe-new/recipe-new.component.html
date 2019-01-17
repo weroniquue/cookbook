@@ -52,6 +52,13 @@
         </div>
       </div>
 
+      <div class="addItem">
+        <button mat-button type="submit" (click)="createRecipe('newIngredient')">
+          <mat-icon>add_circle</mat-icon>
+          Stwórz nowy składnik
+        </button>
+      </div>
+
       <!-- składniki -->
       <div formArrayName="ingredients">
         <section [formGroupName]="i"
@@ -70,12 +77,6 @@
             <mat-error>Podaj poprawną ilość.</mat-error>
           </mat-form-field>
 
-          <div class="addItem">
-            <button mat-button type="submit" (click)="createRecipe('newIngredient')">
-              <mat-icon>add_circle</mat-icon>
-              Stwórz nowy składnik
-            </button>
-          </div>
 
 
           <!-- Allow generated input field to be removed -->
@@ -94,8 +95,11 @@
 
       <!-- zdjęcia tutaj -->
       <!--<mat-form-field class="pad">-->
-      <!--<input matInput type="text" placeholder="Opis" formControlName="description">-->
+        <!--<input matInput type="file" placeholder="Opis" formControlName="photos">-->
+        <input type="file" (change)="onFileChange($event)" />
       <!--</mat-form-field>-->
+
+
 
       <!-- steps -->
       <div formArrayName="steps">
