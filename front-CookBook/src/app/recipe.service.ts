@@ -110,6 +110,16 @@ export class RecipeService implements OnInit {
 
   }
 
+  createRecipe(data: any){
+    return this.http.post(this.recipesUrl, data, httpOptionsWithCredential)
+      .pipe(
+        tap(),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
   getComments(id: number) {
     const url = `${this.recipesUrl}/${id}/comments`;
     console.log(url);

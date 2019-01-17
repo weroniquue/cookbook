@@ -38,13 +38,16 @@
     
       <!-- składniki -->
       <div formArrayName="ingredients">
-
         <section [formGroupName]="i" *ngFor="let ingredient of createRecipeForm.controls.ingredients.controls; let i = index">
           <mat-form-field class="pad">
-            <mat-select placeholder="Składnik..." matInput>
-              <mat-option *ngFor="let ingr of ingredientList"  formControlName="name">{{ingr.name}} {{ingr.unit}}</mat-option>
+            <mat-select placeholder="Składnik..." matInput formControlName="name">
+              <mat-option *ngFor="let ingr of ingredientList" value="{{ingr.name}}">{{ingr.name}}</mat-option>
             </mat-select>
+          </mat-form-field>
 
+          <mat-form-field class="pad">
+            <input matInput type="text" placeholder="ilość" formControlName="amount"> <p>{{ingredient.unit}}</p>
+            <mat-hint align="end">Maksymalnie 150 znaków</mat-hint>
           </mat-form-field>
 
           <!-- Allow generated input field to be removed -->
@@ -75,8 +78,6 @@
           <mat-form-field class="pad">
             <input matInput type="text" placeholder="Krok {{i+1}}" formControlName="name">
             <mat-hint align="end">Maksymalnie 150 znaków</mat-hint>
-            <!--<mat-error *ngIf="hasError('name', 'required')">Opis jest wymagany.</mat-error>-->
-            <!--<mat-error *ngIf="hasError('name', 'maxLength')">Opis przekroczył 150 znaków.</mat-error>-->
           </mat-form-field>
 
             <!-- Allow generated input field to be removed -->

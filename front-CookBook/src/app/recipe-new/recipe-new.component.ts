@@ -26,7 +26,7 @@ export class RecipeNewComponent implements OnInit {
       cuisineName: new FormControl('', [Validators.required]),
       category: new FormControl('', [Validators.required]),
       ingredients: this.fb.array([this.initIngredientsFields()]),
-      steps: this.fb.array([this.initStepFields()])
+      steps: this.fb.array([this.initStepFields(1)])
     });
 
   }
@@ -73,9 +73,10 @@ export class RecipeNewComponent implements OnInit {
     const control = <FormArray>this.createRecipeForm.controls.ingredients;
     control.removeAt(i);
   }
-  initStepFields(): FormGroup
+  initStepFields(id:number): FormGroup
   {
     return this.fb.group({
+      id: [id],
       name : ['', Validators.required]
     });
   }
@@ -83,7 +84,7 @@ export class RecipeNewComponent implements OnInit {
   addNewInputField(): void
   {
     const control = <FormArray>this.createRecipeForm.controls.steps;
-    control.push(this.initStepFields());
+    control.push(this.initStepFields(this.createRecipeForm.value['steps'].length + 1));
   }
 
   removeInputField(i : number) : void
@@ -96,26 +97,15 @@ export class RecipeNewComponent implements OnInit {
   createRecipe(val : any) {
     console.dir(val);
 
-    // utworzenie obiektu do przesłania na serwer:
-    /*this.newRecipe = new Recipe(
-      this.createRecipeForm.controls['title'].value,
-      this.createRecipeForm.controls['description'].value,
-      this.createRecipeForm.controls['cuisineName'].value,
-      this.createRecipeForm.controls['category'].value,
-      this.createRecipeForm.controls['ingredients'].value,
-      this.createRecipeForm.controls['photos'].value,
-      this.createRecipeForm.controls['steps'].value
-    );*/
-
     // utworzenie przepisu:
-    /*this.recipeService.createRecipe(this.newRecipe).subscribe(
+    this.recipeService.createRecipe(val).subscribe(
       data => {
         this.message = data['message'];
         this.messageService.openSnackBar(this.message);
       }, error => {
         console.log(error);
       }
-    );*/
+    );
   }
 
   goBack() {
