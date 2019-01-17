@@ -27,6 +27,10 @@
   margin-bottom: 10px;
 }
 
+.addContainer {
+  display: flex;
+}
+
 .flex {
   display: flex;
   flex-direction: column;

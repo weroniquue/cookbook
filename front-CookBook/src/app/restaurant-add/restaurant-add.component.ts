@@ -6,7 +6,7 @@ import {Location} from '@angular/common';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Recipe} from '../models/recipe';
 import {Restaurant} from '../models/restaurant';
-import {RestaurantService, RestaurantServiceService} from '../restaurant.service';
+import {RestaurantService} from '../restaurant.service';
 import {Router} from '@angular/router';
 
 @Component({
@@ -58,7 +58,7 @@ export class RestaurantAddComponent implements OnInit {
         this.messageService.openSnackBar(this.message);
         setTimeout(() => {
           this.router.navigate(['restaurants']);
-        }, 1000);  //1s
+        }, 2000);  //1s
 
       }, error => {
         this.messageService.openSnackBar(error);

@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { RecipeService } from '../recipe.service';
-import { UserService } from '../user.service';
-import { MessageService } from '../message.service';
-import { Location } from '@angular/common';
-import { Recipe } from '../models/recipe';
+import {Component, OnInit} from '@angular/core';
+import {RecipeService} from '../recipe.service';
+import {UserService} from '../user.service';
+import {MessageService} from '../message.service';
+import {Location} from '@angular/common';
+import {Recipe} from '../models/recipe';
 import {FormArray, FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-recipe-new',
@@ -18,7 +19,8 @@ export class RecipeNewComponent implements OnInit {
     private userService: UserService,
     private messageService: MessageService,
     private location: Location,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router,
   ) {
     this.createRecipeForm = this.fb.group({
       title: new FormControl('', [Validators.required, Validators.maxLength(50)]),
@@ -26,7 +28,7 @@ export class RecipeNewComponent implements OnInit {
       cuisineName: new FormControl('', [Validators.required]),
       category: new FormControl('', [Validators.required]),
       ingredients: this.fb.array([this.initIngredientsFields()]),
-      photos:null,
+      photos: null,
       steps: this.fb.array([this.initStepFields(1)])
     });
 
@@ -35,7 +37,7 @@ export class RecipeNewComponent implements OnInit {
   loggedIn: boolean;
   categories: any;
   cuisine: any;
-  ingredientList:any;
+  ingredientList: any;
   newRecipe: Recipe;
   message: string;
   createRecipeForm: FormGroup;
@@ -47,7 +49,7 @@ export class RecipeNewComponent implements OnInit {
       .subscribe(categoryList => this.categories = categoryList);
 
     this.recipeService.getCuisine()
-      .subscribe( cuisineList => this.cuisine = cuisineList);
+      .subscribe(cuisineList => this.cuisine = cuisineList);
 
     this.recipeService.getIngredients()
       .subscribe(data => this.ingredientList = data);
@@ -58,55 +60,65 @@ export class RecipeNewComponent implements OnInit {
   public hasError(controlName: string, errorName: string) {
     return this.createRecipeForm.controls[controlName].hasError(errorName);
   }
-  initIngredientsFields(): FormGroup{
+
+  initIngredientsFields(): FormGroup {
     return this.fb.group({
-       name: ['', Validators.required],
-       amount: ['', Validators.required]
+      name: ['', Validators.required],
+      amount: ['', Validators.compose([Validators.required, Validators.pattern(/[0-9]*/)])]
     });
   }
-  addNewIngredientField(){
+
+  addNewIngredientField() {
     const control = <FormArray>this.createRecipeForm.controls.ingredients;
     control.push(this.initIngredientsFields());
   }
 
-  removeIngredientField(i: number) : void
-  {
+  removeIngredientField(i: number): void {
     const control = <FormArray>this.createRecipeForm.controls.ingredients;
     control.removeAt(i);
   }
-  initStepFields(id:number): FormGroup
-  {
+
+  initStepFields(id: number): FormGroup {
     return this.fb.group({
       id: [id],
-      description : ['', Validators.required]
+      description: ['', Validators.required]
     });
   }
 
-  addNewInputField(): void
-  {
+  addNewInputField(): void {
     const control = <FormArray>this.createRecipeForm.controls.steps;
     control.push(this.initStepFields(this.createRecipeForm.value['steps'].length + 1));
   }
 
-  removeInputField(i : number) : void
-  {
+  removeInputField(i: number): void {
     const control = <FormArray>this.createRecipeForm.controls.steps;
     control.removeAt(i);
   }
 
 
-  createRecipe(val : any) {
-    console.dir(val);
+  createRecipe(val: any) {
 
-    // utworzenie przepisu:
-    this.recipeService.createRecipe(val).subscribe(
-      data => {
-        this.message = data['message'];
-        this.messageService.openSnackBar(this.message);
-      }, error => {
-        console.log(error);
-      }
-    );
+    if (val === 'newCategory') {
+      console.log('Utworz nowa kategorie');
+    }
+
+    if(val === 'create') {
+      console.log('Przepis');
+      // utworzenie przepisu:
+      this.recipeService.createRecipe(this.createRecipeForm.value).subscribe(
+        data => {
+          this.message = data['message'];
+          const id = data['message'].substring(data['message'].indexOf(':') + 2);
+          this.messageService.openSnackBar(this.message);
+          setTimeout(() => {
+            this.router.navigate(['recipes/'  +  id]);
+          }, 1500);  //1s
+        }, error => {
+          console.log(error);
+        }
+      );
+    }
+
   }
 
   goBack() {
