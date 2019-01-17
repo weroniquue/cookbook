@@ -1,6 +1,11 @@
-<p>
-  restaurant-list works!
-</p>
+<h2>Restauracje</h2>
 
-<span *ngFor="let restaurant of restaurant_list">{{restaurant.name}}</span><br />
-{{restaurant_list[0]}}
+<div *ngFor="let restaurant of restaurant_list">
+    <mat-card class="pad">
+      <mat-card-title>{{restaurant.name}}</mat-card-title>
+      <mat-card-subtitle><span>Adres: </span>{{restaurant.address}}, {{restaurant.code}} {{restaurant.city}}</mat-card-subtitle>
+    
+      <mat-card-content></mat-card-content>
+    
+    </mat-card>
+  </div>

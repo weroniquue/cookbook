@@ -8,10 +8,10 @@ import { MessageService } from './message.service';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { PagedResponse } from './models/paged-response';
-import { PagedResponseRestaurant } from './models/paged-response-restaurant';
 import { catchError, tap } from 'rxjs/operators';
 import { UserService } from './user.service';
 import { CommentResponse } from './models/commentResponse';
+import { Restaurant } from './models/restaurant';
 
 const httpOptionsWithCredential = {
   headers: new HttpHeaders({'Content-type': 'application/json'}),
@@ -182,7 +182,7 @@ export class RecipeService implements OnInit {
   }
 
   getRestaurants() {
-    return this.http.get<PagedResponseRestaurant>('http://localhost:8080/cookbook/api/restaurants/')
+    return this.http.get<Restaurant[]>('http://localhost:8080/cookbook/api/restaurants/')
       .pipe(
         tap(data => {
             console.log(data);

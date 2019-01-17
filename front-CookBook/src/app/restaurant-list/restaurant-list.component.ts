@@ -24,10 +24,11 @@ export class RestaurantListComponent implements OnInit {
   restaurant_list: Restaurant[];
 
   getRestaurantList() {
-    this.recipeService.getRestaurants().subscribe(data => {
-      console.log(data);
-      this.restaurant_list = data.content;
-    });
+    this.recipeService.getRestaurants()
+      .subscribe(data => {
+        console.log(data);
+        this.restaurant_list = data;
+      });
   }
 
 }
