@@ -210,6 +210,15 @@ export class RecipeService implements OnInit {
       }));
   }
 
+  createIngredient(data:any) {
+    const url = `http://localhost:8080/cookbook/api/ingredients/`;
+    return this.http.post(url, data, httpOptionsWithCredential)
+      .pipe(catchError(err => {
+        console.log(err.error.message);
+        return throwError(err);
+      }));
+  }
+
   getRestaurants() {
     return this.http.get<Restaurant[]>('http://localhost:8080/cookbook/api/restaurants/')
       .pipe(

@@ -1,14 +1,18 @@
 <div>
   <h1 mat-dialog-title>Dodaj {{data.typeName}}</h1>
-  <mat-dialog-content>
-    <mat-form-field>
-      <input matInput [(ngModel)]="data.categoryOrCuisine">
-    </mat-form-field>
-  </mat-dialog-content>
+  <form #addForm="ngForm">
+    <mat-dialog-content>
+      <mat-form-field>
+        <input matInput type="text" placeholder="Nazwa" required [(ngModel)]="data.categoryOrCuisine" name="name">
+      </mat-form-field>
+    </mat-dialog-content>
 
-  <mat-dialog-actions>
-    <button mat-button (click)="cancel()">Zamknij</button>
-    <button mat-button [mat-dialog-close]="data.categoryOrCuisine" cdkFocusInitial color="primary">OK</button>
-  </mat-dialog-actions>
+    <mat-dialog-actions>
+      <button mat-button (click)="cancel()">Zamknij</button>
+      <button mat-button [disabled]="addForm.form.invalid"
+              [mat-dialog-close]="data.categoryOrCuisine" cdkFocusInitial color="primary">OK
+      </button>
+    </mat-dialog-actions>
+  </form>
 </div>
 

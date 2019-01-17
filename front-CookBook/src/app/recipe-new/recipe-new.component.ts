@@ -8,6 +8,7 @@ import {FormArray, FormBuilder, FormControl, FormGroup, FormGroupDirective, NgFo
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material';
 import {AddCategoryDialogComponent} from '../add-category-dialog/add-category-dialog.component';
+import {AddIngredientComponent} from '../add-ingredient/add-ingredient.component';
 
 
 export interface Dialogdata {
@@ -24,6 +25,8 @@ export class RecipeNewComponent implements OnInit {
 
   categoryOrCuisine: string;
   typeName: string;
+  ingredientName: string;
+  unit: string;
 
   constructor(
     private recipeService: RecipeService,
@@ -115,6 +118,14 @@ export class RecipeNewComponent implements OnInit {
       this.openCategoryDialog();
     }
 
+    if(val === 'newCuisine') {
+      this.openCuisineDialog();
+    }
+
+    if(val === 'newIngredient') {
+      this.openIngredientDialog();
+    }
+
     if (val === 'create') {
       console.log('Przepis');
       // utworzenie przepisu:
@@ -134,6 +145,34 @@ export class RecipeNewComponent implements OnInit {
 
   }
 
+
+  openCuisineDialog(): void {
+    const dialogRef = this.categoryDialog.open(AddCategoryDialogComponent, {
+      width: '250px',
+      data: {
+        typeName: 'typ kuchnii:',
+        categoryOrCuisine: this.categoryOrCuisine,
+      }
+    }).afterClosed()
+      .subscribe(data => {
+        if (data != null) {
+          this.recipeService.createCuisine(data)
+            .subscribe(result => {
+              this.messageService.openSnackBar(result['message']);
+
+              this.recipeService.getCuisine()
+                .subscribe(cuisineList => this.cuisine = cuisineList);
+
+            }, err => {
+              console.log(err);
+            });
+        }
+
+      });
+
+  }
+
+
   openCategoryDialog(): void {
     const dialogRef = this.categoryDialog.open(AddCategoryDialogComponent, {
       width: '250px',
@@ -143,17 +182,46 @@ export class RecipeNewComponent implements OnInit {
       }
     }).afterClosed()
       .subscribe(data => {
-        console.log(data);
-        this.recipeService.createCategory(data)
-          .subscribe(result => {
-            this.messageService.openSnackBar(result['message']);
-            this.recipeService.getCategories()
-              .subscribe(categoryList => this.categories = categoryList);
-          }, err=> {
-            console.log(err);
-          });
+        if (data != null) {
+          this.recipeService.createCategory(data)
+            .subscribe(result => {
+              this.messageService.openSnackBar(result['message']);
+              this.recipeService.getCategories()
+                .subscribe(categoryList => this.categories = categoryList);
+            }, err => {
+              console.log(err);
+            });
+        }
+
       });
 
+  }
+
+
+  openIngredientDialog(): void {
+    const dialogRef = this.categoryDialog.open(AddIngredientComponent, {
+      width: '250px',
+      data: {
+        name: this.ingredientName,
+        unit: this.unit,
+      }
+    }).afterClosed()
+      .subscribe(data => {
+        console.log(data);
+        if (data != null) {
+          this.recipeService.createIngredient(data)
+            .subscribe(result => {
+              this.messageService.openSnackBar(result['message']);
+
+              this.recipeService.getIngredients()
+                .subscribe(ing => {this.ingredientList = ing });
+            }, err => {
+              console.log(err);
+            });
+
+
+      }
+  });
   }
 
   goBack() {

@@ -61,7 +61,7 @@ export class RestaurantAddComponent implements OnInit {
         }, 2000);  //1s
 
       }, error => {
-        this.messageService.openSnackBar(error);
+        this.messageService.openSnackBar(error['message']);
         console.log(error);
       }
     );
