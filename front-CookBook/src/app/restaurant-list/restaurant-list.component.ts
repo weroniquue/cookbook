@@ -50,7 +50,7 @@ export class RestaurantListComponent implements OnInit {
         if (data === 'yes') {
           this.recipeService.deleteRestaurant(city, name)
             .subscribe(dat => {
-              this.messageService.openSnackBar(dat.message)
+              //this.messageService.openSnackBar(dat.message)
               this.getRestaurantList();
             });
 
@@ -72,7 +72,7 @@ export class RestaurantListComponent implements OnInit {
         if (x === 'yes') {
           this.restuarantService.removeRecipeFromRestaurant(restaurant.city, restaurant.name, recipe.id)
             .subscribe(dat => {
-              this.messageService.openSnackBar(dat.message)
+              //this.messageService.openSnackBar(dat.message)
               this.getRestaurantList();
             });
 

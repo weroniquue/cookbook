@@ -226,7 +226,7 @@ export class RecipeNewComponent implements OnInit {
   }
 
   onFileChange(fileInput) {
-    this.createRecipeForm.get('photos').value.clear();
+    //this.createRecipeForm.get('photos').value.clear();
     const file = fileInput.target.files[0];
     const fileName = file.name;
     this.createRecipeForm.get('photos').value.push(fileName);
