@@ -3,7 +3,7 @@ import {RecipeService} from '../recipe.service';
 import {UserService} from '../user.service';
 import {MessageService} from '../message.service';
 import {Location} from '@angular/common';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ReceivedRecipe } from '../models/received-recipe';
 
@@ -26,23 +26,40 @@ export class RestaurantEditComponent implements OnInit {
               private fb: FormBuilder,
               private route: ActivatedRoute
     ) {
-    this.editRestaurantForm = this.fb.group({
-      recipes: new FormControl([], [Validators.required, Validators.maxLength(50)])
-    });
   }
 
   ngOnInit() {
     this.cityR = this.route.snapshot.paramMap.get('city');
     this.nameR = this.route.snapshot.paramMap.get('name');
+
+    this.editRestaurantForm = this.fb.group({
+      recipes: this.fb.array([])
+    });
+
     this.recipeService.getRecipes()
       .subscribe(data => {
         console.log(data);
         this.recipe_list = data.content;
+
+
+        const formArray = this.editRestaurantForm.get('recipes') as FormArray;
+        this.recipe_list.forEach(x => formArray.push(new FormControl(false)));
       });
+
+
   }
 
   goBack(){
     this.location.back();
+  }
+
+  editRestaurant(data:any){
+    const result = Object.assign({},
+      this.editRestaurantForm.value, {
+        recipes: this.recipe_list
+          .filter((x, i) => !!this.editRestaurantForm.value.recipes[i])});
+
+    console.log(result);
   }
 
 }
