@@ -25,6 +25,7 @@ export class RestaurantEditComponent implements OnInit {
   editRestaurantForm: FormGroup;
   recipe_list: ReceivedRecipe[];
   list_id = [];
+  newList: ReceivedRecipe[];
 
   constructor(private recipeService: RecipeService,
               private userService: UserService,
@@ -33,8 +34,7 @@ export class RestaurantEditComponent implements OnInit {
               private location: Location,
               private fb: FormBuilder,
               private route: ActivatedRoute
-    ) {
-  }
+    ) { }
 
   ngOnInit() {
     this.cityR = this.route.snapshot.paramMap.get('city');
@@ -52,11 +52,29 @@ export class RestaurantEditComponent implements OnInit {
 
         const formArray = this.editRestaurantForm.get('recipes') as FormArray;
         this.recipe_list.forEach(x => formArray.push(new FormControl(false)));
-      });
+        this.getRecipeListNoRepeat();
+    });   
   }
 
   goBack(){
     this.location.back();
+  }
+
+  check: boolean;
+
+  getRecipeListNoRepeat() {
+    this.newList = [];
+    for (let recipe of this.recipe_list) {
+      this.check = false;
+      for (let restaurant of recipe.restaurants) {
+        if (restaurant.name == this.nameR) {
+          if (restaurant.city == this.cityR) {
+            this.check = true;
+          }
+        }
+      }
+      if (!this.check) this.newList.push(recipe);
+    }
   }
 
   editRestaurant(data: any){
