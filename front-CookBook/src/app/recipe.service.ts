@@ -162,7 +162,8 @@ export class RecipeService implements OnInit {
         catchError(err => {
           console.log(err.error.message);
           return throwError(err);
-        }));
+        })
+      );
 
   }
 
@@ -259,6 +260,18 @@ export class RecipeService implements OnInit {
             console.log(data);
           }
         ),
+        catchError(err => {
+          console.log(err.error.message);
+          return throwError(err);
+        })
+      );
+  }
+
+  deleteRestaurant(city: string, name: string) {
+    const url = `http://localhost:8080/cookbook/api/restaurants/${city}/${name}`;
+    console.log(url);
+    return this.http.delete(url, httpOptionsWithCredential)
+      .pipe(
         catchError(err => {
           console.log(err.error.message);
           return throwError(err);

@@ -26,6 +26,7 @@
           <p>Brak dodanych przepisów dla tej restauracji</p>
         </div>
         <button mat-button routerLink="{{restaurant.city}}/{{restaurant.name}}">Edytuj</button>
+        <button mat-button (click)="deleteRestaurant(restaurant.city, restaurant.name)">Usuń</button>
       </mat-card-content>
     </div>
     </mat-card>

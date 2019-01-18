@@ -33,5 +33,9 @@ export class RestaurantListComponent implements OnInit {
       });
   }
 
+  deleteRestaurant(city: string, name: string) {
+    this.recipeService.deleteRestaurant(city, name);
+    this.getRestaurantList();
+  }
 
 }
