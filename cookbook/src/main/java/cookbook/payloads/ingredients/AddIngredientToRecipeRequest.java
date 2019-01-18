@@ -3,7 +3,7 @@ package cookbook.payloads.ingredients;
 public class AddIngredientToRecipeRequest {
 
 	private String name;
-	private Long amount;
+	private Float amount;
 
 	public String getName() {
 		return name;
@@ -13,11 +13,11 @@ public class AddIngredientToRecipeRequest {
 		this.name = name;
 	}
 
-	public Long getAmount() {
+	public Float getAmount() {
 		return amount;
 	}
 
-	public void setAmount(Long amount) {
+	public void setAmount(Float amount) {
 		this.amount = amount;
 	}
 

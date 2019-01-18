@@ -134,7 +134,14 @@ export class RecipeComponent implements OnInit {
 
   }
 
+  portion(size: any){
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.recipeService.getRecipesByPortion(id, size).subscribe(recipe => {
+      this.recipe = recipe;
+    });
 
+
+  }
   //@Input() recipe: Recipe;
 
 }

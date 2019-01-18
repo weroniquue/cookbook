@@ -21,6 +21,16 @@
       <p>
         {{recipe.description}}
       </p>
+      <div>
+        <mat-form-field>
+          <mat-select placeholder="Liczba porcji: ">
+            <mat-option (click)="portion(number)" *ngFor="let number of [1,2,3,4,5,6]" [value]="number">
+              {{number}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
 
       <div>
         Dania spróbujesz w restauracjach:
@@ -47,7 +57,8 @@
           <!--</mat-list>-->
 
 
-          <table mat-table [dataSource]="recipe.ingredients" class="mat-elevation-z8">
+
+          <table mat-table [dataSource]="recipe.ingredients" class="mat-elevation-z8 width60">
 
             <!-- Name Column -->
             <ng-container matColumnDef="nazwa">
