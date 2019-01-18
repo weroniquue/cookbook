@@ -50,4 +50,21 @@ export class RestaurantService {
         })
       );
   }
+
+
+  removeRecipeFromRestaurant(city:string, name:string, id:any){
+    return this.http.delete(this.urlRestaurant + '/' + city + '/' + name + '/' + id, httpOptionsWithCredential)
+      .pipe(
+        tap(data => {
+          console.log(data);
+        }),
+        catchError(err => {
+          this.messageService.openSnackBar(err);
+          return throwError(err);
+        })
+      );
+
+
+  }
+
 }

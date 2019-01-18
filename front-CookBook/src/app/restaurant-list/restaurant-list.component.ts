@@ -5,6 +5,7 @@ import { Restaurant } from '../models/restaurant';
 import { MessageService } from '../message.service';
 import {DeleteConfirmDialogComponent} from '../delete-confirm-dialog/delete-confirm-dialog.component';
 import {MatDialog} from '@angular/material';
+import {RestaurantService} from '../restaurant.service';
 
 @Component({
   selector: 'app-restaurant-list',
@@ -19,6 +20,7 @@ export class RestaurantListComponent implements OnInit {
   constructor(
     private userService: UserService,
     private recipeService: RecipeService,
+    private restuarantService: RestaurantService,
     private messageService: MessageService,
     private dialog: MatDialog,
   ) { }
@@ -55,6 +57,27 @@ export class RestaurantListComponent implements OnInit {
         }
       });
 
+  }
+
+  deleteRecipe(recipe:any, restaurant:any){
+    console.log(recipe, restaurant);
+
+    this.dialog.open(DeleteConfirmDialogComponent, {
+      data: {
+        title: 'Usuń?',
+        content: 'Chcesz usunąć przepis z restauracji?'
+      },
+    }).afterClosed()
+      .subscribe(x => {
+        if (x === 'yes') {
+          this.restuarantService.removeRecipeFromRestaurant(restaurant.city, restaurant.name, recipe.id)
+            .subscribe(dat => {
+              this.messageService.openSnackBar(dat.message)
+              this.getRestaurantList();
+            });
+
+        }
+      });
   }
 
 }

@@ -3,9 +3,9 @@
   <mat-card>
     <mat-card-title>{{recipe.title}}</mat-card-title>
 
-    <div *ngIf="checkIfYourComment(recipe.createdBy.username)" class="pad">
+    <div class="pad">
       <button style="margin-right: 5px;" mat-raised-button (click)="goBack()">Wróć</button>
-      <button style="margin-right: 5px;" mat-raised-button (click)="deleteRecipe()">Usuń</button>
+      <button *ngIf="checkIfYourComment(recipe.createdBy.username)"  style="margin-right: 5px;" mat-raised-button (click)="deleteRecipe()">Usuń</button>
       <!--<button mat-raised-button (click)="editRecipe()" routerLink="./edit">Edytuj</button>-->
     </div>
 

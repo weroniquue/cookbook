@@ -119,8 +119,29 @@ public class RestaurantController {
 			restaurantRepository.save(restaurant);
 		}
 
-		return new ResponseEntity<>(new ApiResponse(true, "Recipes added to restaurant successfully"), HttpStatus.OK);
+		return new ResponseEntity<>(new ApiResponse(true, "Recipes were added to restaurant successfully"), HttpStatus.OK);
 	}
+	
+	
+	@DeleteMapping("/{city}/{name}/{id}")
+	@PreAuthorize("hasRole('USER')")
+	public ResponseEntity<?> deleteRecipeFromRestaurant(@PathVariable(value = "city") String city,
+			@PathVariable(value = "name") String name, @PathVariable(value = "id") Integer recipeId) {
+
+		Restaurants restaurant = restaurantRepository.getOne(new RestaurantsId(name, city));
+
+		Recipes recipe = recipeRepostory.findById(recipeId)
+				.orElseThrow(() -> new ResourceNotFoundException("Recipe", "id", recipeId));
+		
+		if (restaurant.getrecipes().contains(recipe)) {
+			restaurant.getrecipes().remove(recipe);
+			restaurantRepository.save(restaurant);
+		}
+		
+		return new ResponseEntity<>(new ApiResponse(true, "Recipes were removed successfully"), HttpStatus.OK);
+	}
+	
+	
 
 	@DeleteMapping("/{city}/{name}")
 	@PreAuthorize("hasRole('USER')")
