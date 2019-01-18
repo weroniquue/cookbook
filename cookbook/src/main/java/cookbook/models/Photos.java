@@ -37,7 +37,7 @@ public class Photos implements java.io.Serializable {
 
 	@Id
 
-	@Column(name = "path", unique = true, nullable = false, length = 50)
+	@Column(name = "path", unique = true, nullable = false, length = 230)
 	public String getPath() {
 		return this.path;
 	}
