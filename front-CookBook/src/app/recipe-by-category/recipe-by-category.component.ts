@@ -16,9 +16,29 @@ export class RecipeByCategoryComponent implements OnInit {
   ascending: boolean;
 
 
-  constructor(private recipeService: RecipeService,
-              private route: ActivatedRoute,
-              private location: Location) { }
+  constructor(
+    private recipeService: RecipeService,
+    private route: ActivatedRoute,
+    private location: Location
+  ) {
+    route.params.subscribe(val => {
+      const categoryOrCuisine = this.route.snapshot.paramMap.get('categoryOrCuisine');
+    const name = this.route.snapshot.paramMap.get('categoryOrCuisineName');
+    if (categoryOrCuisine == 'category') {
+      this.recipeService.getRecipeByCategory(name)
+        .subscribe(data => {
+          this.recipe_list = data.content;
+        });
+    }
+
+    if (categoryOrCuisine == 'cuisine') {
+      this.recipeService.getRecipeByCuisine(name)
+        .subscribe(data => {
+          this.recipe_list = data.content;
+        });
+    }
+    });          
+  }
 
   ngOnInit() {
     const categoryOrCuisine = this.route.snapshot.paramMap.get('categoryOrCuisine');
