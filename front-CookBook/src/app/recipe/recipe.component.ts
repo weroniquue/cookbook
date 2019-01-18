@@ -140,9 +140,5 @@ export class RecipeComponent implements OnInit {
     this.recipeService.getRecipesByPortion(id, size).subscribe(recipe => {
       this.recipe = recipe;
     });
-
-
   }
-  //@Input() recipe: Recipe;
-
 }

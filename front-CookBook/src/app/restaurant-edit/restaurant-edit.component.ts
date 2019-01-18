@@ -92,7 +92,7 @@ export class RestaurantEditComponent implements OnInit {
       this.nameR, this.cityR)
       .subscribe(da => {
         this.list_id=[];
-        this.messageService.openSnackBar(da.message);
+        this.messageService.openSnackBar(da['message']);
         setTimeout(() => {
           this.router.navigate(['restaurants']);
         }, 1000);
