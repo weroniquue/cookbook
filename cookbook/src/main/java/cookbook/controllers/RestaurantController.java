@@ -4,7 +4,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
+import javax.sound.midi.Soundbank;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +25,13 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import cookbook.database.RecipeRepository;
 import cookbook.database.RestaurantRepository;
 import cookbook.exception.ResourceNotFoundException;
+import cookbook.models.Recipes;
 import cookbook.models.Restaurants;
 import cookbook.models.RestaurantsId;
 import cookbook.payloads.ApiResponse;
 import cookbook.payloads.ObjectAvailability;
 import cookbook.payloads.recipes.RecipeResponse;
+import cookbook.payloads.restaurants.AddRecipesToRestaurant;
 import cookbook.payloads.restaurants.CreateRestaurantRequest;
 import cookbook.payloads.restaurants.RestaurantResponse;
 import cookbook.payloads.users.UserProfile;
@@ -57,19 +59,14 @@ public class RestaurantController {
 
 		Restaurants restaurant = restaurantRepository.findById(new RestaurantsId(name, city))
 				.orElseThrow(() -> new ResourceNotFoundException("Restaurant", "name and city", name + " " + city));
-		
-		
-		Set<RecipeResponse> recipe = restaurant.getrecipes()
-				.stream()
-				.map(x ->{
-					RecipeResponse response = new RecipeResponse(
-							x.getId(), x.getCategory().getName(),
-							x.getCuisine().getName(), x.getTitle(), x.getDescription());
-					return response;
-				})
-				.collect(Collectors.toSet());
-		
-		restaurant.getrecipes().forEach(x-> System.out.println(x.getTitle()));
+
+		Set<RecipeResponse> recipe = restaurant.getrecipes().stream().map(x -> {
+			RecipeResponse response = new RecipeResponse(x.getId(), x.getCategory().getName(), x.getCuisine().getName(),
+					x.getTitle(), x.getDescription());
+			return response;
+		}).collect(Collectors.toSet());
+
+		restaurant.getrecipes().forEach(x -> System.out.println(x.getTitle()));
 
 		RestaurantResponse response = new RestaurantResponse(restaurant.getId().getName(), restaurant.getAddress(),
 				restaurant.getCode(), restaurant.getId().getCity(), recipe);
@@ -88,13 +85,12 @@ public class RestaurantController {
 		Restaurants restaurant = new Restaurants(id, createRestaurantRequest.getAddress(),
 				createRestaurantRequest.getCode());
 
-		if(createRestaurantRequest.getRecipes()!=null) {
-			createRestaurantRequest.getRecipes().forEach(
-					x -> restaurant.getrecipes()
-					.add(recipeRepostory.findById(x).orElseThrow(() -> new ResourceNotFoundException("Recipe", "id", x))));
+		if (createRestaurantRequest.getRecipes() != null) {
+			createRestaurantRequest.getRecipes().forEach(x -> restaurant.getrecipes().add(
+					recipeRepostory.findById(x).orElseThrow(() -> new ResourceNotFoundException("Recipe", "id", x))));
 
 		}
-		
+
 		Restaurants results = restaurantRepository.save(restaurant);
 
 		URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/restaurants/{city}")
@@ -102,6 +98,28 @@ public class RestaurantController {
 
 		return ResponseEntity.created(location).body(new ApiResponse(true, "Restaurant was created successfully"));
 
+	}
+
+	@PostMapping("/{city}/{name}")
+	@PreAuthorize("hasRole('USER')")
+	public ResponseEntity<?> updateRestaurant(@PathVariable(value = "city") String city,
+			@PathVariable(value = "name") String name, @RequestBody @Valid AddRecipesToRestaurant request) {
+
+		Restaurants restaurant = restaurantRepository.getOne(new RestaurantsId(name, city));
+
+		if (request.getRecipes() != null) {
+
+			request.getRecipes().forEach(id -> {
+				Recipes recipe = recipeRepostory.findById(id)
+						.orElseThrow(() -> new ResourceNotFoundException("Recipe", "id", id));
+				if (!restaurant.getrecipes().contains(recipe)) {
+					restaurant.getrecipes().add(recipe);
+				}
+			});
+			restaurantRepository.save(restaurant);
+		}
+
+		return new ResponseEntity<>(new ApiResponse(true, "Recipes added to restaurant successfully"), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{city}/{name}")
@@ -125,29 +143,19 @@ public class RestaurantController {
 
 		List<RestaurantResponse> restaurants = restaurantRepository.findAll().stream().map(obj -> {
 
-			Set<RecipeResponse> recipe = obj.getrecipes()
-					.stream()
-					.map(x ->{
-						RecipeResponse response = new RecipeResponse(
-								x.getId(), x.getCategory().getName(),
-								x.getCuisine().getName(), x.getTitle(), x.getDescription());
-						
-						response.setCreatedBy(new UserProfile(x.getUsers().getUsername(),
-								x.getUsers().getFirstname(),
-								x.getUsers().getSecondname(),
-								x.getUsers().getEmail(),
-								Long.valueOf(x.getUsers().getRecipeses().size()),
-								Long.valueOf(x.getUsers().getCommentses().size())));
-						return response;
-					})
-					.collect(Collectors.toSet());
-			
-			RestaurantResponse response = new RestaurantResponse(
-					obj.getId().getName(), 
-					obj.getAddress(),
-					obj.getCode(),
-					obj.getId().getCity(),
-					recipe);
+			Set<RecipeResponse> recipe = obj.getrecipes().stream().map(x -> {
+				RecipeResponse response = new RecipeResponse(x.getId(), x.getCategory().getName(),
+						x.getCuisine().getName(), x.getTitle(), x.getDescription());
+
+				response.setCreatedBy(new UserProfile(x.getUsers().getUsername(), x.getUsers().getFirstname(),
+						x.getUsers().getSecondname(), x.getUsers().getEmail(),
+						Long.valueOf(x.getUsers().getRecipeses().size()),
+						Long.valueOf(x.getUsers().getCommentses().size())));
+				return response;
+			}).collect(Collectors.toSet());
+
+			RestaurantResponse response = new RestaurantResponse(obj.getId().getName(), obj.getAddress(), obj.getCode(),
+					obj.getId().getCity(), recipe);
 
 			return response;
 		}).collect(Collectors.toList());
