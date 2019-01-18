@@ -80,7 +80,7 @@ public class Comments implements java.io.Serializable {
 		this.users = users;
 	}
 
-	@Column(name = "comment", nullable = false, length = 100)
+	@Column(name = "comment", nullable = false, length = 200)
 	public String getComment() {
 		return this.comment;
 	}
@@ -90,7 +90,7 @@ public class Comments implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "date", nullable = false, length = 10)
+	@Column(name = "date", nullable = false, length = 20)
 	public Date getDate() {
 		return this.date;
 	}
