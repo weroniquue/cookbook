@@ -6,6 +6,12 @@ import {Location} from '@angular/common';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ReceivedRecipe } from '../models/received-recipe';
+import {RestaurantService} from '../restaurant.service';
+
+
+interface addRecipe {
+  recipes: any;
+}
 
 @Component({
   selector: 'app-restaurant-edit',
@@ -18,9 +24,11 @@ export class RestaurantEditComponent implements OnInit {
   nameR: string;
   editRestaurantForm: FormGroup;
   recipe_list: ReceivedRecipe[];
+  list_id = [];
 
   constructor(private recipeService: RecipeService,
               private userService: UserService,
+              private restaurantService: RestaurantService,
               private messageService: MessageService,
               private location: Location,
               private fb: FormBuilder,
@@ -45,21 +53,28 @@ export class RestaurantEditComponent implements OnInit {
         const formArray = this.editRestaurantForm.get('recipes') as FormArray;
         this.recipe_list.forEach(x => formArray.push(new FormControl(false)));
       });
-
-
   }
 
   goBack(){
     this.location.back();
   }
 
-  editRestaurant(data:any){
+  editRestaurant(data: any){
     const result = Object.assign({},
       this.editRestaurantForm.value, {
         recipes: this.recipe_list
           .filter((x, i) => !!this.editRestaurantForm.value.recipes[i])});
 
-    console.log(result);
+    for (let obj of result.recipes){
+      this.list_id.push(obj.id);
+    }
+
+    this.restaurantService.addRecipesToRestaurant(JSON.stringify({ recipes: this.list_id}),
+      this.nameR, this.cityR)
+      .subscribe(da => {
+        this.list_id=[];
+      });
+
   }
 
 }

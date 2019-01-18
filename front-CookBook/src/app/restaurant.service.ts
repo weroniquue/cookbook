@@ -37,4 +37,17 @@ export class RestaurantService {
         })
       );
   }
+
+  addRecipesToRestaurant(array: any, name:string, city:string){
+    return this.http.post(this.urlRestaurant + '/' + city + '/' + name, array, httpOptionsWithCredential)
+      .pipe(
+        tap(data => {
+          console.log(data);
+        }),
+        catchError(err => {
+          this.messageService.openSnackBar(err);
+          return throwError(err);
+        })
+      );
+  }
 }
