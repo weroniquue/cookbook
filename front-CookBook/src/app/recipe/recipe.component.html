@@ -22,6 +22,10 @@
         {{recipe.description}}
       </p>
 
+      <div *ngFor="let pic of recipe.photos">
+          <img src="pic">
+      </div>
+
       <div>
         Dania spróbujesz w restauracjach:
         <mat-list>
