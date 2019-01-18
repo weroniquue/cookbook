@@ -1,9 +1,9 @@
 <h2>Przepisy dostępne w restauracji {{nameR}} w mieście {{cityR}}: [edycja]</h2>
 
-<form [formGroup]="editRestaurantForm" autocomplete="off" novalidate (ngSubmit)="editRestaurant(editRestaurantForm.value)">
+<form [formGroup]="editRestaurantForm" style="margin-left: 15px;" autocomplete="off" novalidate (ngSubmit)="editRestaurant(editRestaurantForm.value)">
   <mat-card-content>
     <ng-container formArrayName="recipes">
-      <div *ngFor="let recipe of newList; let i = index" >
+      <div *ngFor="let recipe of newList; let i = index" class="pad">
         <mat-checkbox [formControlName]="i">
           {{recipe.title}}
         </mat-checkbox>
@@ -17,4 +17,4 @@
 
 </form>
 
-<button mat-button (click)="goBack()">Powrót</button>
+<button mat-button (click)="goBack()" class="pad">Powrót</button>
