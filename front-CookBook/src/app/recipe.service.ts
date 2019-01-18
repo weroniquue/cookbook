@@ -74,7 +74,7 @@ export class RecipeService implements OnInit {
       );
   }
 
-  getRecipesByPortion(id:number, size:number): Observable<PagedResponse> {
+  getRecipesByPortion(id:number, size:number){
     const url = `${this.recipesUrl}/${id}`;
     return this.http.get<ReceivedRecipe>(url + '?portion=' + size)
       .pipe(
