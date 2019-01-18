@@ -4,7 +4,7 @@ import {UserService} from '../user.service';
 import {MessageService} from '../message.service';
 import {Location} from '@angular/common';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { ReceivedRecipe } from '../models/received-recipe';
 import {RestaurantService} from '../restaurant.service';
 
@@ -33,7 +33,8 @@ export class RestaurantEditComponent implements OnInit {
               private messageService: MessageService,
               private location: Location,
               private fb: FormBuilder,
-              private route: ActivatedRoute
+              private route: ActivatedRoute,
+              private router: Router,
     ) { }
 
   ngOnInit() {
@@ -91,6 +92,10 @@ export class RestaurantEditComponent implements OnInit {
       this.nameR, this.cityR)
       .subscribe(da => {
         this.list_id=[];
+        this.messageService.openSnackBar(da.message);
+        setTimeout(() => {
+          this.router.navigate(['restaurants']);
+        }, 1000);
       });
 
   }

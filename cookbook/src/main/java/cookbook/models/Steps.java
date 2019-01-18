@@ -37,7 +37,7 @@ public class Steps implements java.io.Serializable {
 	@EmbeddedId
 
 	@AttributeOverrides({ @AttributeOverride(name = "number", column = @Column(name = "number", nullable = false)),
-			@AttributeOverride(name = "description", column = @Column(name = "description", nullable = false, length = 80)),
+			@AttributeOverride(name = "description", column = @Column(name = "description", nullable = false, length = 400)),
 			@AttributeOverride(name = "recipesId", column = @Column(name = "recipes_id", nullable = false)) })
 	public StepsId getId() {
 		return this.id;
