@@ -1,18 +1,18 @@
 <h2>Przepisy dostępne w restauracji {{nameR}} w mieście {{cityR}}: [edycja]</h2>
 
 <form [formGroup]="editRestaurantForm" autocomplete="off" novalidate (ngSubmit)="editRestaurant(editRestaurantForm.value)">
-
   <mat-card-content>
-
-    <mat-form-field class="pad">
-      <mat-checkbox formControlName="recipe">przepis 1</mat-checkbox>
-
-    </mat-form-field>
-
+    <ng-container formArrayName="recipes">
+      <div *ngFor="let recipe of recipe_list; let i = index" >
+        <mat-checkbox [formControlName]="i">
+          {{recipe.title}}
+        </mat-checkbox>
+      </div>
+    </ng-container>
   </mat-card-content>
 
   <mat-card-actions align="center">
-    <button mat-raised-button color="primary" [disabled]="!editRestaurantForm.valid" class="pad">Zatwierdź</button>
+    <button mat-raised-button color="primary" class="pad" [disabled]="!editRestaurantForm.valid">Zatwierdź</button>
   </mat-card-actions>
 
 </form>
