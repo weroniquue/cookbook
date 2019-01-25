@@ -16,6 +16,8 @@ export class RecipeListComponent implements OnInit {
   order:string;
   ascending: boolean;
   loggedIn: boolean;
+  searchText: string;
+
 
   constructor(
     private recipeService: RecipeService,
