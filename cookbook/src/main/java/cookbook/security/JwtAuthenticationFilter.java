@@ -60,9 +60,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 	}
 
 	private String getJwtFromRequest(HttpServletRequest request) {
-		System.out.println("request");
+		
 		for (Cookie cookie : request.getCookies()) {
-			System.out.println(cookie.getName());
 			if (cookie.getName().equals("jwt")) {
 				return cookie.getValue();
 			}
